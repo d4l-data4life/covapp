@@ -1,0 +1,100 @@
+/*
+  Global App CSS
+  ----------------------
+  Use this file for styles that should be applied to all components.
+  Any global CSS variables should also be applied here.
+*/
+@import '../../node_modules/@d4l/web-components-library/dist/d4l-ui/d4l-ui.css';
+@import './styles/typography.css';
+@import './styles/variables.css';
+@import './styles/components.css';
+@import './styles/objects.css';
+@import './styles/utils.css';
+
+/*
+// TODO: https://github.com/gesundheitscloud/infection-risk-assessment/pull/76
+// This is only a temporary fix. This should be moved/handled differently
+*/
+@import '../components/input-date/input-data-functional.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+  font-family: sans-serif;
+  line-height: 1.5;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+  font-family: var(--font-sans);
+  color: var(--c-gray);
+  background-color: var(--c-tertiary);
+}
+
+.radio strong {
+  font-weight: 400;
+}
+
+@media print {
+  .c-header,
+  .c-footer,
+  .qr-code__footer,
+  .card__header,
+  .recommendation,
+  .summary__risk-spreading,
+  .summary__risk-very-ill,
+  .summary h2,
+  .summary__footer,
+  d4l-button {
+    display: none;
+  }
+
+  .summary h3 {
+    margin-top: 0;
+  }
+
+  .card {
+    box-shadow: none !important;
+  }
+  body {
+    background-color: #fff;
+  }
+}
+
+.disclaimer,
+.data_privacy,
+.faq,
+.summary,
+.imprint,
+.legal {
+  white-space: pre-wrap;
+}
+
+.ie {
+  display: none;
+  margin: 20px auto;
+  padding: 20px;
+  height: auto;
+  width: 50%;
+  background: white;
+  border-radius: 8px;
+  border-collapse: separate;
+  box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.15);
+}
+
+.is-ie {
+  display: block;
+}
+
+.is-ie + app-root {
+  display: none;
+}

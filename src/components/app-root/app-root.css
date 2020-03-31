@@ -1,0 +1,59 @@
+.language-switch {
+  text-transform: uppercase;
+}
+
+main {
+  padding: 0 var(--padding-main);
+}
+
+.app-message {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.15);
+}
+
+.app-message__content {
+  margin-left: 1em;
+}
+
+.app-message__controls {
+  padding-top: 1em;
+}
+
+.app__logo-container {
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.app__logo-container ia-logo-charite {
+  margin-right: 1.56rem;
+}
+
+@media screen and (min-width: 768px) {
+  main {
+    min-height: calc(
+      100vh - var(--header-height-desktop) - var(--footer-height-desktop)
+    );
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .app-message__controls {
+    padding-top: 0;
+  }
+
+  .app__logo-container ia-logo-charite {
+    margin-right: 3.125rem;
+  }
+}
+
+.cookie-bar.snack-bar {
+  background-color: var(--c-gray-lightest);
+}
+
+.cookie-bar__content {
+  color: var(--c-gray);
+}

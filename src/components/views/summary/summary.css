@@ -1,0 +1,30 @@
+.summary h2 {
+  font-size: 1.625rem;
+  text-align: center;
+  font-weight: 500;
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
+  color: var(--c-primary);
+}
+
+.summary h3 {
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin-top: 2.5rem;
+  margin-bottom: 1.5rem;
+  color: var(--c-primary);
+}
+
+.summary h4 {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: var(--c-gray);
+}
+
+.summary__risk-very-ill {
+  margin-bottom: 2.5rem;
+}
+
+.summary__footer {
+  margin-bottom: 2rem;
+}

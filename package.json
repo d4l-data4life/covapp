@@ -1,0 +1,46 @@
+{
+  "name": "infection-risk-assessment-app",
+  "private": true,
+  "version": "1.7.0",
+  "description": "Assessing the risk of contagious viral infections (COVID-19)",
+  "scripts": {
+    "analyze": "stencil build",
+    "prebuild": "npm run prepare-customization",
+    "build": "stencil build",
+    "prestart": "npm run prepare-customization",
+    "start": "stencil build --dev --watch --serve --no-open",
+    "import-translations": "node ./scripts/import-translations.js",
+    "prepare-customization": "node ./scripts/prepare-customization.js",
+    "test": "stencil test --spec",
+    "test:watch": "stencil test --spec --watchAll",
+    "test:e2e": "stencil test --e2e",
+    "test:all": "stencil test --spec --e2e",
+    "test:all:watch": "stencil test --spec --e2e --watchAll",
+    "code-format": "npx prettier --write 'src/**/*.{tsx,css,ts}'"
+  },
+  "devDependencies": {
+    "@lokalise/node-api": "^2.1.0",
+    "@stencil/core": "^1.9.2",
+    "@stencil/router": "^1.0.1",
+    "@types/jest": "24.0.20",
+    "@types/puppeteer": "1.19.0",
+    "deep-assign": "^3.0.0",
+    "dotenv": "^8.2.0",
+    "javascript-stringify": "^2.0.1",
+    "jest": "24.9.0",
+    "jest-cli": "24.9.0",
+    "jest-localstorage-mock": "^2.4.0",
+    "prettier": "^1.19.1",
+    "puppeteer": "1.19.0",
+    "rollup-plugin-visualizer": "^4.0.1",
+    "workbox-build": "4.3.1"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@d4l/web-components-library": "^1.11.2",
+    "i18next": "^19.3.2",
+    "i18next-browser-languagedetector": "^4.0.2",
+    "pure-svg-code": "^1.0.6",
+    "rollup-plugin-node-polyfills": "^0.2.1"
+  }
+}

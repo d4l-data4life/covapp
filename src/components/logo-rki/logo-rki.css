@@ -1,0 +1,15 @@
+:host {
+  display: block;
+}
+
+.logo-rki {
+  height: 30px;
+  transform: translate(-6px, 0);
+}
+
+@media screen and (min-width: 768px) {
+  .logo-rki {
+    height: 48px;
+    transform: translate(-6px, -3px);
+  }
+}

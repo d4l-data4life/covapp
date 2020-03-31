@@ -1,0 +1,19 @@
+@font-face {
+  font-family: 'GT-America';
+  src: url('../assets/fonts/GT-America-Standard-Regular.woff2') format('woff2'),
+    url('../assets/fonts/GT-America-Standard-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF;
+}
+
+@font-face {
+  font-family: 'GT-America';
+  src: url('../assets/fonts/GT-America-Standard-Medium.woff2') format('woff2'),
+    url('../assets/fonts/GT-America-Standard-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF;
+}
