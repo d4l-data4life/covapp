@@ -60,11 +60,11 @@ Additionally, [GitHub provides documentation on how to sync forks manually](http
 
 ## Frequently asked questions
 
-If you have further questions, you can find additional [information on d4l.io](https://d4l.io/blog/covapp-faq)
+If you have further questions, you can find additional [information on d4l.io](https://d4l.io/blog/covapp-faq).
 
 ## Code of conduct
 
-[Contributor Code of Conduct](./CODE-OF-.md). By participating in this project, you agree to abide by its terms.
+[Contributor Code of Conduct](./CODE-OF-CONDUCT.md). By participating in this project, you agree to abide by its terms.
 
 ## License
 
