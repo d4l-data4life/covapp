@@ -1,0 +1,27 @@
+.navigation-header {
+  display: flex;
+  align-items: center;
+  padding: 0 1em 0.75em;
+}
+
+.navigation-header h2 {
+  margin: 0;
+  font-size: 1.25em;
+  font-weight: 500;
+  margin-left: 0.5em;
+  padding: 0.5em 0;
+  text-align: left;
+}
+
+.navigation-header > button {
+  color: var(--c-gray);
+  padding: 1em 1em 1em 0.5em;
+}
+
+.navigation-header svg.icon {
+  color: var(--c-gray);
+}
+
+.navigation-header--border-bottom {
+  border-bottom: 1px solid var(--c-gray-lightest);
+}

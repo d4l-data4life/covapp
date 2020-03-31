@@ -1,0 +1,45 @@
+:root {
+  /* Colors */
+  --c-primary: #003f97;
+  --c-primary-light: #004ebb;
+  --c-primary-lighter: #005fdf;
+  --c-primary-lightest: #2481ff;
+
+  --c-secondary: #ff5e59;
+  --c-secondary-light: #ffa19d;
+  --c-secondary-lighter: #ffd0ce;
+  --c-secondary-lightest: #ffe8e6;
+
+  --c-tertiary: #e7ecf5;
+
+  --c-gray: #011b40;
+  --c-gray-light: #acaba8;
+  --c-gray-lighter: #dedcda;
+  --c-gray-lightest: #f1f1f1;
+
+  --c-error: #b90100;
+  --c-success: #46960a;
+
+  /* Border radius */
+  --border-radius-medium: 12px;
+  --border-radius-large: 20px;
+
+  /* Layout */
+  --padding-main: 1em;
+  --padding-card-default: 1.5em;
+  --header-height-desktop: 154.5px;
+  --footer-height-desktop: 70px;
+  --max-width-desktop: 600px;
+
+  /* Min width media queries breakpoints */
+  --tablet: 768px;
+  --desktop: 960px;
+  --widescreen: 1152px;
+
+  /* Fonts */
+  --font-sans: GT-America, Helvetica, Arial, sans-serif;
+
+  /* Logos */
+  --logo-mobile-height: 48px;
+  --logo-desktop-height: 96px;
+}

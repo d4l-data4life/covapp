@@ -1,0 +1,49 @@
+.logo-header {
+  background: #ffffff;
+  width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+
+.logo-header > * {
+  flex: 0 1 auto;
+}
+
+/*
+Reduce logo height to fit more than three logos into the logo-header
+(needed for the config option `IS_OFFICIAL_COLLABORATION`)
+*/
+.logo-header__reduced-logo-height {
+  --logo-desktop-height: 80px;
+}
+
+.logo-header__label {
+  margin-top: 0.375rem;
+  color: var(--c-gray);
+  text-align: center;
+  font-size: 0.75rem;
+}
+
+.logo-header__container {
+  max-width: var(--max-width-desktop);
+  width: 100%;
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+}
+
+.logo-header__customLogo > * {
+  margin: 1em 0;
+  height: var(--logo-desktop-height);
+}
+
+@media screen and (min-width: 768px) {
+  .logo-header__container > * {
+    height: var(--logo-desktop-height);
+  }
+  .logo-header__label {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+  }
+}

@@ -1,0 +1,9 @@
+<svg viewBox="0 0 140 80" xmlns="http://www.w3.org/2000/svg">
+	<style>
+		.heavy { font: bold 12px sans-serif; color: #666; }
+	</style>
+	<circle cx="70" cy="30" r="20" fill="#ccc" />
+	<text x="40" y="70" class="heavy">
+		Your Logo
+	</text>
+</svg>

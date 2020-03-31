@@ -1,0 +1,48 @@
+.o-link {
+  text-decoration: none;
+  cursor: pointer;
+  color: var(--c-primary);
+}
+
+.o-link:hover,
+.o-link:focus {
+  text-decoration: underline;
+}
+
+.o-link--gray {
+  color: var(--c-gray);
+}
+
+.o-link--bold {
+  font-weight: 500;
+}
+
+.o-error {
+  color: var(--c-error);
+}
+
+.o-error--small {
+  font-size: 0.85rem;
+}
+
+.o-error--animated {
+  transition: transform 200ms ease-in-out, opacity 200ms ease-in;
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+.o-error--animated-ease-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.o-card-subtitle {
+  font-size: 1.125rem;
+  font-weight: 400;
+}
+
+.o-headline-3 {
+  font-size: 1.25rem;
+  margin: 0;
+  padding-top: 0.75rem;
+}

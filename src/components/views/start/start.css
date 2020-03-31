@@ -1,0 +1,24 @@
+.start__headline-1 {
+  font-size: 1.65rem;
+  margin: 0.5em 0 0.75em 0;
+  color: var(--c-primary);
+}
+
+.start__headline-2 {
+  margin-bottom: 1.5em;
+  font-size: 1.125rem;
+  font-weight: 500;
+}
+
+.start__legal-note {
+  font-size: 0.9rem;
+}
+
+.start__legal-note > strong {
+  font-weight: 400;
+}
+
+.start__next-link {
+  padding-bottom: 1em;
+  display: block;
+}

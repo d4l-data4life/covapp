@@ -1,0 +1,13 @@
+:host {
+  display: block;
+}
+
+.logo-d4l {
+  height: 40px;
+}
+
+@media screen and (min-width: 768px) {
+  .logo-d4l {
+    height: 56px;
+  }
+}

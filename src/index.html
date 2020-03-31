@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="google" value="notranslate" />
+    <title>CovApp</title>
+    <meta
+      name="description"
+      content="Recommendations and information regarding Coronavirus"
+    />
+    <meta name="title" content="CovApp" />
+    <meta
+      property="og:description"
+      content="Recommendations and information regarding Coronavirus"
+    />
+    <meta
+      property="og:image"
+      content="https://covapp.charite.de/assets/icon/charite-preview.jpg"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CovApp" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"
+    />
+    <meta name="theme-color" content="#16161d" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta http-equiv="x-ua-compatible" content="IE=Edge" />
+
+    <script type="module" src="/build/app.esm.js"></script>
+    <script nomodule src="/build/app.js"></script>
+    <link href="/build/app.css" rel="stylesheet" />
+
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/assets/icon/apple-touch-icon.png"
+    />
+    <link rel="icon" type="image/x-icon" href="/assets/icon/favicon.ico" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/assets/icon/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/assets/icon/favicon-16x16.png"
+    />
+
+    <link rel="manifest" href="/manifest.json" />
+  </head>
+  <body>
+    <div class="ie"></div>
+    <app-root></app-root>
+
+    <script>
+      if (
+        navigator.userAgent.indexOf('MSIE') !== -1 ||
+        navigator.appVersion.indexOf('Trident/') > -1
+      ) {
+        document.getElementsByClassName('ie')[0].classList.add('is-ie');
+        document.getElementsByClassName('ie')[0].innerHTML =
+          '<h1>Unfortunately you are using an outdated browser.</h1><p>Please upgrade your browser to improve your experience and security. Our browser support covers the latest browser versions as well as the last two versions before.</p>';
+      }
+    </script>
+  </body>
+</html>

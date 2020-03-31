@@ -1,0 +1,23 @@
+.questionnaire__content {
+  min-height: 15em;
+}
+
+.questionnaire__content fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+/* Important is used due to the scoped styles */
+.questionnaire input[type='radio'] + label::before {
+  border-color: var(--c-gray) !important;
+}
+
+.questionnaire input[type='radio']:checked + label::after {
+  background-color: var(--c-gray) !important;
+}
+
+d4l-button .button.sc-d4l-button:disabled {
+  background-color: var(--c-gray-lighter);
+  border-color: var(--c-gray-lighter);
+}
