@@ -1,0 +1,19 @@
+name: Issue Autoresponse
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  auto-response:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: derekprior/add-autoresponse@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        respondableId: ${{ github.event.issue.node_id }}
+        response: "Thank you for this issue. However, due our limited capacity, we can not respond to issues or pull requests in this repository as we are fully focussed on improving the original qbasic-transpiler."
+        author: ${{ github.event.issue.user.login }}
+        exemptedAuthors: "johnsmith, janedoe"
