@@ -46,7 +46,6 @@ The best approach to find translation keys for strings in the application is to 
 The following keys in the application have placeholder content because their original content applies only to the original use case at the Charité-Unversitätsmedizin Berlin. You have to provide your own content and translations:
 - data_privacy_content
 - disclaimer_paragraph_1
-- faq_content
 - imprint_content
 - recommendation_case_1_text
 - recommendation_case_2_text
