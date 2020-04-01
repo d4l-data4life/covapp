@@ -1,6 +1,16 @@
 {
   "label": "TODO – your language label (English, Deutsch, ...)",
   "keys": {
-    "answer_no": "Nein"
+    "data_privacy_content": "[TRANSLATION/CONTENT NEEDED]",
+    "disclaimer_paragraph_1": "[TRANSLATION/CONTENT NEEDED]",
+    "imprint_content": "[TRANSLATION/CONTENT NEEDED]",
+    "recommendation_case_1_additonal_info": "[TRANSLATION/CONTENT NEEDED]",
+    "recommendation_case_1_text": "[TRANSLATION/CONTENT NEEDED]",
+    "recommendation_case_2_text": "[TRANSLATION/CONTENT NEEDED]",
+    "recommendation_case_3_text": "[TRANSLATION/CONTENT NEEDED].",
+    "recommendation_case_4_text": "[TRANSLATION/CONTENT NEEDED].",
+    "recommendation_case_5_text": "[TRANSLATION/CONTENT NEEDED].",
+    "start_paragraph_1_option_1": "[TRANSLATION/CONTENT NEEDED]",
+    "start_paragraph_2": "[TRANSLATION/CONTENT NEEDED]"
   }
 }

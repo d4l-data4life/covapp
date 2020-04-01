@@ -10,7 +10,7 @@ To apply and see below described changes of your environment or changes to the `
 
 ## Internationalization and translation
 
-This application supports several languages. **This repository includes translations for English (`en`) and German (`de`).** Languages and their language codes map to file names. For example, English translation files are named `en.json`.
+This application supports several languages. **This repository includes translations for English (`en`) and German (`de`), with some placeholders (see below).** Languages and their language codes map to file names. For example, English translation files are named `en.json`.
 
 Translations are key-value mappings. A key like `button_start_now` is defined and mapped to `Start questionnaire` in its corresponding language file.
 
@@ -40,6 +40,22 @@ The folder structure with adjusted keys for English should look as follows:
 ```
 
 The best approach to find translation keys for strings in the application is to search for a value like `Start questionnaire` in the provided default file (e.g. `src/global/i18n/en.json`) . This way, you can find the translation key and provide your new translation value in `src/custom/translations/*.json`.
+
+### Existing placeholders
+
+The following keys in the application have placeholder content because their original content applies only to the original use case at the Charité-Unversitätsmedizin Berlin. You have to provide your own content and translations:
+- data_privacy_content
+- disclaimer_paragraph_1
+- imprint_content
+- recommendation_case_1_text
+- recommendation_case_2_text
+- recommendation_case_3_text
+- recommendation_case_4_text
+- recommendation_case_5_text
+- start_paragraph_1_option_1
+- start_paragraph_2
+
+These keys are all listed in the `example.json` translation file as described above.
 
 ### Adding a new language
 
