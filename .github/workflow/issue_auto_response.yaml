@@ -14,6 +14,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         respondableId: ${{ github.event.issue.node_id }}
-        response: "Thank you for this issue. However, due our limited capacity, we can not respond to issues or pull requests in this repository as we are fully focussed on improving the original qbasic-transpiler."
+        response: "Thank you for opening this issue. Please note that, as we are currently working on solutions to help face the current crisis, we do not have the capacity to responds any issues."
         author: ${{ github.event.issue.user.login }}
         exemptedAuthors: "johnsmith, janedoe"
