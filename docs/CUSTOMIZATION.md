@@ -55,7 +55,7 @@ The following keys in the application have placeholder content because their ori
 - start_paragraph_1_option_1
 - start_paragraph_2
 
-These keys are all listed in the custom translation files for English and German as described above.
+These keys are all listed in the `example.json` translation file as described above.
 
 ### Adding a new language
 
