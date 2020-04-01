@@ -17,4 +17,3 @@ jobs:
         pr-message: "Message that will be displayed on users' first pr. Look, a `code block` for markdown."
         response: "Working on it"
         author: ${{ github.event.pull_request.user.login }}
-        exemptedAuthors: "johnsmith, janedoe"
