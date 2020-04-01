@@ -15,5 +15,5 @@ jobs:
       with:
         respondableId: ${{ github.event.pull_request.node_id }}
         pr-message: "Message that will be displayed on users' first pr. Look, a `code block` for markdown."
-        response: "Working on it"
+        response: "Thank you for opening this pull request. Please note that, as we are currently working on solutions to help face the current crisis, we do not have the capacity to manage any pull requests."
         author: ${{ github.event.pull_request.user.login }}
