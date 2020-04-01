@@ -38,7 +38,9 @@ To get further information on how to set up and deploy your custom CovApp applic
 
 The CovApp provides the following customization options:
 
-- change words or add a new language (note that there are several placeholder texts you must provide yourself)
+- change words or add a new language
+
+ ⚠️ ** Note that there are several placeholder texts you must provide yourself.**
 - change colors
 - change the application logo
 
