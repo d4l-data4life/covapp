@@ -1,0 +1,17 @@
+name: PRsOnRelease
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  create_PRs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@master
+      - uses: Gesundheitscloud/github-action-create-synch-PRs-on-release@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          filename: .github/PR_TEMPLATE.md
