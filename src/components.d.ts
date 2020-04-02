@@ -28,6 +28,9 @@ export namespace Components {
     interface IaImprint {
         "history": RouterHistory;
     }
+    interface IaInputMultipleChoice {
+        "question": Question;
+    }
     interface IaInputRadio {
         "currentSelection": any;
         "question": Question;
@@ -35,15 +38,17 @@ export namespace Components {
     interface IaLegal {
         "history": RouterHistory;
     }
+    interface IaLogoBih {
+    }
     interface IaLogoBmg {
     }
     interface IaLogoBzga {
     }
     interface IaLogoCharite {
     }
-    interface IaLogoD4l {
+    interface IaLogoComponent {
     }
-    interface IaLogoHeader {
+    interface IaLogoD4l {
     }
     interface IaLogoRki {
     }
@@ -111,6 +116,12 @@ declare global {
         prototype: HTMLIaImprintElement;
         new (): HTMLIaImprintElement;
     };
+    interface HTMLIaInputMultipleChoiceElement extends Components.IaInputMultipleChoice, HTMLStencilElement {
+    }
+    var HTMLIaInputMultipleChoiceElement: {
+        prototype: HTMLIaInputMultipleChoiceElement;
+        new (): HTMLIaInputMultipleChoiceElement;
+    };
     interface HTMLIaInputRadioElement extends Components.IaInputRadio, HTMLStencilElement {
     }
     var HTMLIaInputRadioElement: {
@@ -122,6 +133,12 @@ declare global {
     var HTMLIaLegalElement: {
         prototype: HTMLIaLegalElement;
         new (): HTMLIaLegalElement;
+    };
+    interface HTMLIaLogoBihElement extends Components.IaLogoBih, HTMLStencilElement {
+    }
+    var HTMLIaLogoBihElement: {
+        prototype: HTMLIaLogoBihElement;
+        new (): HTMLIaLogoBihElement;
     };
     interface HTMLIaLogoBmgElement extends Components.IaLogoBmg, HTMLStencilElement {
     }
@@ -141,17 +158,17 @@ declare global {
         prototype: HTMLIaLogoChariteElement;
         new (): HTMLIaLogoChariteElement;
     };
+    interface HTMLIaLogoComponentElement extends Components.IaLogoComponent, HTMLStencilElement {
+    }
+    var HTMLIaLogoComponentElement: {
+        prototype: HTMLIaLogoComponentElement;
+        new (): HTMLIaLogoComponentElement;
+    };
     interface HTMLIaLogoD4lElement extends Components.IaLogoD4l, HTMLStencilElement {
     }
     var HTMLIaLogoD4lElement: {
         prototype: HTMLIaLogoD4lElement;
         new (): HTMLIaLogoD4lElement;
-    };
-    interface HTMLIaLogoHeaderElement extends Components.IaLogoHeader, HTMLStencilElement {
-    }
-    var HTMLIaLogoHeaderElement: {
-        prototype: HTMLIaLogoHeaderElement;
-        new (): HTMLIaLogoHeaderElement;
     };
     interface HTMLIaLogoRkiElement extends Components.IaLogoRki, HTMLStencilElement {
     }
@@ -203,13 +220,15 @@ declare global {
         "ia-disclaimer": HTMLIaDisclaimerElement;
         "ia-faq": HTMLIaFaqElement;
         "ia-imprint": HTMLIaImprintElement;
+        "ia-input-multiple-choice": HTMLIaInputMultipleChoiceElement;
         "ia-input-radio": HTMLIaInputRadioElement;
         "ia-legal": HTMLIaLegalElement;
+        "ia-logo-bih": HTMLIaLogoBihElement;
         "ia-logo-bmg": HTMLIaLogoBmgElement;
         "ia-logo-bzga": HTMLIaLogoBzgaElement;
         "ia-logo-charite": HTMLIaLogoChariteElement;
+        "ia-logo-component": HTMLIaLogoComponentElement;
         "ia-logo-d4l": HTMLIaLogoD4lElement;
-        "ia-logo-header": HTMLIaLogoHeaderElement;
         "ia-logo-rki": HTMLIaLogoRkiElement;
         "ia-navigation-header": HTMLIaNavigationHeaderElement;
         "ia-qr-code": HTMLIaQrCodeElement;
@@ -243,6 +262,10 @@ declare namespace LocalJSX {
         "history"?: RouterHistory;
         "onShowLogoHeader"?: (event: CustomEvent<any>) => void;
     }
+    interface IaInputMultipleChoice {
+        "onUpdateFormData"?: (event: CustomEvent<any>) => void;
+        "question"?: Question;
+    }
     interface IaInputRadio {
         "currentSelection"?: any;
         "onUpdateFormData"?: (event: CustomEvent<any>) => void;
@@ -252,15 +275,17 @@ declare namespace LocalJSX {
         "history"?: RouterHistory;
         "onShowLogoHeader"?: (event: CustomEvent<any>) => void;
     }
+    interface IaLogoBih {
+    }
     interface IaLogoBmg {
     }
     interface IaLogoBzga {
     }
     interface IaLogoCharite {
     }
-    interface IaLogoD4l {
+    interface IaLogoComponent {
     }
-    interface IaLogoHeader {
+    interface IaLogoD4l {
     }
     interface IaLogoRki {
     }
@@ -295,13 +320,15 @@ declare namespace LocalJSX {
         "ia-disclaimer": IaDisclaimer;
         "ia-faq": IaFaq;
         "ia-imprint": IaImprint;
+        "ia-input-multiple-choice": IaInputMultipleChoice;
         "ia-input-radio": IaInputRadio;
         "ia-legal": IaLegal;
+        "ia-logo-bih": IaLogoBih;
         "ia-logo-bmg": IaLogoBmg;
         "ia-logo-bzga": IaLogoBzga;
         "ia-logo-charite": IaLogoCharite;
+        "ia-logo-component": IaLogoComponent;
         "ia-logo-d4l": IaLogoD4l;
-        "ia-logo-header": IaLogoHeader;
         "ia-logo-rki": IaLogoRki;
         "ia-navigation-header": IaNavigationHeader;
         "ia-qr-code": IaQrCode;
@@ -322,13 +349,15 @@ declare module "@stencil/core" {
             "ia-disclaimer": LocalJSX.IaDisclaimer & JSXBase.HTMLAttributes<HTMLIaDisclaimerElement>;
             "ia-faq": LocalJSX.IaFaq & JSXBase.HTMLAttributes<HTMLIaFaqElement>;
             "ia-imprint": LocalJSX.IaImprint & JSXBase.HTMLAttributes<HTMLIaImprintElement>;
+            "ia-input-multiple-choice": LocalJSX.IaInputMultipleChoice & JSXBase.HTMLAttributes<HTMLIaInputMultipleChoiceElement>;
             "ia-input-radio": LocalJSX.IaInputRadio & JSXBase.HTMLAttributes<HTMLIaInputRadioElement>;
             "ia-legal": LocalJSX.IaLegal & JSXBase.HTMLAttributes<HTMLIaLegalElement>;
+            "ia-logo-bih": LocalJSX.IaLogoBih & JSXBase.HTMLAttributes<HTMLIaLogoBihElement>;
             "ia-logo-bmg": LocalJSX.IaLogoBmg & JSXBase.HTMLAttributes<HTMLIaLogoBmgElement>;
             "ia-logo-bzga": LocalJSX.IaLogoBzga & JSXBase.HTMLAttributes<HTMLIaLogoBzgaElement>;
             "ia-logo-charite": LocalJSX.IaLogoCharite & JSXBase.HTMLAttributes<HTMLIaLogoChariteElement>;
+            "ia-logo-component": LocalJSX.IaLogoComponent & JSXBase.HTMLAttributes<HTMLIaLogoComponentElement>;
             "ia-logo-d4l": LocalJSX.IaLogoD4l & JSXBase.HTMLAttributes<HTMLIaLogoD4lElement>;
-            "ia-logo-header": LocalJSX.IaLogoHeader & JSXBase.HTMLAttributes<HTMLIaLogoHeaderElement>;
             "ia-logo-rki": LocalJSX.IaLogoRki & JSXBase.HTMLAttributes<HTMLIaLogoRkiElement>;
             "ia-navigation-header": LocalJSX.IaNavigationHeader & JSXBase.HTMLAttributes<HTMLIaNavigationHeaderElement>;
             "ia-qr-code": LocalJSX.IaQrCode & JSXBase.HTMLAttributes<HTMLIaQrCodeElement>;

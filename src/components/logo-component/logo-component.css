@@ -1,0 +1,48 @@
+.logo-component {
+  margin-top: 1rem;
+}
+
+.logo-component .card {
+  --card-default-padding: 0.5rem;
+}
+
+.logo-component__label {
+  margin-top: 0.375rem;
+  color: var(--c-gray);
+  text-align: center;
+  font-size: 0.75rem;
+}
+
+.logo-component__container {
+  max-width: var(--max-width-desktop);
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+}
+
+.logo-component__container > * {
+  flex: 1 1 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.75em;
+}
+
+.logo-component__customLogo > * {
+  margin: 1em 0;
+  height: 80px;
+}
+
+@media screen and (min-width: 768px) {
+  .logo-component__container {
+    margin-bottom: 1em;
+  }
+  .logo-component__container > * {
+    flex: 1 1 auto;
+  }
+  .logo-component__label {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+  }
+}

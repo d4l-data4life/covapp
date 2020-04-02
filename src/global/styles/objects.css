@@ -46,3 +46,10 @@
   margin: 0;
   padding-top: 0.75rem;
 }
+
+.o-accordion-headline {
+  color: var(--c-white);
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 0;
+}

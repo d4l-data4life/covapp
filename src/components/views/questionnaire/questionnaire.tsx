@@ -19,6 +19,7 @@ import {
   checkGuard,
   getQuestionIndexById,
   updateScoreData,
+  getScoreChange,
 } from './utils';
 
 @Component({
@@ -71,7 +72,7 @@ export class Questionnaire {
     this.setFormData(QUESTIONS[currentStep].id, value.split('-').join('.'));
   }
 
-  setFormData(key: string, value: string) {
+  setFormData(key: string, value: string | string[]) {
     this.formData = {
       ...this.formData,
       [key]: value,
@@ -126,8 +127,10 @@ export class Questionnaire {
         const previousQuestion = QUESTIONS[getQuestionIndexById(previousDataKey)];
         if (previousQuestion.scoreMap) {
           const previousAnswer = this.formData[previousDataKey];
-          this.scoreData[previousQuestion.category] -=
-            previousQuestion.scoreMap[previousAnswer];
+          this.scoreData[previousQuestion.category] -= getScoreChange(
+            previousQuestion,
+            previousAnswer
+          );
         }
 
         delete this.formData[previousDataKey];
@@ -200,7 +203,7 @@ export class Questionnaire {
                   {i18next.t(QUESTIONS[currentStep].text)}
                 </legend>
                 {QUESTIONS[currentStep].comment && (
-                  <p innerHTML={`${i18next.t(QUESTIONS[currentStep].comment)}`}></p>
+                  <p class="questionnaire__comment" innerHTML={`${i18next.t(QUESTIONS[currentStep].comment)}`}></p>
                 )}
                 <div class="questionnaire__form u-padding-vertical--normal ">
                   {QUESTIONS[currentStep].inputType === 'radio' && (
@@ -209,6 +212,9 @@ export class Questionnaire {
                       question={QUESTIONS[currentStep]}
                       currentSelection={this.formData[QUESTIONS[currentStep].id]}
                     />
+                  )}
+                  {QUESTIONS[currentStep].inputType === 'checkbox' && (
+                    <ia-input-multiple-choice question={QUESTIONS[currentStep]} />
                   )}
 
                   {QUESTIONS[currentStep].inputType === 'date' && <DateInput />}
