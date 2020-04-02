@@ -157,7 +157,7 @@ npm test
 npm run analyze
 
 # Run the unit tests and watch for file changes during development
-npm run test.watch
+npm run test:watch
 
 # Automatically fix potential code formatting issues
 npm run code-format
