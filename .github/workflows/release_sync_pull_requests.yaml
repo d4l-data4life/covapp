@@ -10,7 +10,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@master
-      - uses: Gesundheitscloud/github-action-create-synch-PRs-on-release@master
+      - uses: gesundheitscloud/github-action-create-synch-PRs-on-release@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
