@@ -6,7 +6,7 @@
   "scripts": {
     "analyze": "stencil build",
     "prebuild": "npm run prepare-customization",
-    "build": "stencil build",
+    "build": "stencil build --prerender",
     "prestart": "npm run prepare-customization",
     "start": "stencil build --dev --watch --serve --no-open",
     "import-translations": "node ./scripts/import-translations.js",
