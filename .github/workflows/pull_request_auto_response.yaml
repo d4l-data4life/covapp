@@ -3,6 +3,8 @@ name: Pull Request Autoresponse
 on:
   pull_request:
     types: [opened]
+    branches-ignore:
+      - '**'
 
 jobs:
   auto-response:
