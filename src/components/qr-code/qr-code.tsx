@@ -1,7 +1,16 @@
 import { Component, h, Listen, Prop, State } from '@stencil/core';
 import { qrcode, svg2url } from 'pure-svg-code';
-import i18next from '../../global/utils/i18n';
 import { QUESTIONNAIRE_VERSION } from '../../global/constants';
+import {
+  CheckboxOption,
+  MULTIPLE_CHOICE,
+  QUESTIONS,
+  XML_ORDER,
+} from '../../global/questions';
+import i18next from '../../global/utils/i18n';
+import { getQuestionIndexById } from '../views/questionnaire/utils';
+
+export type KeyValue = { key: string; value: string };
 
 @Component({
   styleUrl: 'qr-code.css',
@@ -19,17 +28,51 @@ export class QRCode {
   }
 
   generateXML = (answers): string => {
-    let xml = '<PATIENT>';
-    xml += `<V0>${QUESTIONNAIRE_VERSION}</V0>`;
-    for (const key in answers) {
-      if (answers[key].includes('.')) {
-        xml += `<${key}>${answers[key].replace(/\./g, '')}</${key}>`;
-      } else {
-        xml += `<${key}>${parseInt(answers[key], 10) + 1}</${key}>`;
-      }
+    let xml = `<PATIENT><V0>${QUESTIONNAIRE_VERSION}</V0>`;
+    let xmlPairs = this.generateXMLValues(answers);
+    xmlPairs.sort(this.XMLSort);
+    for (const pair of xmlPairs) {
+      xml += `<${pair.key}>${pair.value}</${pair.key}>`;
     }
     xml += '</PATIENT>';
     return xml;
+  };
+
+  generateXMLValues = (answers): KeyValue[] => {
+    let pairs = [];
+    for (const key in answers) {
+      if (key.startsWith(MULTIPLE_CHOICE)) {
+        const question = QUESTIONS[getQuestionIndexById(key)];
+        for (const index in question.options) {
+          const option = (question.options as CheckboxOption[])[index];
+          const xmlValue = answers[key].indexOf(index) > -1 ? '1' : '2';
+          pairs.push({ key: option.id, value: xmlValue });
+        }
+      } else {
+        if (answers[key].indexOf('.') > -1) {
+          pairs.push({ key, value: answers[key].replace(/\./g, '') });
+        } else {
+          pairs.push({ key, value: parseInt(answers[key], 10) + 1 });
+        }
+      }
+    }
+    return pairs;
+  };
+
+  XMLSort = (a: KeyValue, b: KeyValue): number => {
+    let a_prefix = XML_ORDER.indexOf(a.key[0]);
+    let b_prefix = XML_ORDER.indexOf(b.key[0]);
+    if (a_prefix !== b_prefix) {
+      return a_prefix - b_prefix;
+    }
+
+    let a_suffix = a.key[1];
+    let b_suffix = b.key[1];
+    if (a_suffix !== b_suffix) {
+      return a_suffix < b_suffix ? -1 : 1;
+    }
+
+    return 0;
   };
 
   generateCode = (): string => {

@@ -75,7 +75,8 @@ body {
 .faq,
 .summary,
 .imprint,
-.legal {
+.legal,
+.questionnaire__comment {
   white-space: pre-wrap;
 }
 

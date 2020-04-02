@@ -3,13 +3,11 @@
 }
 
 .logo-rki {
-  height: 30px;
-  transform: translate(-6px, 0);
+  height: 32px;
 }
 
 @media screen and (min-width: 768px) {
   .logo-rki {
-    height: 48px;
-    transform: translate(-6px, -3px);
+    height: 41px;
   }
 }

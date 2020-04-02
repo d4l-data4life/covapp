@@ -2,6 +2,7 @@ import { Component, h, Listen, Prop, State } from '@stencil/core';
 import { QUESTIONS } from '../../global/questions';
 import i18next from '../../global/utils/i18n';
 import { trackEvent, TRACKING_EVENTS } from '../../global/utils/track';
+import { getRootCSSPropertyValue } from '../../global/utils/css-properties';
 
 @Component({
   styleUrl: 'answers-table.css',
@@ -10,7 +11,6 @@ import { trackEvent, TRACKING_EVENTS } from '../../global/utils/track';
 export class AnswersTable {
   @Prop() answers: any = {};
   @State() language: string;
-  @State() expandedTable: boolean = false;
 
   @Listen('changedLanguage', {
     target: 'window',
@@ -22,10 +22,6 @@ export class AnswersTable {
   get currentLanguage() {
     return this.language || 'en';
   }
-
-  getClasses = () => {
-    return this.expandedTable ? 'answers-table__container--expanded' : '';
-  };
 
   generateQuestionRow = (id: string) => {
     const question = QUESTIONS.find(e => e.id === id);
@@ -46,11 +42,26 @@ export class AnswersTable {
         </tr>
       );
     } else if (question.inputType === 'radio') {
-      const response = question.options[this.answers[id]];
+      const response = question.options[this.answers[id]] as string;
       return (
         <tr class="answers-table__row">
           <td>{i18next.t(question.text)}</td>
           <td>{i18next.t(response)}</td>
+        </tr>
+      );
+    } else if (question.inputType === 'checkbox') {
+      return (
+        <tr class="answers-table__row">
+          <td>{i18next.t(question.text)}</td>
+          <td>
+            {this.answers[id].map(
+              (optionIndex: string, index: number) =>
+                `${i18next.t(question.options[optionIndex].label)}${
+                  index < this.answers[id].length - 1 ? ', ' : ''
+                }`
+            )}
+            {this.answers[id].length < 1 && i18next.t('input_multiple_choice_none')}
+          </td>
         </tr>
       );
     } else {
@@ -59,37 +70,32 @@ export class AnswersTable {
   };
 
   render() {
-    const { answers, getClasses, generateQuestionRow } = this;
+    const { answers, generateQuestionRow } = this;
 
     return (
       <div class="answers-table">
-        <d4l-button
-          type="button"
-          classes="button--block answers-table__button"
-          data-test="toggleAnswersButton"
-          text={i18next.t(
-            this.expandedTable
-              ? 'answers_table_hide_answers'
-              : 'answers_table_show_answers'
-          )}
-          handleClick={() => {
-            this.expandedTable = !this.expandedTable;
-            this.expandedTable && trackEvent(TRACKING_EVENTS.SUMMARY_ANSWERS_SHOW);
-          }}
-        />
-        <div class={`answers-table__container ${getClasses()}`}>
-          <table>{Object.keys(answers).map(id => generateQuestionRow(id))}</table>
-          <d4l-button
-            type="button"
-            classes="button--block answers-table__button"
-            data-test="printButton"
-            text={i18next.t('answers_table_print')}
-            handleClick={() => {
-              trackEvent(TRACKING_EVENTS.SUMMARY_PRINT);
-              window.print();
-            }}
-          />
-        </div>
+        <d4l-accordion
+          open={false}
+          headerBackgroundColor={getRootCSSPropertyValue('--c-gray')}
+          classes="accordion--no-panel-border accordion--no-panel-padding"
+        >
+          <p class="o-accordion-headline" slot="accordion-header">
+            {i18next.t('answers_table_headline')}
+          </p>
+          <div slot="accordion-panel">
+            <table>{Object.keys(answers).map(id => generateQuestionRow(id))}</table>
+            <d4l-button
+              type="button"
+              classes="button--block answers-table__button"
+              data-test="printButton"
+              text={i18next.t('answers_table_print')}
+              handleClick={() => {
+                trackEvent(TRACKING_EVENTS.SUMMARY_PRINT);
+                window.print();
+              }}
+            />
+          </div>
+        </d4l-accordion>
       </div>
     );
   }

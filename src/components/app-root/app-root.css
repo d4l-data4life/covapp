@@ -51,9 +51,10 @@ main {
 }
 
 .cookie-bar.snack-bar {
-  background-color: var(--c-gray-lightest);
+  background-color: #fff;
 }
 
 .cookie-bar__content {
+  font-size: 14px;
   color: var(--c-gray);
 }

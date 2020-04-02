@@ -5,11 +5,16 @@ export type Question = {
   category: string;
   comment?: string;
   text: string;
-  inputType: 'radio' | 'date';
-  options?: string[];
+  inputType: 'radio' | 'date' | 'checkbox';
+  options?: string[] | CheckboxOption[];
   nextQuestionMap?: string | string[];
   scoreMap?: number[];
   guard?: Guard;
+};
+
+export type CheckboxOption = {
+  label: string;
+  id: string;
 };
 
 export const CATEGORIES = {
@@ -31,6 +36,10 @@ export const QUESTION = {
   OUT_OF_BREATH: 'SB',
   SYMPTOM_DATE: 'SZ',
 };
+
+export const XML_ORDER = ['P', 'C', 'S', 'D', 'M'];
+
+export const MULTIPLE_CHOICE = 'X';
 
 export const QUESTIONS: Question[] = [
   {
@@ -153,20 +162,19 @@ export const QUESTIONS: Question[] = [
     scoreMap: [1, 0],
   },
   {
-    id: 'S4',
+    id: `${MULTIPLE_CHOICE}0`,
     category: CATEGORIES.SYMPTOMS,
-    text: 'q_S4_text',
-    inputType: 'radio',
-    options: ['answer_yes', 'answer_no'],
-    scoreMap: [1, 0],
-  },
-  {
-    id: 'S5',
-    category: CATEGORIES.SYMPTOMS,
-    text: 'q_S5_text',
-    inputType: 'radio',
-    options: ['answer_yes', 'answer_no'],
-    scoreMap: [1, 0],
+    text: `q_${MULTIPLE_CHOICE}0_text`,
+    comment: `q_${MULTIPLE_CHOICE}0_comment`,
+    inputType: 'checkbox',
+    options: [
+      { label: `q_${MULTIPLE_CHOICE}0_option_S4`, id: 'S4' },
+      { label: `q_${MULTIPLE_CHOICE}0_option_S5`, id: 'S5' },
+      { label: `q_${MULTIPLE_CHOICE}0_option_S8`, id: 'S8' },
+      { label: `q_${MULTIPLE_CHOICE}0_option_SA`, id: 'SA' },
+      { label: `q_${MULTIPLE_CHOICE}0_option_SC`, id: 'SC' },
+    ],
+    scoreMap: [1, 1, 1, 1, 1],
   },
   {
     id: 'S6',
@@ -187,26 +195,9 @@ export const QUESTIONS: Question[] = [
     scoreMap: [1, 0],
   },
   {
-    id: 'S8',
-    category: CATEGORIES.SYMPTOMS,
-    comment: 'q_S8_comment',
-    text: 'q_S8_text',
-    inputType: 'radio',
-    options: ['answer_yes', 'answer_no'],
-    scoreMap: [1, 0],
-  },
-  {
     id: 'S9',
     category: CATEGORIES.RESPIRATORY_SYMPTOMS,
     text: 'q_S9_text',
-    inputType: 'radio',
-    options: ['answer_yes', 'answer_no'],
-    scoreMap: [1, 0],
-  },
-  {
-    id: 'SA',
-    category: CATEGORIES.SYMPTOMS,
-    text: 'q_SA_text',
     inputType: 'radio',
     options: ['answer_yes', 'answer_no'],
     scoreMap: [1, 0],
@@ -216,14 +207,6 @@ export const QUESTIONS: Question[] = [
     category: CATEGORIES.RESPIRATORY_SYMPTOMS,
     comment: 'q_SB_comment',
     text: 'q_SB_text',
-    inputType: 'radio',
-    options: ['answer_yes', 'answer_no'],
-    scoreMap: [1, 0],
-  },
-  {
-    id: 'SC',
-    category: CATEGORIES.SYMPTOMS,
-    text: 'q_SC_text',
     inputType: 'radio',
     options: ['answer_yes', 'answer_no'],
     scoreMap: [1, 0],

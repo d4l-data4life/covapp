@@ -10,7 +10,7 @@ interface MatomoWindow extends Window {
   _paq?: Array<Array<String>>;
 }
 
-const FEATURE_FLAG_TRACKING_EVENTS_QUEUE = false; // switch on once we have clearance
+const FEATURE_FLAG_TRACKING_EVENTS_QUEUE = true;
 let pendingEventsQueue: TrackingEvent[] = [];
 settings.onChange(key => {
   if (key === ACCEPTS_TRACKING && settings[ACCEPTS_TRACKING]) {
@@ -78,7 +78,7 @@ export const trackEvent = (event: TrackingEvent) => {
     return;
   }
 
-  // (window as MatomoWindow)._paq.push(['trackEvent', ...event]); // switch on once we have clearance
+  (window as MatomoWindow)._paq.push(['trackEvent', ...event]);
 };
 
 initializeTracking({ url: MATOMO_URL, siteId: MATOMO_SITE_ID, window });
