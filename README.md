@@ -48,7 +48,7 @@ To learn more about these options, see the [customization documentation](./docs/
 
 ## Support and contributing
 
-Due to today's urgency and dynamic nature, **we can not offer support for this repository**. We'll continue the development of the official CovApp internally. Changes and releases will be white-labeled and propagated into this repository.
+Due to today's urgency and dynamic nature, **we cannot offer support for this repository**. We'll continue the development of the official CovApp internally. Changes and releases will be white-labeled and propagated into this repository.
 
 We won't be able to react to issues and/or pull requests, but **we would still encourage you to provide feedback**. We will monitor the appearing problems, new ideas and possible feature requests and might consider them for future releases. **Feel free to collaborate and work on your forks to move forward with custom development.**
 

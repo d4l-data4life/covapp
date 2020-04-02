@@ -1,5 +1,7 @@
 # Customization options
 
+**⚠️ We do not support changes in the semantic meaning or evaluation logic of the questionnaire.**
+
 **⚠️ Before you have a look at how to customize the application, make sure you followed [the development instruction](./DEVELOPMENT.md).**
 
 The following instructions require a local development environment of this application including a functional `npm start` and `npm run build` command.
@@ -55,7 +57,7 @@ The following keys in the application have placeholder content because their ori
 - start_paragraph_1_option_1
 - start_paragraph_2
 
-These keys are all listed in the `example.json` translation file as described above.
+These keys are all listed in the [`example.json`](../src/custom/translations/example.json) translation file as described above.
 
 ### Adding a new language
 
