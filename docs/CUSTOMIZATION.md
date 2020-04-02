@@ -45,19 +45,9 @@ The best approach to find translation keys for strings in the application is to 
 
 ### Existing placeholders
 
-The following keys in the application have placeholder content because their original content applies only to the original use case at the Charité-Unversitätsmedizin Berlin. You have to provide your own content and translations:
-- data_privacy_content
-- disclaimer_paragraph_1
-- imprint_content
-- recommendation_case_1_text
-- recommendation_case_2_text
-- recommendation_case_3_text
-- recommendation_case_4_text
-- recommendation_case_5_text
-- start_paragraph_1_option_1
-- start_paragraph_2
+Several keys in the application have placeholder content because their original content applies only to the original use case at the Charité-Unversitätsmedizin Berlin. You have to provide your own content and translations.
 
-These keys are all listed in the [`example.json`](../src/custom/translations/example.json) translation file as described above.
+These keys are listed in the [`example.json`](../src/custom/translations/example.json) translation file as described above.
 
 ### Adding a new language
 
