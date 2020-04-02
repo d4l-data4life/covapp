@@ -62,7 +62,7 @@ Navigate into the new directory.
 cd covapp
 ```
 
-The application heavily relies on dependencies that are served via npm. To install all dependencies run `npm ci` inside of the `covapp` directory.
+The application heavily relies on dependencies that are served via npm with install-scripts enabled. To install all dependencies run `npm ci` inside of the `covapp` directory.
 
 ```sh
 npm ci
