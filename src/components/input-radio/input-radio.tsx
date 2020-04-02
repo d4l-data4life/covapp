@@ -50,7 +50,7 @@ export class InputRadio {
 
     return (
       <span>
-        {question.options.map(
+        {(question.options as string[]).map(
           (option: string, index: number) =>
             option !== '' && (
               <p>

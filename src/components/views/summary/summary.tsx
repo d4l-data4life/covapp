@@ -166,7 +166,7 @@ export class Summary {
         <d4l-card classes="card--desktop">
           <div class="summary__content" slot="card-content">
             <h2>{i18next.t('summary_headline')}</h2>
-            {[1, 2, 4].includes(resultCase) && snippetsAnswers.outOfBreath && (
+            {[1, 2, 4].indexOf(resultCase) > -1 && snippetsAnswers.outOfBreath && (
               <RiskVeryIll ageAboveSixtyFive={snippetsAnswers.ageAboveSixtyFive} />
             )}
             <ia-recommendation resultCase={resultCase} />

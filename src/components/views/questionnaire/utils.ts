@@ -1,11 +1,11 @@
-import { QUESTIONS } from '../../../global/questions';
+import { QUESTIONS, Question } from '../../../global/questions';
 
 export const getQuestionIndexById = (questionId: string) =>
   QUESTIONS.findIndex(question => question.id === questionId);
 
 export const updateScoreData = (
   questionIndex: number,
-  answerIndex: string,
+  answer: string | string[],
   score
 ) => {
   let nextScore = score;
@@ -16,10 +16,22 @@ export const updateScoreData = (
       : 0;
     nextScore = {
       ...nextScore,
-      [question.category]: previousScore + question.scoreMap[answerIndex],
+      [question.category]: previousScore + getScoreChange(question, answer),
     };
   }
   return nextScore;
+};
+
+export const getScoreChange = (question: Question, answer: string | string[]) => {
+  let scoreChange = 0;
+  if (Array.isArray(answer)) {
+    for (const key of answer) {
+      scoreChange += question.scoreMap[key];
+    }
+  } else {
+    scoreChange = question.scoreMap[answer];
+  }
+  return scoreChange;
 };
 
 export const checkGoTo = (questionIndex, answerIndex): number => {

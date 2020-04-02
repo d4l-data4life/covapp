@@ -3,11 +3,11 @@
 }
 
 .logo-bzga {
-  height: var(--logo-mobile-height);
+  height: 33px;
 }
 
 @media screen and (min-width: 768px) {
   .logo-bzga {
-    height: var(--logo-desktop-height);
+    height: 39px;
   }
 }
