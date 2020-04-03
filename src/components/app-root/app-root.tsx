@@ -117,7 +117,7 @@ export class AppRoot {
           )}
         </div>
 
-        {TRACKING_IS_ENABLED && !hasMadeCookieChoice && (
+        {TRACKING_IS_ENABLED && !hasMadeCookieChoice && !dnt && (
           <d4l-cookie-bar
             classes="cookie-bar"
             acceptText={i18next.t('cookie_bar_accept')}
@@ -130,7 +130,7 @@ export class AppRoot {
             }
           >
             <div class="cookie-bar__content" slot="cookie-bar-text">
-              {dnt ? i18next.t('cookie_bar_text_dnt') : i18next.t('cookie_bar_text')}{' '}
+              {i18next.t('cookie_bar_text')}{' '}
               <stencil-route-link url={ROUTES.DATA_PRIVACY}>
                 {i18next.t('cookie_bar_data_privacy')}
               </stencil-route-link>
