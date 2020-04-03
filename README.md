@@ -6,7 +6,7 @@
 
 [The CovApp](https://covapp.charite.de/) is an application developed in collaboration by [Charité – Universitätsmedizin Berlin](https://www.charite.de/) and [Data4Life](https://www.data4life.care/). It can help users to assess their medical condition better, provide recommendations regarding doctor’s visits or coronavirus testing by answering a few questions.
 
-Additionally, every filled out questionnaire summarizes relevant medical information for future doctor’s consultation in the form of a summary page, print out or a QR code. Institutions with the technical setup can scan the provided QR code and retrieve the patient information quickly and without any physical contact.
+Additionally, every filled out questionnaire summarizes relevant medical information for future doctor’s consultation in the form of a summary page, printout or a QR code. Institutions with the technical setup can scan the provided QR code and retrieve the patient information quickly and without any physical contact.
 
 By implementing the CovApp, any medical institution can reduce the number of new incoming patients, avoid physical contact and speed up the patient registration process.
 
