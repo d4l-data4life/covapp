@@ -161,7 +161,7 @@ export class AppRoot {
         </header>
         <main>
           <stencil-router>
-            <stencil-route-switch scrollTopOffset={0}>
+            <stencil-route-switch scrollTopOffset={0.1}>
               <stencil-route url="/" component="ia-start" exact />
               <stencil-route
                 url={ROUTES.QUESTIONNAIRE}
