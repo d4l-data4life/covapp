@@ -1,4 +1,4 @@
-import { Component, h, State, Listen } from '@stencil/core';
+import { Component, h, State, Prop, Listen } from '@stencil/core';
 import i18next from 'i18next';
 import { CUSTOM_LOGO } from '../../global/custom';
 import { IS_CUSTOM, IS_COLLABORATION, IS_CHARITE } from '../../global/layouts';
@@ -8,6 +8,7 @@ import { IS_CUSTOM, IS_COLLABORATION, IS_CHARITE } from '../../global/layouts';
   assetsDirs: ['assets'],
 })
 export class LogoComponent {
+  @Prop() classes?: string;
   @State() language: string;
   @Listen('changedLanguage', {
     target: 'window',
@@ -18,9 +19,9 @@ export class LogoComponent {
 
   render() {
     return (
-      <div class="logo-component">
+      <div class={`logo-component ${this.classes}`}>
         <d4l-card classes="card--desktop card--text-center">
-          {!IS_CUSTOM && (
+          {IS_CHARITE && (
             <div class="logo-component__label" slot="card-header">
               {i18next.t('logo_header_label')}
             </div>
@@ -31,9 +32,9 @@ export class LogoComponent {
             ) : (
               <div class="logo-component__container">
                 {IS_COLLABORATION && <ia-logo-charite />}
-                {IS_CHARITE && <ia-logo-bmg />}
-                {IS_CHARITE && <ia-logo-rki />}
-                {IS_CHARITE && <ia-logo-bzga />}
+                {(IS_CHARITE || IS_COLLABORATION) && <ia-logo-bmg />}
+                {(IS_CHARITE || IS_COLLABORATION) && <ia-logo-rki />}
+                {(IS_CHARITE || IS_COLLABORATION) && <ia-logo-bzga />}
                 {IS_CHARITE && <ia-logo-bih />}
               </div>
             )}

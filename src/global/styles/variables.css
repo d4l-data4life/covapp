@@ -36,6 +36,10 @@
   --desktop: 960px;
   --widescreen: 1152px;
 
+  /* Shadows */
+  --shadow-soft: 0 1px 4px 1px rgba(0, 0, 0, 0.15);
+  --shadow-medium: 0 1px 6px 3px rgba(0, 0, 0, 0.15);
+
   /* Fonts */
   --font-sans: GT-America, Helvetica, Arial, sans-serif;
 }

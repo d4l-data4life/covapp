@@ -119,7 +119,7 @@ export class AppRoot {
 
         {TRACKING_IS_ENABLED && !hasMadeCookieChoice && !dnt && (
           <d4l-cookie-bar
-            classes="cookie-bar"
+            classes="cookie-bar app__cookie-bar"
             acceptText={i18next.t('cookie_bar_accept')}
             rejectText={i18next.t('cookie_bar_reject')}
             handleAccept={() =>
@@ -136,6 +136,9 @@ export class AppRoot {
               </stencil-route-link>
             </div>
           </d4l-cookie-bar>
+        )}
+        {showLogoHeader && !IS_CHARITE && (
+          <ia-logo-component classes="logo-component--collaboration" />
         )}
         <header class="c-header">
           {showLogoHeader && IS_CHARITE && (

@@ -34,6 +34,20 @@
   height: 80px;
 }
 
+.logo-component--collaboration {
+  margin-top: 0;
+}
+
+.logo-component--collaboration .card {
+  --border-radius-medium: 0;
+  --shadow-soft: none;
+}
+
+.logo-component--collaboration .logo-component__container {
+  margin: 0 auto;
+  padding-bottom: 1em;
+}
+
 @media screen and (min-width: 768px) {
   .logo-component__container {
     margin-bottom: 1em;

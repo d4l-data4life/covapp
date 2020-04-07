@@ -31,6 +31,11 @@ main {
   margin-right: 1.56rem;
 }
 
+.app__cookie-bar {
+  position: relative;
+  box-shadow: var(--shadow-soft);
+}
+
 @media screen and (min-width: 768px) {
   main {
     min-height: calc(
