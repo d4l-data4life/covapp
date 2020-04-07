@@ -47,6 +47,7 @@ export namespace Components {
     interface IaLogoCharite {
     }
     interface IaLogoComponent {
+        "classes"?: string;
     }
     interface IaLogoD4l {
     }
@@ -284,6 +285,7 @@ declare namespace LocalJSX {
     interface IaLogoCharite {
     }
     interface IaLogoComponent {
+        "classes"?: string;
     }
     interface IaLogoD4l {
     }

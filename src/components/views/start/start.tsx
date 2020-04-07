@@ -132,7 +132,7 @@ export class Start {
             )}
           </div>
         </d4l-card>
-        <ia-logo-component />
+        {IS_CHARITE && <ia-logo-component />}
         <div class="u-padding-vertical--normal">
           <h3 class="o-headline-3">{i18next.t('start_sub_headline_2')}</h3>
           <div innerHTML={i18next.t('start_paragraph_2')}></div>

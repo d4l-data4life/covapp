@@ -72,12 +72,17 @@ export class AnswersTable {
   render() {
     const { answers, generateQuestionRow } = this;
 
+    const props = {
+      'data-test': 'toggleAnswersButton',
+    };
+
     return (
       <div class="answers-table">
         <d4l-accordion
           open={false}
           headerBackgroundColor={getRootCSSPropertyValue('--c-gray')}
           classes="accordion--no-panel-border accordion--no-panel-padding"
+          buttonProps={props}
         >
           <p class="o-accordion-headline" slot="accordion-header">
             {i18next.t('answers_table_headline')}
