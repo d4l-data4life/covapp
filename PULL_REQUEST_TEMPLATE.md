@@ -1,1 +1,3 @@
-<!-- Thank you for opening this pull request. Please note that, as we are currently working on solutions to help face the current crisis, we do not have the capacity to respond to any issues or pull requests. -->
+Thank you for your contribution to the CovApp repo.
+
+Before submitting this PR, please make sure that you've checked the [support and contributing](https://github.com/d4l-data4life/covapp#support-and-contributing) notes.
