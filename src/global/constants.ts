@@ -1,4 +1,4 @@
-export const QUESTIONNAIRE_VERSION = '301';
+export const QUESTIONNAIRE_VERSION = '310';
 
 export const KEY_CODES = {
   BACKSPACE: 8,
@@ -23,6 +23,8 @@ export const LOCAL_STORAGE_KEYS = {
   ANSWERS: 'answers',
   SCORES: 'scores',
   VERSION: 'version',
+  DATA_SENT: 'dataSent',
+  COMPLETED: 'completed'
 };
 
 export const IS_DEV =

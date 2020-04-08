@@ -35,6 +35,8 @@ export const TRACKING_EVENTS: TrackingEvents = {
   SUMMARY_ANSWERS_SHOW: ['Summary', 'Show answers'],
   SUMMARY_PRINT: ['Summary', 'Print code and answers'],
   SUMMARY_DELETE: ['Summary', 'Delete code and answers'],
+  DATA_DONATION_CONSENT: ['Data Donation', 'Consent'], // appending value depening on consent given or not
+  DATA_DONATION_SENT: ['Data Donation', 'Sent'], // appending value depending on success or error while sending
 };
 
 const initializeTracking = ({

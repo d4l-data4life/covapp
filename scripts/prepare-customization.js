@@ -73,6 +73,8 @@ function writeCustomizationAppFile({
   logo,
   matomoUrl,
   matomoSiteId,
+  sentryDSN,
+  pandemicTrackingUrl,
   translations,
 }) {
   const appFilePath = join(__dirname, '..', 'src', 'global', 'custom.ts');
@@ -105,7 +107,11 @@ function writeCustomizationAppFile({
 
   export const TRACKING_IS_ENABLED = ${!!(matomoUrl && matomoSiteId)};
   export const MATOMO_URL = '${matomoUrl}';
-  export const MATOMO_SITE_ID = '${matomoSiteId}'
+  export const MATOMO_SITE_ID = '${matomoSiteId}';
+  export const ERROR_TRACKING_ENABLED = ${!!sentryDSN};
+  export const SENTRY_DSN = '${sentryDSN}';
+  export const PANDEMIC_TRACKING_IS_ENABLED = ${!!pandemicTrackingUrl};
+  export const PANDEMIC_TRACKING_URL = '${pandemicTrackingUrl}';
   `,
     prettierOptions
   );
@@ -113,7 +119,14 @@ function writeCustomizationAppFile({
   writeFileSync(appFilePath, fileContent);
 }
 
-const { LAYOUT, MATOMO_URL, MATOMO_SITE_ID, SUPPORTED_LANGUAGES } = process.env;
+const {
+  LAYOUT,
+  MATOMO_URL,
+  MATOMO_SITE_ID,
+  SUPPORTED_LANGUAGES,
+  SENTRY_DSN,
+  PANDEMIC_TRACKING_URL,
+} = process.env;
 const supportedLanguages = SUPPORTED_LANGUAGES
   ? SUPPORTED_LANGUAGES.split(',')
   : ['de', 'en'];
@@ -126,5 +139,7 @@ writeCustomizationAppFile({
   logo,
   matomoUrl: MATOMO_URL,
   matomoSiteId: MATOMO_SITE_ID,
+  sentryDSN: SENTRY_DSN,
+  pandemicTrackingUrl: PANDEMIC_TRACKING_URL,
   translations,
 });

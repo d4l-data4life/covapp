@@ -10,9 +10,9 @@ const set = () => {
 };
 
 const reset = () => {
-  localStorage.removeItem(LOCAL_STORAGE_KEYS.ANSWERS);
-  localStorage.removeItem(LOCAL_STORAGE_KEYS.SCORES);
-  localStorage.removeItem(LOCAL_STORAGE_KEYS.VERSION);
+  for (const key in LOCAL_STORAGE_KEYS) {
+    localStorage.removeItem(LOCAL_STORAGE_KEYS[key]);
+  }
 };
 
 const version = {

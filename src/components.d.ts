@@ -31,6 +31,9 @@ export namespace Components {
     interface IaInputMultipleChoice {
         "question": Question;
     }
+    interface IaInputPostalCode {
+        "question": Question;
+    }
     interface IaInputRadio {
         "currentSelection": any;
         "question": Question;
@@ -61,6 +64,7 @@ export namespace Components {
     }
     interface IaQrCode {
         "answers": any;
+        "resultCase": number;
     }
     interface IaQuestionnaire {
         "history": RouterHistory;
@@ -122,6 +126,12 @@ declare global {
     var HTMLIaInputMultipleChoiceElement: {
         prototype: HTMLIaInputMultipleChoiceElement;
         new (): HTMLIaInputMultipleChoiceElement;
+    };
+    interface HTMLIaInputPostalCodeElement extends Components.IaInputPostalCode, HTMLStencilElement {
+    }
+    var HTMLIaInputPostalCodeElement: {
+        prototype: HTMLIaInputPostalCodeElement;
+        new (): HTMLIaInputPostalCodeElement;
     };
     interface HTMLIaInputRadioElement extends Components.IaInputRadio, HTMLStencilElement {
     }
@@ -222,6 +232,7 @@ declare global {
         "ia-faq": HTMLIaFaqElement;
         "ia-imprint": HTMLIaImprintElement;
         "ia-input-multiple-choice": HTMLIaInputMultipleChoiceElement;
+        "ia-input-postal-code": HTMLIaInputPostalCodeElement;
         "ia-input-radio": HTMLIaInputRadioElement;
         "ia-legal": HTMLIaLegalElement;
         "ia-logo-bih": HTMLIaLogoBihElement;
@@ -267,6 +278,10 @@ declare namespace LocalJSX {
         "onUpdateFormData"?: (event: CustomEvent<any>) => void;
         "question"?: Question;
     }
+    interface IaInputPostalCode {
+        "onUpdateFormData"?: (event: CustomEvent<any>) => void;
+        "question"?: Question;
+    }
     interface IaInputRadio {
         "currentSelection"?: any;
         "onUpdateFormData"?: (event: CustomEvent<any>) => void;
@@ -299,6 +314,7 @@ declare namespace LocalJSX {
     }
     interface IaQrCode {
         "answers"?: any;
+        "resultCase"?: number;
     }
     interface IaQuestionnaire {
         "history"?: RouterHistory;
@@ -323,6 +339,7 @@ declare namespace LocalJSX {
         "ia-faq": IaFaq;
         "ia-imprint": IaImprint;
         "ia-input-multiple-choice": IaInputMultipleChoice;
+        "ia-input-postal-code": IaInputPostalCode;
         "ia-input-radio": IaInputRadio;
         "ia-legal": IaLegal;
         "ia-logo-bih": IaLogoBih;
@@ -352,6 +369,7 @@ declare module "@stencil/core" {
             "ia-faq": LocalJSX.IaFaq & JSXBase.HTMLAttributes<HTMLIaFaqElement>;
             "ia-imprint": LocalJSX.IaImprint & JSXBase.HTMLAttributes<HTMLIaImprintElement>;
             "ia-input-multiple-choice": LocalJSX.IaInputMultipleChoice & JSXBase.HTMLAttributes<HTMLIaInputMultipleChoiceElement>;
+            "ia-input-postal-code": LocalJSX.IaInputPostalCode & JSXBase.HTMLAttributes<HTMLIaInputPostalCodeElement>;
             "ia-input-radio": LocalJSX.IaInputRadio & JSXBase.HTMLAttributes<HTMLIaInputRadioElement>;
             "ia-legal": LocalJSX.IaLegal & JSXBase.HTMLAttributes<HTMLIaLegalElement>;
             "ia-logo-bih": LocalJSX.IaLogoBih & JSXBase.HTMLAttributes<HTMLIaLogoBihElement>;
