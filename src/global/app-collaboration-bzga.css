@@ -1,0 +1,9 @@
+@import './app.css';
+
+:root {
+  /* Colors */
+  --c-primary: #2c5a6d;
+  --c-primary-light: #1d7db7;
+
+  --c-tertiary: #ecf3f6;
+}

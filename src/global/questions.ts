@@ -227,6 +227,7 @@ export const QUESTIONS: Question[] = [
     text: 'q_D0_text',
     inputType: 'radio',
     options: ['answer_yes', 'answer_no', 'answer_unknown'],
+    scoreMap: [1, 0, 0],
   },
   {
     id: 'D1',
@@ -234,6 +235,7 @@ export const QUESTIONS: Question[] = [
     text: 'q_D1_text',
     inputType: 'radio',
     options: ['answer_yes', 'answer_no', 'answer_unknown'],
+    scoreMap: [1, 0, 0],
   },
   {
     id: 'D2',
@@ -241,6 +243,7 @@ export const QUESTIONS: Question[] = [
     text: 'q_D2_text',
     inputType: 'radio',
     options: ['answer_yes', 'answer_no', 'answer_unknown'],
+    scoreMap: [1, 0, 0],
   },
   {
     id: 'D3',
@@ -248,6 +251,7 @@ export const QUESTIONS: Question[] = [
     text: 'q_D3_text',
     inputType: 'radio',
     options: ['answer_yes', 'answer_no', 'answer_unknown'],
+    scoreMap: [1, 0, 0],
   },
   {
     id: 'M0',
@@ -255,6 +259,7 @@ export const QUESTIONS: Question[] = [
     text: 'q_M0_text',
     inputType: 'radio',
     options: ['answer_yes', 'answer_no', 'answer_unknown'],
+    scoreMap: [1, 0, 0],
   },
   {
     id: 'M1',
@@ -263,6 +268,7 @@ export const QUESTIONS: Question[] = [
     text: 'q_M1_text',
     inputType: 'radio',
     options: ['answer_yes', 'answer_no', 'answer_unknown'],
+    scoreMap: [1, 0, 0],
   },
   {
     id: 'M2',
