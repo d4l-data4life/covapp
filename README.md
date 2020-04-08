@@ -1,6 +1,6 @@
 # CovApp
 
-> 😷 Solution for assessing the risk of contagious viral infections (COVID-19)
+> 😷 Solution for speeding up the decision-making process with suspected contagious viral infections (COVID-19)
 
 ![Screenshots of the CovApp showing the start of a questionnaire, the risk assessment and the generated QR code holding the collected information](./docs/img/screenshot.png)
 
