@@ -11,7 +11,7 @@ jobs:
     steps:
     - uses: derekprior/add-autoresponse@master
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
       with:
         respondableId: ${{ github.event.pull_request.node_id }}
         response: "Thank you for your contribution. Please note that, as we are currently working on solutions to help face the current crisis, we do not have the capacity to manage any pull requests."
