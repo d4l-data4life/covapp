@@ -43,7 +43,7 @@ export class AppRoot {
         type: event.detail.type,
         text: event.detail.text,
       };
-    }, 0);
+    }, 1);
   }
 
   @Listen('showLogoHeader')
