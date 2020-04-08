@@ -40,9 +40,8 @@ export const checkGoTo = (questionIndex, answerIndex): number => {
     return getQuestionIndexById(nextQuestionMap[answerIndex]);
   } else if (typeof nextQuestionMap === 'string') {
     return getQuestionIndexById(nextQuestionMap);
-  } else {
-    return questionIndex + 1;
   }
+  return questionIndex + 1;
 };
 
 export const checkGuard = (questionIndex, score): number => {
