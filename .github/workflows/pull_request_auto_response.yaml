@@ -14,5 +14,5 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         respondableId: ${{ github.event.pull_request.node_id }}
-        response: "Thank you for your contribution to the CovApp repo. Please note that, as we are currently working on solutions to help face the current crisis, we do not have the capacity to manage all pull requests. Please make sure that you've checked the [support and contributing](https://github.com/d4l-data4life/covapp#support-and-contributing) notes."
+        response: "Thank you for your contribution. Please note that, as we are currently working on solutions to help face the current crisis, we do not have the capacity to manage any pull requests."
         author: ${{ github.event.pull_request.user.login }}
