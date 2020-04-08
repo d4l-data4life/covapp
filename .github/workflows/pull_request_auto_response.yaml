@@ -3,8 +3,6 @@ name: Pull Request Autoresponse
 on:
   pull_request:
     types: [opened]
-    branches-ignore:
-      - '**'
 
 jobs:
   auto-response:
@@ -16,6 +14,5 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         respondableId: ${{ github.event.pull_request.node_id }}
-        pr-message: "Thank you for opening this pull request. Please note that, as we are currently working on solutions to help face the current crisis, we do not have the capacity to manage any pull requests."
-        response: "Thank you for opening this pull request. Please note that, as we are currently working on solutions to help face the current crisis, we do not have the capacity to manage any pull requests."
+        response: "Thank you for your contribution to the CovApp repo. Please note that, as we are currently working on solutions to help face the current crisis, we do not have the capacity to manage all pull requests. Please make sure that you've checked the [support and contributing](https://github.com/d4l-data4life/covapp#support-and-contributing) notes."
         author: ${{ github.event.pull_request.user.login }}
