@@ -12,8 +12,8 @@ export const config: Config = {
   // this approach makes it possible to make the CSS adjustable
   // without the need of switching another environment/config flag
   globalStyle:
-    process.env.LAYOUT === 'OFFICIAL_COLLABORATION'
-      ? 'src/global/app-collaboration.css'
+    process.env.LAYOUT === 'OFFICIAL_COLLABORATION_BZGA'
+      ? 'src/global/app-collaboration-bzga.css'
       : 'src/global/app.css',
   globalScript: 'src/global/app.ts',
   outputTargets: [
@@ -21,7 +21,7 @@ export const config: Config = {
       type: 'www',
       // comment the following line to disable service workers in production
       serviceWorker: null,
-      baseUrl: 'https://infection-risk-assessment.netlify.com/',
+      baseUrl: 'https://covapp.charite.de',
     },
   ],
   testing: {

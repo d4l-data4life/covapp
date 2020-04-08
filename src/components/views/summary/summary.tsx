@@ -16,6 +16,8 @@ import { trackEvent, TRACKING_EVENTS } from '../../../global/utils/track';
 import version from '../../../global/utils/version';
 import { RiskSpreading } from './snippets/risk-spreading';
 import { RiskVeryIll } from './snippets/risk-very-ill';
+import { RiskGroup } from './snippets/risk-group';
+import { RiskWorkingInMedical } from './snippets/risk-working-in-medical';
 
 @Component({
   styleUrl: 'summary.css',
@@ -34,6 +36,8 @@ export class Summary {
     livingSituation: 0,
     workspace: 0,
     caringForRelatives: false,
+    isRiskGroup: false,
+    isMedicalWorker: false,
   };
   @Event() showLogoHeader: EventEmitter;
 
@@ -137,6 +141,16 @@ export class Summary {
       );
       this.snippetsAnswers.caringForRelatives =
         parseInt(this.answers[QUESTION.CARING], 10) === 0;
+
+      this.snippetsAnswers.isRiskGroup =
+        this.scores[CATEGORIES.RESPIRATORY_SYMPTOMS] > 0 &&
+        (this.scores[CATEGORIES.ILLNESS] > 0 ||
+          this.scores[CATEGORIES.MEDICATION] > 0 ||
+          this.snippetsAnswers.ageAboveSixtyFive);
+
+      this.snippetsAnswers.isMedicalWorker =
+        this.scores[CATEGORIES.RESPIRATORY_SYMPTOMS] > 0 &&
+        this.snippetsAnswers.workspace === 0;
     }
   };
 
@@ -166,8 +180,16 @@ export class Summary {
         <d4l-card classes="card--desktop">
           <div class="summary__content" slot="card-content">
             <h2>{i18next.t('summary_headline')}</h2>
-            {[1, 2, 4].indexOf(resultCase) > -1 && snippetsAnswers.outOfBreath && (
-              <RiskVeryIll ageAboveSixtyFive={snippetsAnswers.ageAboveSixtyFive} />
+            {[1, 2, 4].indexOf(resultCase) > -1 && (
+              <span>
+                {snippetsAnswers.outOfBreath && (
+                  <RiskVeryIll
+                    ageAboveSixtyFive={snippetsAnswers.ageAboveSixtyFive}
+                  />
+                )}
+                {snippetsAnswers.isRiskGroup && <RiskGroup />}
+                {snippetsAnswers.isMedicalWorker && <RiskWorkingInMedical />}
+              </span>
             )}
             <ia-recommendation resultCase={resultCase} />
             {resultCase !== 5 && (
