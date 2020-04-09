@@ -1,7 +1,6 @@
 import { Component, Event, EventEmitter, h, Listen, State } from '@stencil/core';
 import { LOCAL_STORAGE_KEYS, ROUTES } from '../../../global/constants';
 import { IS_CHARITE } from '../../../global/layouts';
-import { QUESTIONS } from '../../../global/questions';
 import i18next from '../../../global/utils/i18n';
 import { trackEvent, TRACKING_EVENTS } from '../../../global/utils/track';
 import version from '../../../global/utils/version';
@@ -46,18 +45,9 @@ export class Start {
     if (!version.match()) {
       version.reset();
     }
-    const availableAnswers = JSON.parse(
-      localStorage.getItem(LOCAL_STORAGE_KEYS.ANSWERS)
-    );
-    if (availableAnswers) {
-      const questionKeys = Object.keys(availableAnswers);
-      this.started = questionKeys.length > 0;
-
-      const lastAnswerIndex = QUESTIONS.findIndex(
-        question => question.id === questionKeys[questionKeys.length - 1]
-      );
-      this.completed = lastAnswerIndex === QUESTIONS.length - 1;
-    }
+    const completedFlag = localStorage.getItem(LOCAL_STORAGE_KEYS.COMPLETED);
+    this.completed = completedFlag === 'true';
+    this.started = completedFlag === 'false';
   };
 
   get getState() {

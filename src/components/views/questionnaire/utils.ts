@@ -1,4 +1,5 @@
 import { QUESTIONS, Question } from '../../../global/questions';
+import { Scores, Answers } from './questionnaire';
 
 export const getQuestionIndexById = (questionId: string) =>
   QUESTIONS.findIndex(question => question.id === questionId);
@@ -34,7 +35,7 @@ export const getScoreChange = (question: Question, answer: string | string[]) =>
   return scoreChange;
 };
 
-export const checkGoTo = (questionIndex, answerIndex): number => {
+export const checkGoTo = (questionIndex: number, answerIndex: any): number => {
   const nextQuestionMap = QUESTIONS[questionIndex].nextQuestionMap;
   if (Array.isArray(nextQuestionMap)) {
     return getQuestionIndexById(nextQuestionMap[answerIndex]);
@@ -45,11 +46,15 @@ export const checkGoTo = (questionIndex, answerIndex): number => {
   }
 };
 
-export const checkGuard = (questionIndex, score): number => {
+export const checkGuard = (
+  questionIndex: number,
+  score: Scores,
+  answers: Answers
+): number => {
   const nextQuestion = QUESTIONS[questionIndex];
   if (nextQuestion && nextQuestion.guard) {
-    if (!nextQuestion.guard.evaluate(score)) {
-      return questionIndex + 1;
+    if (!nextQuestion.guard.evaluate(score, answers)) {
+      return checkGuard(questionIndex + 1, score, answers);
     }
   }
   return questionIndex;

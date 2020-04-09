@@ -1,11 +1,16 @@
-export type Scores = { [key: string]: number };
+import { Scores, Answers } from '../components/views/questionnaire/questionnaire';
 
 // Guard is used to check if a question should be skipped.
 // This can be done by one of the following types
-export type Guard = Condition | Conjunction | Disjunction;
+export type Guard =
+  | ScoreCondition
+  | RadioAnswerCondition
+  | BoolCondition
+  | Conjunction
+  | Disjunction;
 
-// Condition checks if the score of a given category is within the specified range
-export class Condition {
+// ScoreCondition checks if the score of a given category is within the specified range
+export class ScoreCondition {
   category: string;
   min?: number | null;
   max?: number | null;
@@ -14,7 +19,7 @@ export class Condition {
     this.min = min;
     this.max = max;
   }
-  evaluate(scores: Scores): boolean {
+  evaluate(scores: Scores, _answers: Answers): boolean {
     const categoryExists = !!scores[this.category];
     if (this.min !== null) {
       if (!categoryExists) {
@@ -33,15 +38,49 @@ export class Condition {
   }
 }
 
+// RadioAnswerCondition checks if the answer for a specific radio question is in a set of accepted answers
+export class RadioAnswerCondition {
+  questionID: string;
+  acceptedAnswers: string[];
+  constructor(questionID: string, acceptedAnswers: string[]) {
+    this.questionID = questionID;
+    this.acceptedAnswers = acceptedAnswers;
+  }
+  evaluate(_scores: Scores, answers: Answers): boolean {
+    const answer = answers[this.questionID];
+    if (answer) {
+      if (Array.isArray(answer)) {
+        return false;
+      }
+      if (answer.split('.').length > 1) {
+        return false;
+      }
+      return this.acceptedAnswers.indexOf(answer) >= 0;
+    }
+    return false;
+  }
+}
+
+// BoolCondition checks if a condition is true or false
+export class BoolCondition {
+  condition: boolean;
+  constructor(condition: boolean) {
+    this.condition = condition;
+  }
+  evaluate(_scores: Scores, _answers: Answers): boolean {
+    return this.condition;
+  }
+}
+
 // Conjunctions combine a set of Guards with AND
 export class Conjunction {
   conditions: Guard[];
   constructor(conditions: Guard[]) {
     this.conditions = conditions;
   }
-  evaluate(scores: Scores): boolean {
+  evaluate(scores: Scores, answers: Answers): boolean {
     for (const condition of this.conditions) {
-      if (!condition.evaluate(scores)) {
+      if (!condition.evaluate(scores, answers)) {
         return false;
       }
     }
@@ -55,9 +94,9 @@ export class Disjunction {
   constructor(conditions: Guard[]) {
     this.conditions = conditions;
   }
-  evaluate(scores: Scores): boolean {
+  evaluate(scores: Scores, answers: Answers): boolean {
     for (const condition of this.conditions) {
-      if (condition.evaluate(scores)) {
+      if (condition.evaluate(scores, answers)) {
         return true;
       }
     }

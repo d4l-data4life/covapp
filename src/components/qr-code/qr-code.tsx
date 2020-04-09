@@ -1,14 +1,21 @@
 import { Component, h, Listen, Prop, State } from '@stencil/core';
 import { qrcode, svg2url } from 'pure-svg-code';
-import { QUESTIONNAIRE_VERSION } from '../../global/constants';
+import {
+  PANDEMIC_TRACKING_URL,
+  PANDEMIC_TRACKING_IS_ENABLED,
+} from '../../global/custom';
+import { LOCAL_STORAGE_KEYS, QUESTIONNAIRE_VERSION } from '../../global/constants';
 import {
   CheckboxOption,
-  MULTIPLE_CHOICE,
+  NO_XML,
   QUESTIONS,
   XML_ORDER,
+  QUESTION,
 } from '../../global/questions';
 import i18next from '../../global/utils/i18n';
 import { getQuestionIndexById } from '../views/questionnaire/utils';
+import { trackEvent, TRACKING_EVENTS } from '../../global/utils/track';
+import { Answers } from '../views/questionnaire/questionnaire';
 
 export type KeyValue = { key: string; value: string };
 
@@ -18,6 +25,7 @@ export type KeyValue = { key: string; value: string };
 })
 export class QRCode {
   @Prop() answers: any = {};
+  @Prop() resultCase: number = 5;
   @State() language: string;
 
   @Listen('changedLanguage', {
@@ -41,12 +49,17 @@ export class QRCode {
   generateXMLValues = (answers): KeyValue[] => {
     let pairs = [];
     for (const key in answers) {
-      if (key.startsWith(MULTIPLE_CHOICE)) {
+      if (key === QUESTION.POSTAL_CODE) {
+        break;
+      }
+      if (key.startsWith(NO_XML)) {
         const question = QUESTIONS[getQuestionIndexById(key)];
-        for (const index in question.options) {
-          const option = (question.options as CheckboxOption[])[index];
-          const xmlValue = answers[key].indexOf(index) > -1 ? '1' : '2';
-          pairs.push({ key: option.id, value: xmlValue });
+        if (question.inputType === 'checkbox') {
+          for (const index in question.options) {
+            const option = (question.options as CheckboxOption[])[index];
+            const xmlValue = answers[key].indexOf(index) > -1 ? '1' : '2';
+            pairs.push({ key: option.id, value: xmlValue });
+          }
         }
       } else {
         if (answers[key].indexOf('.') > -1) {
@@ -87,6 +100,53 @@ export class QRCode {
     });
 
     return svg2url(svgString);
+  };
+
+  generateDonationXML = (answers: Answers) => {
+    const postalCode = `<V1>${answers[QUESTION.POSTAL_CODE]}</V1>`;
+    const resultCase = `<V2>${this.resultCase}</V2>`;
+    return `<PATIENT>${postalCode}${resultCase}</PATIENT>`;
+  };
+
+  sendXMLData = async () => {
+    const xml = this.generateXML(this.answers);
+    const payload = {
+      XML: xml,
+    };
+    const encodedString = btoa(JSON.stringify(payload));
+    fetch(PANDEMIC_TRACKING_URL, {
+      method: 'POST',
+      mode: 'cors',
+      cache: 'no-cache',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      redirect: 'follow',
+      referrer: 'no-referrer',
+      body: JSON.stringify({ data: encodedString }),
+    })
+      .then(response => {
+        if (response.ok) {
+          localStorage.setItem(LOCAL_STORAGE_KEYS.DATA_SENT, 'true');
+          trackEvent([...TRACKING_EVENTS.DATA_DONATION_SENT, '1']);
+        } else {
+          trackEvent([...TRACKING_EVENTS.DATA_DONATION_SENT, '0']);
+        }
+      })
+      .catch(error => {
+        console.log(`Error donatiing data: ${JSON.stringify(error)}`);
+      });
+  };
+
+  componentWillLoad = () => {
+    const dataSent = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.DATA_SENT));
+    if (
+      PANDEMIC_TRACKING_IS_ENABLED &&
+      !dataSent &&
+      this.answers[QUESTION.DATA_DONATION] === '0'
+    ) {
+      this.sendXMLData();
+    }
   };
 
   render() {

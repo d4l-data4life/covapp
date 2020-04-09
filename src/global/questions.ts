@@ -1,11 +1,19 @@
-import { Guard, Condition, Disjunction } from './guard';
+import {
+  Guard,
+  ScoreCondition,
+  Disjunction,
+  RadioAnswerCondition,
+  Conjunction,
+  BoolCondition,
+} from './guard';
+import { PANDEMIC_TRACKING_IS_ENABLED } from './custom';
 
 export type Question = {
   id: string;
   category: string;
   comment?: string;
   text: string;
-  inputType: 'radio' | 'date' | 'checkbox';
+  inputType: 'radio' | 'date' | 'checkbox' | 'postal';
   options?: string[] | CheckboxOption[];
   nextQuestionMap?: string | string[];
   scoreMap?: number[];
@@ -26,7 +34,9 @@ export const CATEGORIES = {
   MEDICATION: 'medication',
 };
 
+export const NO_XML = 'X';
 export const QUESTION = {
+  POSTAL_CODE: 'V1',
   AGE: 'P0',
   ABOVE_65: 'P1',
   LIVING_SITUATION: 'P2',
@@ -35,11 +45,10 @@ export const QUESTION = {
   CONTACT_DATE: 'CZ',
   OUT_OF_BREATH: 'SB',
   SYMPTOM_DATE: 'SZ',
+  DATA_DONATION: `${NO_XML}1`,
 };
 
-export const XML_ORDER = ['P', 'C', 'S', 'D', 'M'];
-
-export const MULTIPLE_CHOICE = 'X';
+export const XML_ORDER = ['V', 'P', 'C', 'S', 'D', 'M'];
 
 export const QUESTIONS: Question[] = [
   {
@@ -162,17 +171,17 @@ export const QUESTIONS: Question[] = [
     scoreMap: [1, 0],
   },
   {
-    id: `${MULTIPLE_CHOICE}0`,
+    id: `${NO_XML}0`,
     category: CATEGORIES.SYMPTOMS,
-    text: `q_${MULTIPLE_CHOICE}0_text`,
-    comment: `q_${MULTIPLE_CHOICE}0_comment`,
+    text: `q_X0_text`,
+    comment: `q_X0_comment`,
     inputType: 'checkbox',
     options: [
-      { label: `q_${MULTIPLE_CHOICE}0_option_S4`, id: 'S4' },
-      { label: `q_${MULTIPLE_CHOICE}0_option_S5`, id: 'S5' },
-      { label: `q_${MULTIPLE_CHOICE}0_option_S8`, id: 'S8' },
-      { label: `q_${MULTIPLE_CHOICE}0_option_SA`, id: 'SA' },
-      { label: `q_${MULTIPLE_CHOICE}0_option_SC`, id: 'SC' },
+      { label: `q_X0_option_S4`, id: 'S4' },
+      { label: `q_X0_option_S5`, id: 'S5' },
+      { label: `q_X0_option_S8`, id: 'S8' },
+      { label: `q_X0_option_SA`, id: 'SA' },
+      { label: `q_X0_option_SC`, id: 'SC' },
     ],
     scoreMap: [1, 1, 1, 1, 1],
   },
@@ -217,8 +226,8 @@ export const QUESTIONS: Question[] = [
     text: 'q_SZ_text',
     inputType: 'date',
     guard: new Disjunction([
-      new Condition(CATEGORIES.SYMPTOMS, 1, null),
-      new Condition(CATEGORIES.RESPIRATORY_SYMPTOMS, 1, null),
+      new ScoreCondition(CATEGORIES.SYMPTOMS, 1, null),
+      new ScoreCondition(CATEGORIES.RESPIRATORY_SYMPTOMS, 1, null),
     ]),
   },
   {
@@ -276,5 +285,25 @@ export const QUESTIONS: Question[] = [
     text: 'q_M2_text',
     inputType: 'radio',
     options: ['answer_yes', 'answer_no'],
+  },
+  {
+    id: QUESTION.DATA_DONATION,
+    category: CATEGORIES.PERSONAL,
+    comment: 'q_X1_comment',
+    text: 'q_X1_text',
+    options: ['q_X1_option0', 'q_X1_option1'],
+    inputType: 'radio',
+    guard: new BoolCondition(PANDEMIC_TRACKING_IS_ENABLED),
+  },
+  {
+    id: QUESTION.POSTAL_CODE,
+    category: CATEGORIES.PERSONAL,
+    comment: 'q_V1_comment',
+    text: 'q_V1_text',
+    inputType: 'postal',
+    guard: new Conjunction([
+      new BoolCondition(PANDEMIC_TRACKING_IS_ENABLED),
+      new RadioAnswerCondition(`${NO_XML}1`, ['0']),
+    ]),
   },
 ];

@@ -9,7 +9,7 @@ import {
 } from '@stencil/core';
 import { RouterHistory } from '@stencil/router';
 import { LOCAL_STORAGE_KEYS, ROUTES, TWO_WEEKS } from '../../../global/constants';
-import { CATEGORIES, QUESTION, QUESTIONS } from '../../../global/questions';
+import { CATEGORIES, QUESTION } from '../../../global/questions';
 import { getToday } from '../../../global/utils/date';
 import i18next from '../../../global/utils/i18n';
 import { trackEvent, TRACKING_EVENTS } from '../../../global/utils/track';
@@ -18,6 +18,7 @@ import { RiskSpreading } from './snippets/risk-spreading';
 import { RiskVeryIll } from './snippets/risk-very-ill';
 import { RiskGroup } from './snippets/risk-group';
 import { RiskWorkingInMedical } from './snippets/risk-working-in-medical';
+import { Answers, Scores } from '../questionnaire/questionnaire';
 
 @Component({
   styleUrl: 'summary.css',
@@ -27,8 +28,8 @@ export class Summary {
   @Prop() history: RouterHistory;
 
   @State() language: string;
-  @State() answers: any = {};
-  @State() scores: any = {};
+  @State() answers: Answers = {};
+  @State() scores: Scores = {};
   @State() resultCase: number = 5;
   @State() snippetsAnswers = {
     outOfBreath: false,
@@ -52,8 +53,10 @@ export class Summary {
     target: 'window',
   })
   handlePopStateChange() {
-    delete this.answers[QUESTIONS[QUESTIONS.length - 1].id];
+    const answerKeys = Object.keys(this.answers);
+    delete this.answers[answerKeys[answerKeys.length - 1]];
     localStorage.setItem(LOCAL_STORAGE_KEYS.ANSWERS, JSON.stringify(this.answers));
+    localStorage.setItem(LOCAL_STORAGE_KEYS.COMPLETED, 'false');
   }
 
   get currentLanguage() {
@@ -102,8 +105,8 @@ export class Summary {
   };
 
   get symptomsWithinTwoWeeksOfContact() {
-    const contactAnswer = this.answers[QUESTION.CONTACT_DATE];
-    const symptomAnswer = this.answers[QUESTION.SYMPTOM_DATE];
+    const contactAnswer = this.answers[QUESTION.CONTACT_DATE] as string;
+    const symptomAnswer = this.answers[QUESTION.SYMPTOM_DATE] as string;
     if (contactAnswer && symptomAnswer) {
       let contact = new Date(contactAnswer.split('.').join('-')).getTime();
       let symptoms = new Date(symptomAnswer.split('.').join('-')).getTime();
@@ -114,7 +117,7 @@ export class Summary {
   }
 
   get contactWithinTwoWeeks() {
-    const contactAnswer = this.answers[QUESTION.CONTACT_DATE];
+    const contactAnswer = this.answers[QUESTION.CONTACT_DATE] as string;
     if (contactAnswer) {
       const contact = new Date(contactAnswer.split('.').join('-')).getTime();
       const today = getToday();
@@ -127,20 +130,20 @@ export class Summary {
   setSnippetState = () => {
     if (this.answers) {
       this.snippetsAnswers.outOfBreath =
-        parseInt(this.answers[QUESTION.OUT_OF_BREATH], 10) === 0;
+        parseInt(this.answers[QUESTION.OUT_OF_BREATH] as string, 10) === 0;
       this.snippetsAnswers.ageAboveSixtyFive =
-        parseInt(this.answers[QUESTION.AGE], 10) > 3 ||
-        parseInt(this.answers[QUESTION.ABOVE_65], 10) === 0;
+        parseInt(this.answers[QUESTION.AGE] as string, 10) > 3 ||
+        parseInt(this.answers[QUESTION.ABOVE_65] as string, 10) === 0;
       this.snippetsAnswers.livingSituation = parseInt(
-        this.answers[QUESTION.LIVING_SITUATION],
+        this.answers[QUESTION.LIVING_SITUATION] as string,
         10
       );
       this.snippetsAnswers.workspace = parseInt(
-        this.answers[QUESTION.WORKSPACE],
+        this.answers[QUESTION.WORKSPACE] as string,
         10
       );
       this.snippetsAnswers.caringForRelatives =
-        parseInt(this.answers[QUESTION.CARING], 10) === 0;
+        parseInt(this.answers[QUESTION.CARING] as string, 10) === 0;
 
       this.snippetsAnswers.isRiskGroup =
         this.scores[CATEGORIES.RESPIRATORY_SYMPTOMS] > 0 &&
@@ -170,6 +173,7 @@ export class Summary {
     this.scores = availableScores ? availableScores : {};
     this.setResultCase();
     this.setSnippetState();
+    localStorage.setItem(LOCAL_STORAGE_KEYS.COMPLETED, 'true')
   };
 
   render() {
@@ -199,7 +203,7 @@ export class Summary {
                 caringForRelatives={snippetsAnswers.caringForRelatives}
               />
             )}
-            <ia-qr-code answers={answers} />
+            <ia-qr-code answers={answers} resultCase={resultCase} />
             <ia-answers-table answers={answers} />
           </div>
           <div class="summary__footer" slot="card-footer">
