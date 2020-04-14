@@ -19,7 +19,7 @@
     "button_show_code": "Erstellten QR-Code anzeigen",
     "button_start_now": "Fragebogen starten",
     "call_to_action_open_source": "<strong>CovApp Open Source</strong>\nDie CovApp ist Open Source mit MIT-Lizenz. Finden Sie hier den <a href=\"https://github.com/d4l-data4life/covapp\">Code</a> und hier die <a href=\"https://www.d4l.io/blog/covapp-faq/\">FAQ</a>. Erstellen Sie Ihre eigene Version und unterstützen Sie den Kampf gegen COVID-19.",
-    "call_to_action_widget": "<strong>Verwenden Sie die CovApp für Ihre Arztpraxis</strong>\nFalls Sie eine einfache Version bevorzugen, verwenden Sie unser CovApp-Widget zum Integrieren der App und helfen so möglichst vielen Patienten. Hier finden Sie weitere <a ref=\"https://www.data4life.care/de/corona/#coronavirus-test\">Informationen zur Implementierung</a>.",
+    "call_to_action_widget": "<strong>Verwenden Sie die CovApp für Ihre Arztpraxis</strong>\nFalls Sie eine einfache Version bevorzugen, verwenden Sie unser CovApp-Widget zum Integrieren der App und helfen so möglichst vielen Patienten. Hier finden Sie weitere <a href=\"https://www.data4life.care/de/corona/#coronavirus-test\">Informationen zur Implementierung</a>.",
     "cookie_bar_accept": "Akzeptieren",
     "cookie_bar_data_privacy": "Datenschutzerklärung",
     "cookie_bar_reject": "Ablehnen",

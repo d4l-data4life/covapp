@@ -77,7 +77,8 @@ body {
 .imprint,
 .legal,
 .questionnaire__comment,
-.accordion__content {
+.accordion__content,
+.call-to-action__container {
   white-space: pre-wrap;
 }
 
