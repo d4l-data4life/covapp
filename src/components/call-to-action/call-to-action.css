@@ -1,0 +1,29 @@
+.call-to-action {
+    margin-top: 1rem;
+}
+
+.call-to-action .card {
+    --card-default-padding: 1rem;
+}
+
+.call-to-action__container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+}
+
+.call-to-action__container > *:first-child {
+    margin: 0 0 1rem 0;
+}
+
+@media screen and (min-width: 768px) {
+    .call-to-action__container {
+        flex-direction: row;
+        text-align: left;
+    }
+
+    .call-to-action__container > *:first-child {
+        margin: 0 1rem 0 0;
+    }
+}

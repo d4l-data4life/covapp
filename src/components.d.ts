@@ -17,6 +17,9 @@ export namespace Components {
     interface IaAnswersTable {
         "answers": any;
     }
+    interface IaCallToAction {
+        "type": "OPEN_SOURCE" | "WIDGET";
+    }
     interface IaDataPrivacy {
         "history": RouterHistory;
     }
@@ -54,7 +57,11 @@ export namespace Components {
     }
     interface IaLogoD4l {
     }
+    interface IaLogoOpenSource {
+    }
     interface IaLogoRki {
+    }
+    interface IaLogoWidget {
     }
     interface IaNavigationHeader {
         "classes": string;
@@ -96,6 +103,12 @@ declare global {
     var HTMLIaAnswersTableElement: {
         prototype: HTMLIaAnswersTableElement;
         new (): HTMLIaAnswersTableElement;
+    };
+    interface HTMLIaCallToActionElement extends Components.IaCallToAction, HTMLStencilElement {
+    }
+    var HTMLIaCallToActionElement: {
+        prototype: HTMLIaCallToActionElement;
+        new (): HTMLIaCallToActionElement;
     };
     interface HTMLIaDataPrivacyElement extends Components.IaDataPrivacy, HTMLStencilElement {
     }
@@ -181,11 +194,23 @@ declare global {
         prototype: HTMLIaLogoD4lElement;
         new (): HTMLIaLogoD4lElement;
     };
+    interface HTMLIaLogoOpenSourceElement extends Components.IaLogoOpenSource, HTMLStencilElement {
+    }
+    var HTMLIaLogoOpenSourceElement: {
+        prototype: HTMLIaLogoOpenSourceElement;
+        new (): HTMLIaLogoOpenSourceElement;
+    };
     interface HTMLIaLogoRkiElement extends Components.IaLogoRki, HTMLStencilElement {
     }
     var HTMLIaLogoRkiElement: {
         prototype: HTMLIaLogoRkiElement;
         new (): HTMLIaLogoRkiElement;
+    };
+    interface HTMLIaLogoWidgetElement extends Components.IaLogoWidget, HTMLStencilElement {
+    }
+    var HTMLIaLogoWidgetElement: {
+        prototype: HTMLIaLogoWidgetElement;
+        new (): HTMLIaLogoWidgetElement;
     };
     interface HTMLIaNavigationHeaderElement extends Components.IaNavigationHeader, HTMLStencilElement {
     }
@@ -227,6 +252,7 @@ declare global {
         "app-root": HTMLAppRootElement;
         "connect-translations": HTMLConnectTranslationsElement;
         "ia-answers-table": HTMLIaAnswersTableElement;
+        "ia-call-to-action": HTMLIaCallToActionElement;
         "ia-data-privacy": HTMLIaDataPrivacyElement;
         "ia-disclaimer": HTMLIaDisclaimerElement;
         "ia-faq": HTMLIaFaqElement;
@@ -241,7 +267,9 @@ declare global {
         "ia-logo-charite": HTMLIaLogoChariteElement;
         "ia-logo-component": HTMLIaLogoComponentElement;
         "ia-logo-d4l": HTMLIaLogoD4lElement;
+        "ia-logo-open-source": HTMLIaLogoOpenSourceElement;
         "ia-logo-rki": HTMLIaLogoRkiElement;
+        "ia-logo-widget": HTMLIaLogoWidgetElement;
         "ia-navigation-header": HTMLIaNavigationHeaderElement;
         "ia-qr-code": HTMLIaQrCodeElement;
         "ia-questionnaire": HTMLIaQuestionnaireElement;
@@ -258,6 +286,9 @@ declare namespace LocalJSX {
     }
     interface IaAnswersTable {
         "answers"?: any;
+    }
+    interface IaCallToAction {
+        "type"?: "OPEN_SOURCE" | "WIDGET";
     }
     interface IaDataPrivacy {
         "history"?: RouterHistory;
@@ -304,7 +335,11 @@ declare namespace LocalJSX {
     }
     interface IaLogoD4l {
     }
+    interface IaLogoOpenSource {
+    }
     interface IaLogoRki {
+    }
+    interface IaLogoWidget {
     }
     interface IaNavigationHeader {
         "classes"?: string;
@@ -334,6 +369,7 @@ declare namespace LocalJSX {
         "app-root": AppRoot;
         "connect-translations": ConnectTranslations;
         "ia-answers-table": IaAnswersTable;
+        "ia-call-to-action": IaCallToAction;
         "ia-data-privacy": IaDataPrivacy;
         "ia-disclaimer": IaDisclaimer;
         "ia-faq": IaFaq;
@@ -348,7 +384,9 @@ declare namespace LocalJSX {
         "ia-logo-charite": IaLogoCharite;
         "ia-logo-component": IaLogoComponent;
         "ia-logo-d4l": IaLogoD4l;
+        "ia-logo-open-source": IaLogoOpenSource;
         "ia-logo-rki": IaLogoRki;
+        "ia-logo-widget": IaLogoWidget;
         "ia-navigation-header": IaNavigationHeader;
         "ia-qr-code": IaQrCode;
         "ia-questionnaire": IaQuestionnaire;
@@ -364,6 +402,7 @@ declare module "@stencil/core" {
             "app-root": LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
             "connect-translations": LocalJSX.ConnectTranslations & JSXBase.HTMLAttributes<HTMLConnectTranslationsElement>;
             "ia-answers-table": LocalJSX.IaAnswersTable & JSXBase.HTMLAttributes<HTMLIaAnswersTableElement>;
+            "ia-call-to-action": LocalJSX.IaCallToAction & JSXBase.HTMLAttributes<HTMLIaCallToActionElement>;
             "ia-data-privacy": LocalJSX.IaDataPrivacy & JSXBase.HTMLAttributes<HTMLIaDataPrivacyElement>;
             "ia-disclaimer": LocalJSX.IaDisclaimer & JSXBase.HTMLAttributes<HTMLIaDisclaimerElement>;
             "ia-faq": LocalJSX.IaFaq & JSXBase.HTMLAttributes<HTMLIaFaqElement>;
@@ -378,7 +417,9 @@ declare module "@stencil/core" {
             "ia-logo-charite": LocalJSX.IaLogoCharite & JSXBase.HTMLAttributes<HTMLIaLogoChariteElement>;
             "ia-logo-component": LocalJSX.IaLogoComponent & JSXBase.HTMLAttributes<HTMLIaLogoComponentElement>;
             "ia-logo-d4l": LocalJSX.IaLogoD4l & JSXBase.HTMLAttributes<HTMLIaLogoD4lElement>;
+            "ia-logo-open-source": LocalJSX.IaLogoOpenSource & JSXBase.HTMLAttributes<HTMLIaLogoOpenSourceElement>;
             "ia-logo-rki": LocalJSX.IaLogoRki & JSXBase.HTMLAttributes<HTMLIaLogoRkiElement>;
+            "ia-logo-widget": LocalJSX.IaLogoWidget & JSXBase.HTMLAttributes<HTMLIaLogoWidgetElement>;
             "ia-navigation-header": LocalJSX.IaNavigationHeader & JSXBase.HTMLAttributes<HTMLIaNavigationHeaderElement>;
             "ia-qr-code": LocalJSX.IaQrCode & JSXBase.HTMLAttributes<HTMLIaQrCodeElement>;
             "ia-questionnaire": LocalJSX.IaQuestionnaire & JSXBase.HTMLAttributes<HTMLIaQuestionnaireElement>;
