@@ -7,10 +7,9 @@ export const getToday = (): number => {
   return zeroedDate.getTime();
 };
 
-export const getStorageString = (date: Date): string => {
-  return `${date.getFullYear()}.${zeroPadded(date.getMonth() + 1)}.${zeroPadded(date.getDate())}`;
-};
+export const getStorageString = (date: Date): string =>
+  `${date.getFullYear()}.${zeroPadded(date.getMonth() + 1)}.${zeroPadded(
+    date.getDate()
+  )}`;
 
-const zeroPadded = (n: number) => {
-  return `0${n}`.slice(-2);
-};
+const zeroPadded = (n: number) => `0${n}`.slice(-2);

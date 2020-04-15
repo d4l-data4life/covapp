@@ -1,6 +1,7 @@
 import { Component, h, State, Listen, Prop } from '@stencil/core';
 import i18next from '../../global/utils/i18n';
 import { getRootCSSPropertyValue } from '../../global/utils/css-properties';
+import { IS_COLLABORATION } from '../../global/layouts';
 
 @Component({
   styleUrl: 'recommendation.css',
@@ -53,27 +54,29 @@ export class Recommendation {
           </d4l-accordion>
         </div>
 
-        <div class="u-padding-top--normal">
-          <d4l-accordion
-            open={false}
-            headerBackgroundColor={getRootCSSPropertyValue('--c-gray')}
-            buttonProps={{
-              'data-test': 'toggleTelemedicine',
-            }}
-          >
-            <p
-              class="o-accordion-headline u-text-align--left"
-              slot="accordion-header"
+        {!IS_COLLABORATION && (
+          <div class="u-padding-top--normal">
+            <d4l-accordion
+              open={false}
+              headerBackgroundColor={getRootCSSPropertyValue('--c-gray')}
+              buttonProps={{
+                'data-test': 'toggleTelemedicine',
+              }}
             >
-              {i18next.t('recommendation_telemedicine_headline')}
-            </p>
-            <div
-              class="u-padding-vertical--normal accordion__content"
-              slot="accordion-panel"
-              innerHTML={i18next.t('recommendation_telemedicine_content')}
-            ></div>
-          </d4l-accordion>
-        </div>
+              <p
+                class="o-accordion-headline u-text-align--left"
+                slot="accordion-header"
+              >
+                {i18next.t('recommendation_telemedicine_headline')}
+              </p>
+              <div
+                class="u-padding-vertical--normal accordion__content"
+                slot="accordion-panel"
+                innerHTML={i18next.t('recommendation_telemedicine_content')}
+              ></div>
+            </d4l-accordion>
+          </div>
+        )}
       </div>
     );
   }
