@@ -135,7 +135,7 @@ export class Summary {
         parseInt(this.answers[QUESTION.AGE] as string, 10) > 3 ||
         parseInt(this.answers[QUESTION.ABOVE_65] as string, 10) === 0;
       this.snippetsAnswers.livingSituation = parseInt(
-        this.answers[QUESTION.LIVING_SITUATION] as string,
+        this.answers[QUESTION.HOUSING] as string,
         10
       );
       this.snippetsAnswers.workspace = parseInt(

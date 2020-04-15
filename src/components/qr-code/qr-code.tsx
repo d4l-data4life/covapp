@@ -37,16 +37,16 @@ export class QRCode {
 
   generateXML = (answers): string => {
     let xml = `<PATIENT><V0>${QUESTIONNAIRE_VERSION}</V0>`;
-    let xmlPairs = this.generateXMLValues(answers);
-    xmlPairs.sort(this.XMLSort);
-    for (const pair of xmlPairs) {
+    let valuePairs = this.generateValuePairs(answers);
+    valuePairs.sort(this.XMLSort);
+    for (const pair of valuePairs) {
       xml += `<${pair.key}>${pair.value}</${pair.key}>`;
     }
     xml += '</PATIENT>';
     return xml;
   };
 
-  generateXMLValues = (answers): KeyValue[] => {
+  generateValuePairs = (answers): KeyValue[] => {
     let pairs = [];
     for (const key in answers) {
       if (key === QUESTION.POSTAL_CODE) {

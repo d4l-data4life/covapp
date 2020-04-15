@@ -47,6 +47,25 @@ The CovApp provides the following customization options:
 
 To learn more about these options, see the [customization documentation](./docs/CUSTOMIZATION.md).
 
+### Questionnaire answers in FHIR format
+
+In addition to the XML representation of the questionnaire answers that is stored in the QR code, there is the possibility to generate a [FHIR R4](http://hl7.org/fhir/R4/) representation.
+In the `src/global/fhir` folder, you find a module that lets you create a [FHIR R4 QuestionnaireResponse](http://hl7.org/fhir/R4/questionnaireresponse.html) resource which contains the answers.
+
+To generate the FHIR format, add the following code to the `src/components/qr-code/qr-code.tsx` file:
+
+```typescript
+import { createFHIRQuestionnaireResponse } from '../../global/fhir';
+
+createFHIR = () => {
+  const valuePairs = this.generateValuePairs(this.answers);
+  const fhir = createFHIRQuestionnaireResponse(valuePairs, this.language);
+  return fhir;
+};
+```
+
+Note: Since you’re changing the code outside of the general customization process, this might bring merge conflicts for future app updates.
+
 ## Support and contributing
 
 Due to today's urgency and dynamic nature, **we cannot offer support for this repository**. We'll continue the development of the official CovApp internally. Changes and releases will be white-labeled and propagated into this repository.

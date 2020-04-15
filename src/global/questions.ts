@@ -39,7 +39,7 @@ export const QUESTION = {
   POSTAL_CODE: 'V1',
   AGE: 'P0',
   ABOVE_65: 'P1',
-  LIVING_SITUATION: 'P2',
+  HOUSING: 'P2',
   CARING: 'P3',
   WORKSPACE: 'P4',
   CONTACT_DATE: 'CZ',
@@ -74,7 +74,7 @@ export const QUESTIONS: Question[] = [
     options: ['answer_yes', 'answer_no'],
   },
   {
-    id: QUESTION.LIVING_SITUATION,
+    id: QUESTION.HOUSING,
     category: CATEGORIES.PERSONAL,
     text: 'q_P2_text',
     inputType: 'radio',
