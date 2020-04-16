@@ -42,6 +42,8 @@ The CovApp provides the following customization options:
 
 ⚠️ **Note that there are several placeholder texts you must provide yourself.**
 
+⚠️ **Note that the default fallback language is English (en) and it has to be available.**
+
 - change colors
 - change the application logo
 
