@@ -28,8 +28,12 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta http-equiv="x-ua-compatible" content="IE=Edge" />
 
+    <!--
+      ESM turns out to be significantly slower for a set of chained request from a small bundle
     <script type="module" src="/build/app.esm.js"></script>
     <script nomodule src="/build/app.js"></script>
+    -->
+    <script src="/build/app.js"></script>
     <link href="/build/app.css" rel="stylesheet" />
 
     <link
