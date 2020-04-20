@@ -57,6 +57,8 @@ export namespace Components {
     }
     interface IaLogoD4l {
     }
+    interface IaLogoHeader {
+    }
     interface IaLogoOpenSource {
     }
     interface IaLogoRki {
@@ -194,6 +196,12 @@ declare global {
         prototype: HTMLIaLogoD4lElement;
         new (): HTMLIaLogoD4lElement;
     };
+    interface HTMLIaLogoHeaderElement extends Components.IaLogoHeader, HTMLStencilElement {
+    }
+    var HTMLIaLogoHeaderElement: {
+        prototype: HTMLIaLogoHeaderElement;
+        new (): HTMLIaLogoHeaderElement;
+    };
     interface HTMLIaLogoOpenSourceElement extends Components.IaLogoOpenSource, HTMLStencilElement {
     }
     var HTMLIaLogoOpenSourceElement: {
@@ -267,6 +275,7 @@ declare global {
         "ia-logo-charite": HTMLIaLogoChariteElement;
         "ia-logo-component": HTMLIaLogoComponentElement;
         "ia-logo-d4l": HTMLIaLogoD4lElement;
+        "ia-logo-header": HTMLIaLogoHeaderElement;
         "ia-logo-open-source": HTMLIaLogoOpenSourceElement;
         "ia-logo-rki": HTMLIaLogoRkiElement;
         "ia-logo-widget": HTMLIaLogoWidgetElement;
@@ -335,6 +344,8 @@ declare namespace LocalJSX {
     }
     interface IaLogoD4l {
     }
+    interface IaLogoHeader {
+    }
     interface IaLogoOpenSource {
     }
     interface IaLogoRki {
@@ -384,6 +395,7 @@ declare namespace LocalJSX {
         "ia-logo-charite": IaLogoCharite;
         "ia-logo-component": IaLogoComponent;
         "ia-logo-d4l": IaLogoD4l;
+        "ia-logo-header": IaLogoHeader;
         "ia-logo-open-source": IaLogoOpenSource;
         "ia-logo-rki": IaLogoRki;
         "ia-logo-widget": IaLogoWidget;
@@ -417,6 +429,7 @@ declare module "@stencil/core" {
             "ia-logo-charite": LocalJSX.IaLogoCharite & JSXBase.HTMLAttributes<HTMLIaLogoChariteElement>;
             "ia-logo-component": LocalJSX.IaLogoComponent & JSXBase.HTMLAttributes<HTMLIaLogoComponentElement>;
             "ia-logo-d4l": LocalJSX.IaLogoD4l & JSXBase.HTMLAttributes<HTMLIaLogoD4lElement>;
+            "ia-logo-header": LocalJSX.IaLogoHeader & JSXBase.HTMLAttributes<HTMLIaLogoHeaderElement>;
             "ia-logo-open-source": LocalJSX.IaLogoOpenSource & JSXBase.HTMLAttributes<HTMLIaLogoOpenSourceElement>;
             "ia-logo-rki": LocalJSX.IaLogoRki & JSXBase.HTMLAttributes<HTMLIaLogoRkiElement>;
             "ia-logo-widget": LocalJSX.IaLogoWidget & JSXBase.HTMLAttributes<HTMLIaLogoWidgetElement>;

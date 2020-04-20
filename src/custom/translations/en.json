@@ -1,5 +1,5 @@
 {
-  "label": "TODO – your language label (English, Deutsch, ...)",
+  "label": "English",
   "keys": {
     "data_privacy_content": "[TRANSLATION/CONTENT NEEDED]",
     "disclaimer_paragraph_1": "[TRANSLATION/CONTENT NEEDED]",
@@ -10,7 +10,7 @@
     "recommendation_case_3_text": "[TRANSLATION/CONTENT NEEDED].",
     "recommendation_case_4_text": "[TRANSLATION/CONTENT NEEDED].",
     "recommendation_case_5_text": "[TRANSLATION/CONTENT NEEDED].",
-    "start_paragraph_1_option_1": "[TRANSLATION/CONTENT NEEDED]",
+    "start_paragraph_1_option_1": "mal schauen",
     "start_paragraph_2": "[TRANSLATION/CONTENT NEEDED]",
     "input_postal_code_label": "[TRANSLATION/CONTENT NEEDED]",
     "q_X1_comment": "[TRANSLATION/CONTENT NEEDED]",

@@ -23,7 +23,6 @@ $RECYCLE.BIN/
 .DS_Store
 Thumbs.db
 UserInterfaceState.xcuserstate
-.env
 stats.html
 
 src/global/custom.ts
