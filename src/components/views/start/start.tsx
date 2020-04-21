@@ -130,6 +130,9 @@ export class Start {
           <div innerHTML={i18next.t('start_paragraph_3')}></div>
           <h3 class="o-headline-3">{i18next.t('start_sub_headline_4')}</h3>
           <div innerHTML={i18next.t('start_paragraph_4')}></div>
+          <h3 class="o-headline-3">{i18next.t('start__sub_headline_5')}</h3>
+          <ia-call-to-action type="OPEN_SOURCE" />
+          <ia-call-to-action type="WIDGET" />
         </div>
       </div>
     );

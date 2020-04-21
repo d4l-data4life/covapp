@@ -91,6 +91,14 @@ The folder structure with adjusted keys for e.g. Italian should look as follows:
           |_ it.json
 ```
 
+#### Using the example languages and contributing a new language
+
+In the `src/custom/translations` folder, you find example translations by open source contributors 🙌
+
+The files follow the `example.{language-id}.json` naming pattern, for example, `example.es.json` for Spanish. To include any of the language files, rename them by removing the example prefix and review them before releasing your custom application.
+
+If you want to add more languages, open a pull request with your example JSON file which follows the naming pattern and is saved in the described file location.
+
 ## Changing of colors
 
 To adjust the colors or do minor style tweaks, you can edit `src/custom/styles/app.css`. This stylesheet loads all the default styling included in the app but also gives you the possibility to add your own CSS.

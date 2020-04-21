@@ -37,16 +37,16 @@ export class QRCode {
 
   generateXML = (answers): string => {
     let xml = `<PATIENT><V0>${QUESTIONNAIRE_VERSION}</V0>`;
-    let xmlPairs = this.generateXMLValues(answers);
-    xmlPairs.sort(this.XMLSort);
-    for (const pair of xmlPairs) {
+    let valuePairs = this.generateValuePairs(answers);
+    valuePairs.sort(this.XMLSort);
+    for (const pair of valuePairs) {
       xml += `<${pair.key}>${pair.value}</${pair.key}>`;
     }
     xml += '</PATIENT>';
     return xml;
   };
 
-  generateXMLValues = (answers): KeyValue[] => {
+  generateValuePairs = (answers): KeyValue[] => {
     let pairs = [];
     for (const key in answers) {
       if (key === QUESTION.POSTAL_CODE) {
@@ -109,11 +109,6 @@ export class QRCode {
   };
 
   sendXMLData = async () => {
-    const xml = this.generateXML(this.answers);
-    const payload = {
-      XML: xml,
-    };
-    const encodedString = btoa(JSON.stringify(payload));
     fetch(PANDEMIC_TRACKING_URL, {
       method: 'POST',
       mode: 'cors',
@@ -123,7 +118,10 @@ export class QRCode {
       },
       redirect: 'follow',
       referrer: 'no-referrer',
-      body: JSON.stringify({ data: encodedString }),
+      body: JSON.stringify({
+        postalCode: this.answers[QUESTION.POSTAL_CODE],
+        riskCase: this.resultCase,
+      }),
     })
       .then(response => {
         if (response.ok) {
@@ -134,7 +132,7 @@ export class QRCode {
         }
       })
       .catch(error => {
-        console.log(`Error donatiing data: ${JSON.stringify(error)}`);
+        console.log(error);
       });
   };
 

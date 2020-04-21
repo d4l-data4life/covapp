@@ -42,10 +42,31 @@ The CovApp provides the following customization options:
 
 ⚠️ **Note that there are several placeholder texts you must provide yourself.**
 
+⚠️ **Note that the default fallback language is English (en) and it has to be available.**
+
 - change colors
 - change the application logo
 
 To learn more about these options, see the [customization documentation](./docs/CUSTOMIZATION.md).
+
+### Questionnaire answers in FHIR format
+
+In addition to the XML representation of the questionnaire answers that is stored in the QR code, there is the possibility to generate a [FHIR R4](http://hl7.org/fhir/R4/) representation.
+In the `src/global/fhir` folder, you find a module that lets you create a [FHIR R4 QuestionnaireResponse](http://hl7.org/fhir/R4/questionnaireresponse.html) resource which contains the answers.
+
+To generate the FHIR format, add the following code to the `src/components/qr-code/qr-code.tsx` file:
+
+```typescript
+import { createFHIRQuestionnaireResponse } from '../../global/fhir';
+
+createFHIR = () => {
+  const valuePairs = this.generateValuePairs(this.answers);
+  const fhir = createFHIRQuestionnaireResponse(valuePairs, this.language);
+  return fhir;
+};
+```
+
+Note: Since you’re changing the code outside of the general customization process, this might bring merge conflicts for future app updates.
 
 ## Support and contributing
 

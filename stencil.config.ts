@@ -14,7 +14,7 @@ export const config: Config = {
   globalStyle:
     process.env.LAYOUT === 'OFFICIAL_COLLABORATION_BZGA'
       ? 'src/global/app-collaboration-bzga.css'
-      : 'src/global/app.css',
+      : 'src/custom/styles/app.css',
   globalScript: 'src/global/app.ts',
   outputTargets: [
     {
