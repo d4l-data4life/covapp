@@ -8,6 +8,7 @@ dotenv.config();
 // https://stenciljs.com/docs/config
 
 export const config: Config = {
+  devMode: false,
   // the defined custom stylesheet loads /src/global/app.css
   // this approach makes it possible to make the CSS adjustable
   // without the need of switching another environment/config flag
@@ -21,7 +22,7 @@ export const config: Config = {
       type: 'www',
       // comment the following line to disable service workers in production
       serviceWorker: null,
-      baseUrl: 'https://covapp.charite.de',
+      baseUrl: 'https://covapp-id.data4life.care',
     },
   ],
   testing: {
