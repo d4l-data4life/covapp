@@ -1,3 +1,7 @@
+.qr-code__img-code {
+  margin-top: 2em;
+}
+
 .qr-code__img-code > img {
   width: 100%;
 }

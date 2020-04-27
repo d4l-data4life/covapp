@@ -204,7 +204,6 @@ export class Summary {
               />
             )}
             <ia-qr-code answers={answers} resultCase={resultCase} />
-            <ia-answers-table answers={answers} />
           </div>
           <div class="summary__footer" slot="card-footer">
             <h3>{i18next.t('summary_reset_headline')}</h3>

@@ -26,7 +26,8 @@ export const createFHIRQuestionnaireResponse = (
   const version = QUESTIONNAIRE_VERSION.split('').join('.');
   let response: FHIRQuestionnaireResponse = {
     resourceType: 'QuestionnaireResponse',
-    questionnaire: `http://notdecided.example.com/fhir/R4/Questionnaire/covid19-recommendation|${version}`,
+    language: language,
+    questionnaire: `http://fhir.data4life.care/covid-19/r4/Questionnaire/covid19-recommendation|${version}`,
     authored: new Date().toISOString(),
     status: 'completed',
     item: createItemsPerCategory(answers, language),
@@ -103,7 +104,7 @@ export const createItem = (
   } else {
     answerItem = {
       valueCoding: {
-        system: getCodingSystem(answer.key),
+        system: getCodingSystem(answer),
         code: getCode(answer),
       },
     };
@@ -118,14 +119,17 @@ export const createItem = (
   return item;
 };
 
-const getCodingSystem = (question: string) => {
-  switch (question) {
+const getCodingSystem = (answer: KeyValue) => {
+  switch (answer.key) {
     case QUESTION.AGE:
-      return 'http://notdecided.example.com/fhir/R4/CodeSystem/age-groups';
+      return 'http://fhir.data4life.care/covid-19/r4/CodeSystem/age-group';
     case QUESTION.WORKSPACE:
-      return 'http://notdecided.example.com/fhir/R4/CodeSystem/occupation-class';
+      return 'http://fhir.data4life.care/covid-19/r4/CodeSystem/occupation-class';
     case 'S2':
-      return 'http://notdecided.example.com/fhir/R4/CodeSystem/fever-class';
+      if (answer.value === '7') {
+        return 'http://loinc.org';
+      }
+      return 'http://fhir.data4life.care/covid-19/r4/CodeSystem/fever-class';
     default:
       return 'http://loinc.org';
   }

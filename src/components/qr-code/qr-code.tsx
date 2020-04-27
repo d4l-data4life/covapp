@@ -148,12 +148,13 @@ export class QRCode {
   };
 
   render() {
-    const { generateCode } = this;
+    const { generateCode, answers } = this;
 
     return (
       <div class="qr-code">
         <h3>{i18next.t('qr_code_headline')}</h3>
         <p>{i18next.t('qr_code_paragraph')}</p>
+        <ia-answers-table answers={answers} />
         <div class="qr-code__img-code u-text-align--center">
           <img
             src={generateCode()}

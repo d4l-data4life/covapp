@@ -35,6 +35,7 @@ export type FHIRQuestionnaireItem = {
 export type FHIRQuestionnaireResponse = {
   resourceType: string;
   contained?: any;
+  language: string;
   questionnaire: string;
   status: FHIRStatus;
   authored: string;
