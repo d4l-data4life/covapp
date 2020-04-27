@@ -4,18 +4,18 @@
   Use this file for styles that should be applied to all components.
   Any global CSS variables should also be applied here.
 */
-@import "../../node_modules/@d4l/web-components-library/dist/d4l-ui/d4l-ui.css";
-@import "./styles/typography.css";
-@import "./styles/variables.css";
-@import "./styles/components.css";
-@import "./styles/objects.css";
-@import "./styles/utils.css";
+@import '../../node_modules/@d4l/web-components-library/dist/d4l-ui/d4l-ui.css';
+@import './styles/typography.css';
+@import './styles/variables.css';
+@import './styles/components.css';
+@import './styles/objects.css';
+@import './styles/utils.css';
 
 /*
 // TODO: https://github.com/gesundheitscloud/infection-risk-assessment/pull/76
 // This is only a temporary fix. This should be moved/handled differently
 */
-@import "../components/input-date/input-data-functional.css";
+@import '../components/input-date/input-data-functional.css';
 
 *,
 *::before,
@@ -54,6 +54,7 @@ body {
   .summary__risk-very-ill,
   .summary h2,
   .summary__footer,
+  d4l-cookie-bar,
   d4l-button {
     display: none;
   }

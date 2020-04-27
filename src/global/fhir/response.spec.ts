@@ -81,7 +81,7 @@ describe('FhirResponse', () => {
         answer: [
           {
             valueCoding: {
-              system: 'http://notdecided.example.com/fhir/R4/CodeSystem/age-groups',
+              system: 'http://fhir.data4life.care/covid-19/r4/CodeSystem/age-group',
               code: '61-70',
             },
           },
@@ -161,8 +161,28 @@ describe('FhirResponse', () => {
         answer: [
           {
             valueCoding: {
-              system: 'http://notdecided.example.com/fhir/R4/CodeSystem/fever-class',
+              system: 'http://fhir.data4life.care/covid-19/r4/CodeSystem/fever-class',
               code: '40C',
+            },
+          },
+        ],
+      };
+      expect(createItem(question, 'de')).toEqual(expected);
+    });
+
+    it('works for fever Valueset loinc answer', () => {
+      const question = {
+        key: 'S2',
+        value: '7',
+      };
+      const expected: FHIRQuestionnaireItem = {
+        linkId: 'S2',
+        text: LANGUAGE_RESOURCES.de.translation.q_S2_text,
+        answer: [
+          {
+            valueCoding: {
+              system: 'http://loinc.org',
+              code: 'LA12688-0',
             },
           },
         ],
