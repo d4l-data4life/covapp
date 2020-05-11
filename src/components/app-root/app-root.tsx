@@ -2,7 +2,7 @@ import { Component, State, Listen, h } from '@stencil/core';
 import i18next, { initialLanguage, LANGUAGES } from '../../global/utils/i18n';
 
 import { ROUTES, IS_DEV } from '../../global/constants';
-import { IS_CHARITE } from '../../global/layouts';
+import { IS_CHARITE, IS_CUSTOM, IS_BZGA, IS_RKI, IS_BMG } from '../../global/layouts';
 import { TRACKING_IS_ENABLED } from '../../global/custom';
 import settings from '../../global/utils/settings';
 
@@ -137,15 +137,18 @@ export class AppRoot {
             </div>
           </d4l-cookie-bar>
         )}
-        {showLogoHeader && !IS_CHARITE && (
+        {showLogoHeader && IS_CUSTOM && (
           <ia-logo-component classes="logo-component--collaboration" />
         )}
         <header class="c-header">
-          {showLogoHeader && IS_CHARITE && (
+          {showLogoHeader && !IS_CUSTOM && (
             <div class="app__logo-container">
-              <ia-logo-charite />
-              <ia-logo-d4l />
-            </div>
+            {IS_CHARITE && <ia-logo-charite big/>}
+            {IS_CHARITE && <ia-logo-d4l />}
+            {IS_BZGA && <ia-logo-bzga big />}
+            {IS_BMG && <ia-logo-bmg big/>}
+            {IS_RKI && <ia-logo-rki big/>}
+          </div>
           )}
           {!showLogoHeader && (
             <stencil-route-link

@@ -47,10 +47,13 @@ export namespace Components {
     interface IaLogoBih {
     }
     interface IaLogoBmg {
+        "big"?: boolean;
     }
     interface IaLogoBzga {
+        "big"?: boolean;
     }
     interface IaLogoCharite {
+        "big"?: boolean;
     }
     interface IaLogoComponent {
         "classes"?: string;
@@ -60,6 +63,7 @@ export namespace Components {
     interface IaLogoOpenSource {
     }
     interface IaLogoRki {
+        "big"?: boolean;
     }
     interface IaLogoWidget {
     }
@@ -325,10 +329,13 @@ declare namespace LocalJSX {
     interface IaLogoBih {
     }
     interface IaLogoBmg {
+        "big"?: boolean;
     }
     interface IaLogoBzga {
+        "big"?: boolean;
     }
     interface IaLogoCharite {
+        "big"?: boolean;
     }
     interface IaLogoComponent {
         "classes"?: string;
@@ -338,6 +345,7 @@ declare namespace LocalJSX {
     interface IaLogoOpenSource {
     }
     interface IaLogoRki {
+        "big"?: boolean;
     }
     interface IaLogoWidget {
     }

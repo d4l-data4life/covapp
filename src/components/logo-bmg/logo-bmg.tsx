@@ -1,4 +1,4 @@
-import { Component, h } from '@stencil/core';
+import { Component, h, Prop } from '@stencil/core';
 
 @Component({
   styleUrl: 'logo-bmg.css',
@@ -6,9 +6,15 @@ import { Component, h } from '@stencil/core';
   shadow: true,
 })
 export class LogoBMG {
+  @Prop() big?: boolean;
+
+  get styleClass() {
+    return this.big ? 'logo-bmg--big' : 'logo-bmg';
+  }
+
   render() {
     return (
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 92 47" class="logo-bmg">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 92 47" class={this.styleClass}>
         <g fill="none">
           <path
             fill="#000"

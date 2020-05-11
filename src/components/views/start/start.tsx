@@ -1,6 +1,6 @@
 import { Component, Event, EventEmitter, h, Listen, State } from '@stencil/core';
 import { LOCAL_STORAGE_KEYS, ROUTES } from '../../../global/constants';
-import { IS_CHARITE } from '../../../global/layouts';
+import { IS_CHARITE, IS_CUSTOM } from '../../../global/layouts';
 import i18next from '../../../global/utils/i18n';
 import { trackEvent, TRACKING_EVENTS } from '../../../global/utils/track';
 import version from '../../../global/utils/version';
@@ -122,7 +122,7 @@ export class Start {
             )}
           </div>
         </d4l-card>
-        {IS_CHARITE && <ia-logo-component />}
+        {!IS_CUSTOM && <ia-logo-component />}
         <div class="u-padding-vertical--normal">
           <h3 class="o-headline-3">{i18next.t('start_sub_headline_2')}</h3>
           <div innerHTML={i18next.t('start_paragraph_2')}></div>

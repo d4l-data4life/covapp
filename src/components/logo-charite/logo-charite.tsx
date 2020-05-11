@@ -1,4 +1,4 @@
-import { Component, h } from '@stencil/core';
+import { Component, h, Prop } from '@stencil/core';
 
 @Component({
   styleUrl: 'logo-charite.css',
@@ -6,12 +6,18 @@ import { Component, h } from '@stencil/core';
   shadow: true,
 })
 export class LogoCharite {
+  @Prop() big?: boolean;
+
+  get styleClass() {
+    return this.big ? 'logo-charite--big' : 'logo-charite';
+  }
+
   render() {
     return (
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 151 56"
-        class="logo-charite"
+        class={this.styleClass}
       >
         <g fill="none">
           <path

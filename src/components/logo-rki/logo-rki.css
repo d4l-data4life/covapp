@@ -6,8 +6,16 @@
   height: 32px;
 }
 
+.logo-rki--big {
+  height: 32px;
+}
+
 @media screen and (min-width: 768px) {
   .logo-rki {
     height: 41px;
+  }
+
+  .logo-rki--big {
+    height: 56px;
   }
 }
