@@ -124,6 +124,9 @@ const getCodingSystem = (answer: KeyValue) => {
     case QUESTION.AGE:
       return 'http://fhir.data4life.care/covid-19/r4/CodeSystem/age-group';
     case QUESTION.WORKSPACE:
+      if (answer.value === '2') {
+        return "http://loinc.org"
+      }
       return 'http://fhir.data4life.care/covid-19/r4/CodeSystem/occupation-class';
     case 'S2':
       if (answer.value === '7') {

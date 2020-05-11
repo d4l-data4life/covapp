@@ -28,8 +28,8 @@ export const HOUSING_VALUESET = {
 };
 
 export const WORKSPACE_VALUESET = {
-  '0': 'LA20533-8',
-  '1': 'LA20532-0',
+  '0': 'medical',
+  '1': 'community',
   '2': 'LA46-8',
 };
 

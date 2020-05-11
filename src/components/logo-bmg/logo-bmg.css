@@ -6,8 +6,15 @@
   height: 37px;
 }
 
+.logo-bmg--big {
+  height: 40px;
+}
+
 @media screen and (min-width: 768px) {
   .logo-bmg {
     height: 47px;
+  }
+  .logo-bmg--big {
+    height: 56px;
   }
 }

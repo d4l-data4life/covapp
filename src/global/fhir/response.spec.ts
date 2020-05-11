@@ -1,4 +1,4 @@
-import { KeyValue } from '../../components/qr-code/qr-code';
+import { KeyValue } from '../../components/qr-code/utils';
 import { LANGUAGE_RESOURCES } from '../custom';
 import { createItem, groupByCategory, createItemCategory } from './response';
 import { FHIRQuestionnaireItem } from './types';
@@ -112,16 +112,36 @@ describe('FhirResponse', () => {
 
     it('works for workspace Valueset', () => {
       const question = {
-        key: 'P2',
+        key: 'P4',
         value: '0',
       };
       const expected: FHIRQuestionnaireItem = {
-        linkId: 'P2',
-        text: LANGUAGE_RESOURCES.de.translation.q_P2_text,
+        linkId: 'P4',
+        text: LANGUAGE_RESOURCES.de.translation.q_P4_text,
         answer: [
           {
             valueCoding: {
-              code: 'LA6255-9',
+              code: 'medical',
+              system: 'http://fhir.data4life.care/covid-19/r4/CodeSystem/occupation-class',
+            },
+          },
+        ],
+      };
+      expect(createItem(question, 'de')).toEqual(expected);
+    });
+
+    it('works for workspace Valueset loinc answer', () => {
+      const question = {
+        key: 'P4',
+        value: '2',
+      };
+      const expected: FHIRQuestionnaireItem = {
+        linkId: 'P4',
+        text: LANGUAGE_RESOURCES.de.translation.q_P4_text,
+        answer: [
+          {
+            valueCoding: {
+              code: 'LA46-8',
               system: 'http://loinc.org',
             },
           },

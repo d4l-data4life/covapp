@@ -3,11 +3,18 @@
 }
 
 .logo-charite {
+  height: 22px;
+}
+
+.logo-charite--big {
   height: 40px;
 }
 
 @media screen and (min-width: 768px) {
-  .logo-charite {
+  .logo-charite{
+    height: 30px;
+  }
+  .logo-charite--big {
     height: 56px;
   }
 }
