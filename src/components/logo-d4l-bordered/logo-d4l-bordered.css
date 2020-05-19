@@ -1,0 +1,10 @@
+.bordered-logo--size-medium {
+    filter: drop-shadow(0 2px 14px rgba(0, 0, 0, 0.12));
+    width: 56px;
+    height: 56px;
+}
+
+.bordered-logo--size-small {
+    width: 40px;
+    height: 40px;
+}

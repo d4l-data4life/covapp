@@ -2,11 +2,18 @@ import { Component, State, Listen, h } from '@stencil/core';
 import i18next, { initialLanguage, LANGUAGES } from '../../global/utils/i18n';
 
 import { ROUTES, IS_DEV } from '../../global/constants';
-import { IS_CHARITE, IS_CUSTOM, IS_BZGA, IS_RKI, IS_BMG } from '../../global/layouts';
+import {
+  IS_CHARITE,
+  IS_CUSTOM,
+  IS_BZGA,
+  IS_RKI,
+  IS_BMG,
+} from '../../global/layouts';
 import { TRACKING_IS_ENABLED } from '../../global/custom';
 import settings from '../../global/utils/settings';
 
 import { Language } from '@d4l/web-components-library/dist/types/components/LanguageSwitcher/language-switcher';
+import { trackEvent } from '../../global/utils/track';
 
 const dnt = navigator.doNotTrack === '1';
 
@@ -19,6 +26,7 @@ export class AppRoot {
   @State() language: Language;
   @State() appMessage: any = null;
   @State() showLogoHeader: boolean = false;
+  @State() isEmbedded: boolean = false;
   @State() hasMadeCookieChoice: boolean;
 
   @Listen('changedLanguage', {
@@ -51,6 +59,11 @@ export class AppRoot {
     this.showLogoHeader = event.detail.show;
   }
 
+  @Listen('isEmbedded')
+  isEmbeddedListener(event: CustomEvent) {
+    this.isEmbedded = !!event.detail;
+  }
+
   saveSettings = ({ acceptCookies, acceptTracking }) => {
     settings.acceptsCookies = acceptCookies;
     settings.acceptsTracking = acceptCookies && acceptTracking;
@@ -62,8 +75,7 @@ export class AppRoot {
 
   trackConsentIfGiven() {
     if (settings.acceptsTracking) {
-      // @ts-ignore
-      window._paq.push(['setConsentGiven']);
+      trackEvent([], 'setConsentGiven');
     }
   }
 
@@ -82,6 +94,7 @@ export class AppRoot {
       language,
       appMessage,
       showLogoHeader,
+      isEmbedded,
       saveSettings,
       hasMadeCookieChoice,
     } = this;
@@ -117,7 +130,7 @@ export class AppRoot {
           )}
         </div>
 
-        {TRACKING_IS_ENABLED && !hasMadeCookieChoice && !dnt && (
+        {TRACKING_IS_ENABLED && !hasMadeCookieChoice && !dnt && !isEmbedded && (
           <d4l-cookie-bar
             classes="cookie-bar app__cookie-bar"
             acceptText={i18next.t('cookie_bar_accept')}
@@ -137,9 +150,10 @@ export class AppRoot {
             </div>
           </d4l-cookie-bar>
         )}
-        {showLogoHeader && IS_CUSTOM && (
+        {showLogoHeader && !isEmbedded && IS_CUSTOM && (
           <ia-logo-component classes="logo-component--collaboration" />
         )}
+        {!isEmbedded && (
         <header class="c-header">
           {showLogoHeader && !IS_CUSTOM && (
             <div class="app__logo-container">
@@ -165,7 +179,8 @@ export class AppRoot {
             class="u-margin-left--auto"
           />
         </header>
-        <main>
+        )}
+        <main class={{ 'layout--embedded': isEmbedded }}>
           <stencil-router>
             <stencil-route-switch scrollTopOffset={0.1}>
               <stencil-route url="/" component="ia-start" exact />
@@ -179,46 +194,53 @@ export class AppRoot {
               <stencil-route url={ROUTES.DISCLAIMER} component="ia-disclaimer" />
               <stencil-route url={ROUTES.FAQ} component="ia-faq" />
               <stencil-route url={ROUTES.DATA_PRIVACY} component="ia-data-privacy" />
+              <stencil-route url={ROUTES.EXPORT} component="ia-export" />
               <stencil-route component="ia-start" />
             </stencil-route-switch>
           </stencil-router>
         </main>
-        <footer class="c-footer">
-          <ul class="u-list-reset">
-            <li>
-              <stencil-route-link
-                anchorClass="o-link o-link--gray"
-                url={ROUTES.IMPRINT}
-              >
-                {i18next.t('app_root_imprint_link')}
-              </stencil-route-link>
-            </li>
-            <li>
-              <stencil-route-link
-                anchorClass="o-link o-link--gray"
-                url={ROUTES.LEGAL}
-              >
-                {i18next.t('app_root_legal_link')}
-              </stencil-route-link>
-            </li>
-            <li>
-              <stencil-route-link anchorClass="o-link o-link--gray" url={ROUTES.FAQ}>
-                {i18next.t('app_root_faq_link')}
-              </stencil-route-link>
-            </li>
-            <li>
-              <stencil-route-link
-                anchorClass="o-link o-link--gray"
-                url={ROUTES.DATA_PRIVACY}
-              >
-                {i18next.t('app_root_data_privacy_link')}
-              </stencil-route-link>
-            </li>
-          </ul>
-          <p>
-            © {new Date().getFullYear()} {i18next.t('app_root_all_rights_reserved')}
-          </p>
-        </footer>
+        {!isEmbedded && (
+          <footer class="c-footer">
+            <ul class="u-list-reset">
+              <li>
+                <stencil-route-link
+                  anchorClass="o-link o-link--gray"
+                  url={ROUTES.IMPRINT}
+                >
+                  {i18next.t('app_root_imprint_link')}
+                </stencil-route-link>
+              </li>
+              <li>
+                <stencil-route-link
+                  anchorClass="o-link o-link--gray"
+                  url={ROUTES.LEGAL}
+                >
+                  {i18next.t('app_root_legal_link')}
+                </stencil-route-link>
+              </li>
+              <li>
+                <stencil-route-link
+                  anchorClass="o-link o-link--gray"
+                  url={ROUTES.FAQ}
+                >
+                  {i18next.t('app_root_faq_link')}
+                </stencil-route-link>
+              </li>
+              <li>
+                <stencil-route-link
+                  anchorClass="o-link o-link--gray"
+                  url={ROUTES.DATA_PRIVACY}
+                >
+                  {i18next.t('app_root_data_privacy_link')}
+                </stencil-route-link>
+              </li>
+            </ul>
+            <p>
+              © {new Date().getFullYear()}{' '}
+              {i18next.t('app_root_all_rights_reserved')}
+            </p>
+          </footer>
+        )}
       </connect-translations>
     );
   }

@@ -35,6 +35,8 @@ export const TRACKING_EVENTS: TrackingEvents = {
   SUMMARY_ANSWERS_SHOW: ['Summary', 'Show answers'],
   SUMMARY_PRINT: ['Summary', 'Print code and answers'],
   SUMMARY_DELETE: ['Summary', 'Delete code and answers'],
+  SUMMARY_DATA4LIFE_NO_ACCOUNT: ['Summary', 'Lets start - no account'],
+  SUMMARY_DATA4LIFE_ACCOUNT: ['Summary', 'Send answers - account'],
   DATA_DONATION_CONSENT: ['Data Donation', 'Consent'], // appending value depening on consent given or not
   DATA_DONATION_SENT: ['Data Donation', 'Sent'], // appending value depending on success or error while sending
 };
@@ -70,7 +72,10 @@ const initializeTracking = ({
   }
 };
 
-export const trackEvent = (event: TrackingEvent) => {
+export const trackEvent = (
+  event: TrackingEvent,
+  methodName: string = 'trackEvent'
+) => {
   if (!TRACKING_IS_ENABLED) {
     return;
   }
@@ -80,7 +85,7 @@ export const trackEvent = (event: TrackingEvent) => {
     return;
   }
 
-  (window as MatomoWindow)._paq.push(['trackEvent', ...event]);
+  (window as MatomoWindow)._paq.push([methodName, ...event]);
 };
 
 initializeTracking({ url: MATOMO_URL, siteId: MATOMO_SITE_ID, window });

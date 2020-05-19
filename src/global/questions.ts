@@ -28,8 +28,8 @@ export type CheckboxOption = {
 export const CATEGORIES = {
   PERSONAL: 'personalInfo',
   CONTACT: 'contact',
-  SYMPTOMS: 'symptoms',
-  RESPIRATORY_SYMPTOMS: 'respiratorySymptoms',
+  SYMPTOMS: 'symptoms', // Box 2 symptoms
+  SYMPTOMS_HIGH: 'symptomsHigh', // Box 1 symptoms
   ILLNESS: 'illnesses',
   MEDICATION: 'medication',
 };
@@ -45,7 +45,7 @@ export const QUESTION = {
   CONTACT_DATE: 'CZ',
   OUT_OF_BREATH: 'SB',
   SYMPTOM_DATE: 'SZ',
-  DATA_DONATION: `${NO_XML}1`,
+  DATA_DONATION: 'X1',
 };
 
 export const XML_ORDER = ['V', 'P', 'C', 'S', 'D', 'M'];
@@ -127,7 +127,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: 'S0',
-    category: CATEGORIES.SYMPTOMS,
+    category: CATEGORIES.SYMPTOMS_HIGH,
     comment: null,
     text: 'q_S0_text',
     inputType: 'radio',
@@ -137,17 +137,17 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: 'S1',
-    category: CATEGORIES.SYMPTOMS,
+    category: CATEGORIES.SYMPTOMS_HIGH,
     comment: null,
     text: 'q_S1_text',
     inputType: 'radio',
     options: ['answer_yes', 'answer_no'],
-    nextQuestionMap: ['S2', 'S3'],
+    nextQuestionMap: ['S2', 'X0'],
     scoreMap: [1, 0],
   },
   {
     id: 'S2',
-    category: CATEGORIES.SYMPTOMS,
+    category: CATEGORIES.SYMPTOMS_HIGH,
     comment: null,
     text: 'q_S2_text',
     inputType: 'radio',
@@ -163,57 +163,37 @@ export const QUESTIONS: Question[] = [
     ],
   },
   {
-    id: 'S3',
-    category: CATEGORIES.SYMPTOMS,
-    text: 'q_S3_text',
-    inputType: 'radio',
-    options: ['answer_yes', 'answer_no'],
-    scoreMap: [1, 0],
-  },
-  {
-    id: `${NO_XML}0`,
-    category: CATEGORIES.SYMPTOMS,
-    text: `q_X0_text`,
-    comment: `q_X0_comment`,
+    id: 'X0',
+    category: CATEGORIES.SYMPTOMS_HIGH,
+    text: 'q_X0_text',
+    comment: 'q_X0_comment',
     inputType: 'checkbox',
     options: [
-      { label: `q_X0_option_S4`, id: 'S4' },
-      { label: `q_X0_option_S5`, id: 'S5' },
-      { label: `q_X0_option_S8`, id: 'S8' },
-      { label: `q_X0_option_SA`, id: 'SA' },
-      { label: `q_X0_option_SC`, id: 'SC' },
+      { label: 'q_X0_option_S3', id: 'S3' },
+      { label: 'q_X0_option_S5', id: 'S5' },
+      { label: 'q_X0_option_SC', id: 'SC' },
     ],
-    scoreMap: [1, 1, 1, 1, 1],
+    scoreMap: [1, 1, 1],
   },
   {
-    id: 'S6',
-    category: CATEGORIES.RESPIRATORY_SYMPTOMS,
-    comment: 'q_S6_comment',
-    text: 'q_S6_text',
-    inputType: 'radio',
-    options: ['answer_yes', 'answer_no'],
-    scoreMap: [1, 0],
-  },
-  {
-    id: 'S7',
-    category: CATEGORIES.RESPIRATORY_SYMPTOMS,
-    comment: 'q_S7_comment',
-    text: 'q_S7_text',
-    inputType: 'radio',
-    options: ['answer_yes', 'answer_no'],
-    scoreMap: [1, 0],
-  },
-  {
-    id: 'S9',
-    category: CATEGORIES.RESPIRATORY_SYMPTOMS,
-    text: 'q_S9_text',
-    inputType: 'radio',
-    options: ['answer_yes', 'answer_no'],
-    scoreMap: [1, 0],
+    id: 'X2',
+    category: CATEGORIES.SYMPTOMS,
+    text: 'q_X2_text',
+    comment: 'q_X2_comment',
+    inputType: 'checkbox',
+    options: [
+      { label: 'q_X2_option_S4', id: 'S4' },
+      { label: 'q_X2_option_S6', id: 'S6' },
+      { label: 'q_X2_option_S7', id: 'S7' },
+      { label: 'q_X2_option_S8', id: 'S8' },
+      { label: 'q_X2_option_S9', id: 'S9' },
+      { label: 'q_X2_option_SA', id: 'SA' },
+    ],
+    scoreMap: [1, 1, 1, 1, 1, 1],
   },
   {
     id: QUESTION.OUT_OF_BREATH,
-    category: CATEGORIES.RESPIRATORY_SYMPTOMS,
+    category: CATEGORIES.SYMPTOMS,
     comment: 'q_SB_comment',
     text: 'q_SB_text',
     inputType: 'radio',
@@ -227,7 +207,7 @@ export const QUESTIONS: Question[] = [
     inputType: 'date',
     guard: new Disjunction([
       new ScoreCondition(CATEGORIES.SYMPTOMS, 1, null),
-      new ScoreCondition(CATEGORIES.RESPIRATORY_SYMPTOMS, 1, null),
+      new ScoreCondition(CATEGORIES.SYMPTOMS_HIGH, 1, null),
     ]),
   },
   {
@@ -303,7 +283,7 @@ export const QUESTIONS: Question[] = [
     inputType: 'postal',
     guard: new Conjunction([
       new BoolCondition(PANDEMIC_TRACKING_IS_ENABLED),
-      new RadioAnswerCondition(`${NO_XML}1`, ['0']),
+      new RadioAnswerCondition('X1', ['0']),
     ]),
   },
 ];

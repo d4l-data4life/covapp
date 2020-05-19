@@ -20,10 +20,19 @@ export namespace Components {
     interface IaCallToAction {
         "type": "OPEN_SOURCE" | "WIDGET";
     }
+    interface IaCovappToData4life {
+        "success": boolean;
+    }
     interface IaDataPrivacy {
         "history": RouterHistory;
     }
+    interface IaData4life {
+        "long": boolean;
+    }
     interface IaDisclaimer {
+    }
+    interface IaExport {
+        "history": RouterHistory;
     }
     interface IaFaq {
         "history": RouterHistory;
@@ -60,6 +69,11 @@ export namespace Components {
     }
     interface IaLogoD4l {
     }
+    interface IaLogoD4lBordered {
+        "size": "medium" | "small";
+    }
+    interface IaLogoD4lPoweredBy {
+    }
     interface IaLogoOpenSource {
     }
     interface IaLogoRki {
@@ -84,6 +98,7 @@ export namespace Components {
         "resultCase": number;
     }
     interface IaStart {
+        "history": RouterHistory;
     }
     interface IaSummary {
         "history": RouterHistory;
@@ -114,17 +129,35 @@ declare global {
         prototype: HTMLIaCallToActionElement;
         new (): HTMLIaCallToActionElement;
     };
+    interface HTMLIaCovappToData4lifeElement extends Components.IaCovappToData4life, HTMLStencilElement {
+    }
+    var HTMLIaCovappToData4lifeElement: {
+        prototype: HTMLIaCovappToData4lifeElement;
+        new (): HTMLIaCovappToData4lifeElement;
+    };
     interface HTMLIaDataPrivacyElement extends Components.IaDataPrivacy, HTMLStencilElement {
     }
     var HTMLIaDataPrivacyElement: {
         prototype: HTMLIaDataPrivacyElement;
         new (): HTMLIaDataPrivacyElement;
     };
+    interface HTMLIaData4lifeElement extends Components.IaData4life, HTMLStencilElement {
+    }
+    var HTMLIaData4lifeElement: {
+        prototype: HTMLIaData4lifeElement;
+        new (): HTMLIaData4lifeElement;
+    };
     interface HTMLIaDisclaimerElement extends Components.IaDisclaimer, HTMLStencilElement {
     }
     var HTMLIaDisclaimerElement: {
         prototype: HTMLIaDisclaimerElement;
         new (): HTMLIaDisclaimerElement;
+    };
+    interface HTMLIaExportElement extends Components.IaExport, HTMLStencilElement {
+    }
+    var HTMLIaExportElement: {
+        prototype: HTMLIaExportElement;
+        new (): HTMLIaExportElement;
     };
     interface HTMLIaFaqElement extends Components.IaFaq, HTMLStencilElement {
     }
@@ -198,6 +231,18 @@ declare global {
         prototype: HTMLIaLogoD4lElement;
         new (): HTMLIaLogoD4lElement;
     };
+    interface HTMLIaLogoD4lBorderedElement extends Components.IaLogoD4lBordered, HTMLStencilElement {
+    }
+    var HTMLIaLogoD4lBorderedElement: {
+        prototype: HTMLIaLogoD4lBorderedElement;
+        new (): HTMLIaLogoD4lBorderedElement;
+    };
+    interface HTMLIaLogoD4lPoweredByElement extends Components.IaLogoD4lPoweredBy, HTMLStencilElement {
+    }
+    var HTMLIaLogoD4lPoweredByElement: {
+        prototype: HTMLIaLogoD4lPoweredByElement;
+        new (): HTMLIaLogoD4lPoweredByElement;
+    };
     interface HTMLIaLogoOpenSourceElement extends Components.IaLogoOpenSource, HTMLStencilElement {
     }
     var HTMLIaLogoOpenSourceElement: {
@@ -257,8 +302,11 @@ declare global {
         "connect-translations": HTMLConnectTranslationsElement;
         "ia-answers-table": HTMLIaAnswersTableElement;
         "ia-call-to-action": HTMLIaCallToActionElement;
+        "ia-covapp-to-data4life": HTMLIaCovappToData4lifeElement;
         "ia-data-privacy": HTMLIaDataPrivacyElement;
+        "ia-data4life": HTMLIaData4lifeElement;
         "ia-disclaimer": HTMLIaDisclaimerElement;
+        "ia-export": HTMLIaExportElement;
         "ia-faq": HTMLIaFaqElement;
         "ia-imprint": HTMLIaImprintElement;
         "ia-input-multiple-choice": HTMLIaInputMultipleChoiceElement;
@@ -271,6 +319,8 @@ declare global {
         "ia-logo-charite": HTMLIaLogoChariteElement;
         "ia-logo-component": HTMLIaLogoComponentElement;
         "ia-logo-d4l": HTMLIaLogoD4lElement;
+        "ia-logo-d4l-bordered": HTMLIaLogoD4lBorderedElement;
+        "ia-logo-d4l-powered-by": HTMLIaLogoD4lPoweredByElement;
         "ia-logo-open-source": HTMLIaLogoOpenSourceElement;
         "ia-logo-rki": HTMLIaLogoRkiElement;
         "ia-logo-widget": HTMLIaLogoWidgetElement;
@@ -294,12 +344,22 @@ declare namespace LocalJSX {
     interface IaCallToAction {
         "type"?: "OPEN_SOURCE" | "WIDGET";
     }
+    interface IaCovappToData4life {
+        "success"?: boolean;
+    }
     interface IaDataPrivacy {
         "history"?: RouterHistory;
         "onShowLogoHeader"?: (event: CustomEvent<any>) => void;
     }
+    interface IaData4life {
+        "long"?: boolean;
+    }
     interface IaDisclaimer {
         "onShowLogoHeader"?: (event: CustomEvent<any>) => void;
+    }
+    interface IaExport {
+        "history"?: RouterHistory;
+        "onIsEmbedded"?: (event: CustomEvent<any>) => void;
     }
     interface IaFaq {
         "history"?: RouterHistory;
@@ -342,6 +402,11 @@ declare namespace LocalJSX {
     }
     interface IaLogoD4l {
     }
+    interface IaLogoD4lBordered {
+        "size"?: "medium" | "small";
+    }
+    interface IaLogoD4lPoweredBy {
+    }
     interface IaLogoOpenSource {
     }
     interface IaLogoRki {
@@ -367,6 +432,7 @@ declare namespace LocalJSX {
         "resultCase"?: number;
     }
     interface IaStart {
+        "history"?: RouterHistory;
         "onShowLogoHeader"?: (event: CustomEvent<any>) => void;
     }
     interface IaSummary {
@@ -378,8 +444,11 @@ declare namespace LocalJSX {
         "connect-translations": ConnectTranslations;
         "ia-answers-table": IaAnswersTable;
         "ia-call-to-action": IaCallToAction;
+        "ia-covapp-to-data4life": IaCovappToData4life;
         "ia-data-privacy": IaDataPrivacy;
+        "ia-data4life": IaData4life;
         "ia-disclaimer": IaDisclaimer;
+        "ia-export": IaExport;
         "ia-faq": IaFaq;
         "ia-imprint": IaImprint;
         "ia-input-multiple-choice": IaInputMultipleChoice;
@@ -392,6 +461,8 @@ declare namespace LocalJSX {
         "ia-logo-charite": IaLogoCharite;
         "ia-logo-component": IaLogoComponent;
         "ia-logo-d4l": IaLogoD4l;
+        "ia-logo-d4l-bordered": IaLogoD4lBordered;
+        "ia-logo-d4l-powered-by": IaLogoD4lPoweredBy;
         "ia-logo-open-source": IaLogoOpenSource;
         "ia-logo-rki": IaLogoRki;
         "ia-logo-widget": IaLogoWidget;
@@ -411,8 +482,11 @@ declare module "@stencil/core" {
             "connect-translations": LocalJSX.ConnectTranslations & JSXBase.HTMLAttributes<HTMLConnectTranslationsElement>;
             "ia-answers-table": LocalJSX.IaAnswersTable & JSXBase.HTMLAttributes<HTMLIaAnswersTableElement>;
             "ia-call-to-action": LocalJSX.IaCallToAction & JSXBase.HTMLAttributes<HTMLIaCallToActionElement>;
+            "ia-covapp-to-data4life": LocalJSX.IaCovappToData4life & JSXBase.HTMLAttributes<HTMLIaCovappToData4lifeElement>;
             "ia-data-privacy": LocalJSX.IaDataPrivacy & JSXBase.HTMLAttributes<HTMLIaDataPrivacyElement>;
+            "ia-data4life": LocalJSX.IaData4life & JSXBase.HTMLAttributes<HTMLIaData4lifeElement>;
             "ia-disclaimer": LocalJSX.IaDisclaimer & JSXBase.HTMLAttributes<HTMLIaDisclaimerElement>;
+            "ia-export": LocalJSX.IaExport & JSXBase.HTMLAttributes<HTMLIaExportElement>;
             "ia-faq": LocalJSX.IaFaq & JSXBase.HTMLAttributes<HTMLIaFaqElement>;
             "ia-imprint": LocalJSX.IaImprint & JSXBase.HTMLAttributes<HTMLIaImprintElement>;
             "ia-input-multiple-choice": LocalJSX.IaInputMultipleChoice & JSXBase.HTMLAttributes<HTMLIaInputMultipleChoiceElement>;
@@ -425,6 +499,8 @@ declare module "@stencil/core" {
             "ia-logo-charite": LocalJSX.IaLogoCharite & JSXBase.HTMLAttributes<HTMLIaLogoChariteElement>;
             "ia-logo-component": LocalJSX.IaLogoComponent & JSXBase.HTMLAttributes<HTMLIaLogoComponentElement>;
             "ia-logo-d4l": LocalJSX.IaLogoD4l & JSXBase.HTMLAttributes<HTMLIaLogoD4lElement>;
+            "ia-logo-d4l-bordered": LocalJSX.IaLogoD4lBordered & JSXBase.HTMLAttributes<HTMLIaLogoD4lBorderedElement>;
+            "ia-logo-d4l-powered-by": LocalJSX.IaLogoD4lPoweredBy & JSXBase.HTMLAttributes<HTMLIaLogoD4lPoweredByElement>;
             "ia-logo-open-source": LocalJSX.IaLogoOpenSource & JSXBase.HTMLAttributes<HTMLIaLogoOpenSourceElement>;
             "ia-logo-rki": LocalJSX.IaLogoRki & JSXBase.HTMLAttributes<HTMLIaLogoRkiElement>;
             "ia-logo-widget": LocalJSX.IaLogoWidget & JSXBase.HTMLAttributes<HTMLIaLogoWidgetElement>;

@@ -1,0 +1,44 @@
+.export .card.sc-d4l-card {
+  padding: 1.5em 1em;
+}
+
+.export__header {
+  padding: 1.5em 1em 1em;
+}
+
+.export__content {
+  display: flex;
+  flex-direction: column;
+}
+
+.export__content,
+.export__footer {
+  border-top: 1px solid var(--c-gray-lightest);
+}
+
+.export__content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 1.5em;
+}
+
+.export__content__text {
+  width: 320px;
+}
+
+.export__checkbox {
+  border-top: 1px solid var(--c-gray-lightest);
+}
+
+.export__checkbox {
+  padding: 1em 1.5em;
+}
+
+.export__label {
+  margin-top: -0.25em;
+}
+
+.export__footer {
+  padding: 1.5em 1em;
+}

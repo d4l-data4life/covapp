@@ -9,6 +9,7 @@ import {
 } from '@stencil/core';
 import { RouterHistory } from '@stencil/router';
 import i18next from '../../../global/utils/i18n';
+import { IS_CHARITE, IS_BZGA, IS_BMG, IS_RKI, IS_CUSTOM } from '../../../global/layouts';
 
 @Component({
   tag: 'ia-data-privacy',
@@ -44,7 +45,10 @@ export class DataPrivacy {
             />
           </div>
           <div class="data_privacy__content u-text-align--left" slot="card-content">
-            <p innerHTML={i18next.t('data_privacy_content')} />
+            {(IS_CHARITE || IS_CUSTOM) && <p innerHTML={i18next.t('data_privacy_content')} />}
+            {IS_BMG && <p innerHTML={i18next.t('data_privacy_content_bmg')} />}
+            {IS_BZGA && <p innerHTML={i18next.t('data_privacy_content_bzga')} />}
+            {IS_RKI && <p innerHTML={i18next.t('data_privacy_content_rki')} />}
           </div>
         </d4l-card>
       </div>

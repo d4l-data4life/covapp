@@ -6,6 +6,12 @@ main {
   padding: 0 var(--padding-main);
 }
 
+main.layout--embedded {
+  padding: var(--padding-main);
+  min-height: 100%;
+  justify-content: center;
+}
+
 .app-message {
   position: fixed;
   top: 0;

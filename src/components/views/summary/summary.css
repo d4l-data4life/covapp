@@ -1,3 +1,7 @@
+.summary > * > * {
+  margin: 1em 0;
+}
+
 .summary h2 {
   font-size: 1.625rem;
   text-align: center;

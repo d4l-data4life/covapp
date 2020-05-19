@@ -76,6 +76,8 @@ function writeCustomizationAppFile({
   sentryDSN,
   pandemicTrackingUrl,
   translations,
+  data4lifeUrl,
+  whitelistedData4LifeOrigins,
 }) {
   const appFilePath = join(__dirname, '..', 'src', 'global', 'custom.ts');
 
@@ -112,6 +114,12 @@ function writeCustomizationAppFile({
   export const SENTRY_DSN = '${sentryDSN}';
   export const PANDEMIC_TRACKING_IS_ENABLED = ${!!pandemicTrackingUrl};
   export const PANDEMIC_TRACKING_URL = '${pandemicTrackingUrl}';
+  export const DATA4LIFE_URL = ${
+    data4lifeUrl ? '"' + data4lifeUrl + '"' : undefined
+  };
+  export const WHITELISTED_DATA4LIFE_ORIGINS = ${stringify(
+    whitelistedData4LifeOrigins ? whitelistedData4LifeOrigins.split(',') : []
+  )};
   `,
     prettierOptions
   );
@@ -126,6 +134,8 @@ const {
   SUPPORTED_LANGUAGES,
   SENTRY_DSN,
   PANDEMIC_TRACKING_URL,
+  DATA4LIFE_URL,
+  WHITELISTED_DATA4LIFE_ORIGINS,
 } = process.env;
 const supportedLanguages = SUPPORTED_LANGUAGES
   ? SUPPORTED_LANGUAGES.split(',')
@@ -142,4 +152,6 @@ writeCustomizationAppFile({
   sentryDSN: SENTRY_DSN,
   pandemicTrackingUrl: PANDEMIC_TRACKING_URL,
   translations,
+  data4lifeUrl: DATA4LIFE_URL,
+  whitelistedData4LifeOrigins: WHITELISTED_DATA4LIFE_ORIGINS,
 });

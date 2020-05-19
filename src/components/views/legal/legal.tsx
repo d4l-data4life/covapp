@@ -9,6 +9,7 @@ import {
 } from '@stencil/core';
 import { RouterHistory } from '@stencil/router';
 import i18next from '../../../global/utils/i18n';
+import { IS_CHARITE, IS_CUSTOM, IS_BMG, IS_BZGA, IS_RKI } from '../../../global/layouts';
 
 @Component({
   tag: 'ia-legal',
@@ -44,7 +45,10 @@ export class Legal {
             />
           </div>
           <div class="legal__content u-text-align--left" slot="card-content">
-            <p innerHTML={i18next.t('legal_first_paragraph')} />
+            {(IS_CHARITE || IS_CUSTOM) && <p innerHTML={i18next.t('legal_content')} />}
+            {IS_BMG && <p innerHTML={i18next.t('legal_content_bmg')} />}
+            {IS_BZGA && <p innerHTML={i18next.t('legal_content_bzga')} />}
+            {IS_RKI && <p innerHTML={i18next.t('legal_content_rki')} />}
           </div>
         </d4l-card>
       </div>

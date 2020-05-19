@@ -5,19 +5,12 @@ import {
   PANDEMIC_TRACKING_IS_ENABLED,
 } from '../../global/custom';
 import { LOCAL_STORAGE_KEYS, QUESTIONNAIRE_VERSION } from '../../global/constants';
-import {
-  CheckboxOption,
-  NO_XML,
-  QUESTIONS,
-  XML_ORDER,
-  QUESTION,
-} from '../../global/questions';
+import { XML_ORDER, QUESTION } from '../../global/questions';
 import i18next from '../../global/utils/i18n';
-import { getQuestionIndexById } from '../views/questionnaire/utils';
 import { trackEvent, TRACKING_EVENTS } from '../../global/utils/track';
 import { Answers } from '../views/questionnaire/questionnaire';
 
-export type KeyValue = { key: string; value: string };
+import { generateValuePairs, KeyValue } from './utils';
 
 @Component({
   styleUrl: 'qr-code.css',
@@ -37,39 +30,13 @@ export class QRCode {
 
   generateXML = (answers): string => {
     let xml = `<PATIENT><V0>${QUESTIONNAIRE_VERSION}</V0>`;
-    let valuePairs = this.generateValuePairs(answers);
+    let valuePairs = generateValuePairs(answers);
     valuePairs.sort(this.XMLSort);
     for (const pair of valuePairs) {
       xml += `<${pair.key}>${pair.value}</${pair.key}>`;
     }
     xml += '</PATIENT>';
     return xml;
-  };
-
-  generateValuePairs = (answers): KeyValue[] => {
-    let pairs = [];
-    for (const key in answers) {
-      if (key === QUESTION.POSTAL_CODE) {
-        break;
-      }
-      if (key.startsWith(NO_XML)) {
-        const question = QUESTIONS[getQuestionIndexById(key)];
-        if (question.inputType === 'checkbox') {
-          for (const index in question.options) {
-            const option = (question.options as CheckboxOption[])[index];
-            const xmlValue = answers[key].indexOf(index) > -1 ? '1' : '2';
-            pairs.push({ key: option.id, value: xmlValue });
-          }
-        }
-      } else {
-        if (answers[key].indexOf('.') > -1) {
-          pairs.push({ key, value: answers[key].replace(/\./g, '') });
-        } else {
-          pairs.push({ key, value: parseInt(answers[key], 10) + 1 });
-        }
-      }
-    }
-    return pairs;
   };
 
   XMLSort = (a: KeyValue, b: KeyValue): number => {
