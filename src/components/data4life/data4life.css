@@ -1,0 +1,38 @@
+.data4life__header {
+  padding-top: 1.5em;
+  padding-bottom: 3em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.data4life__content h3 {
+  margin: 0;
+  padding-bottom: 1.5em;
+  border-bottom: 1px solid var(--c-gray-lightest);
+}
+
+.data4life__section {
+  padding: 1.5em 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-bottom: 1px solid var(--c-gray-lightest);
+}
+
+.data4life__section-image {
+  max-height: 2.5em;
+  margin-top: 2em;
+}
+
+.data4life__header h2,
+.data4life__header p,
+.data4life__section p,
+.data4life__section h3 {
+  padding: 0 2em;
+  width: 320px;
+}
+
+.data4life__footer {
+  padding: 1.5em 0 0;
+}

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 289 48"
+preserveAspectRatio="xMidYMid meet"><defs><linearGradient id="c" x1="0%" x2="100%" y1="56.716%" y2="56.716%"><stop
+offset="0%" stop-color="#FFF" stop-opacity="0"/><stop offset="100%" stop-color="#FFF"/></linearGradient><path id="a"
+d="M0 0h289v48H0z"/></defs><g fill="none" fill-rule="evenodd"><mask id="b" fill="#fff"><use xlink:href="#a"/></mask><use
+fill="#FFF" xlink:href="#a"/><g mask="url(#b)"><g transform="translate(-7 5)"><g transform="translate(88)"><rect
+width="37.969" height="38" x=".031" fill="#FFFAF9" stroke="#FFD2C3" stroke-width="2" rx="6"/><g fill="navy"><path
+d="M28.293 11.293a1 1 0 011.497 1.32l-.083.094-10 10a1 1 0 01-1.32.083l-.094-.083-3-3a1 1 0 011.32-1.497l.094.083L19
+20.585l9.293-9.292z"/><path d="M23 9a1 1 0 01.117 1.993L23 11H12a1 1 0 00-.993.883L11 12v14a1 1 0 00.883.993L12 27h14a1
+1 0 00.993-.883L27 26v-7a1 1 0 011.993-.117L29 19v7a3 3 0 01-2.824 2.995L26 29H12a3 3 0 01-2.995-2.824L9 26V12a3 3 0
+012.824-2.995L12 9h11z"/></g></g><g transform="translate(132)"><rect width="37.969" height="38" x=".031" fill="#FFFAF9"
+stroke="#FFD2C3" stroke-width="2" rx="6"/><g fill="navy"><path d="M28.293 11.293a1 1 0 011.497 1.32l-.083.094-10 10a1 1
+0 01-1.32.083l-.094-.083-3-3a1 1 0 011.32-1.497l.094.083L19 20.585l9.293-9.292z"/><path d="M23 9a1 1 0 01.117 1.993L23
+11H12a1 1 0 00-.993.883L11 12v14a1 1 0 00.883.993L12 27h14a1 1 0 00.993-.883L27 26v-7a1 1 0 011.993-.117L29 19v7a3 3 0
+01-2.824 2.995L26 29H12a3 3 0 01-2.995-2.824L9 26V12a3 3 0 012.824-2.995L12 9h11z"/></g></g><g
+transform="translate(176)"><rect width="37.969" height="38" x=".031" fill="#FFFAF9" stroke="#FFD2C3" stroke-width="2"
+rx="6"/><g fill="navy"><path d="M28.293 11.293a1 1 0 011.497 1.32l-.083.094-10 10a1 1 0 01-1.32.083l-.094-.083-3-3a1 1 0
+011.32-1.497l.094.083L19 20.585l9.293-9.292z"/><path d="M23 9a1 1 0 01.117 1.993L23 11H12a1 1 0 00-.993.883L11 12v14a1 1
+0 00.883.993L12 27h14a1 1 0 00.993-.883L27 26v-7a1 1 0 011.993-.117L29 19v7a3 3 0 01-2.824 2.995L26 29H12a3 3 0
+01-2.995-2.824L9 26V12a3 3 0 012.824-2.995L12 9h11z"/></g></g><g transform="translate(220)"><rect width="37.969"
+height="38" x=".031" fill="#FFFAF9" stroke="#FFD2C3" stroke-width="2" rx="6"/><g fill="navy"><path d="M28.293 11.293a1 1
+0 011.497 1.32l-.083.094-10 10a1 1 0 01-1.32.083l-.094-.083-3-3a1 1 0 011.32-1.497l.094.083L19
+20.585l9.293-9.292z"/><path d="M23 9a1 1 0 01.117 1.993L23 11H12a1 1 0 00-.993.883L11 12v14a1 1 0 00.883.993L12 27h14a1
+1 0 00.993-.883L27 26v-7a1 1 0 011.993-.117L29 19v7a3 3 0 01-2.824 2.995L26 29H12a3 3 0 01-2.995-2.824L9 26V12a3 3 0
+012.824-2.995L12 9h11z"/></g></g><g transform="translate(264)"><rect width="37.969" height="38" x=".031" fill="#FFFAF9"
+stroke="#FFD2C3" stroke-width="2" rx="6"/><g fill="navy"><path d="M28.293 11.293a1 1 0 011.497 1.32l-.083.094-10 10a1 1
+0 01-1.32.083l-.094-.083-3-3a1 1 0 011.32-1.497l.094.083L19 20.585l9.293-9.292z"/><path d="M23 9a1 1 0 01.117 1.993L23
+11H12a1 1 0 00-.993.883L11 12v14a1 1 0 00.883.993L12 27h14a1 1 0 00.993-.883L27 26v-7a1 1 0 011.993-.117L29 19v7a3 3 0
+01-2.824 2.995L26 29H12a3 3 0 01-2.995-2.824L9 26V12a3 3 0 012.824-2.995L12 9h11z"/></g></g><g
+transform="translate(44)"><rect width="37.969" height="38" x=".031" fill="#FFFAF9" stroke="#FFD2C3" stroke-width="2"
+rx="6"/><g fill="navy"><path d="M28.293 11.293a1 1 0 011.497 1.32l-.083.094-10 10a1 1 0 01-1.32.083l-.094-.083-3-3a1 1 0
+011.32-1.497l.094.083L19 20.585l9.293-9.292z"/><path d="M23 9a1 1 0 01.117 1.993L23 11H12a1 1 0 00-.993.883L11 12v14a1 1
+0 00.883.993L12 27h14a1 1 0 00.993-.883L27 26v-7a1 1 0 011.993-.117L29 19v7a3 3 0 01-2.824 2.995L26 29H12a3 3 0
+01-2.995-2.824L9 26V12a3 3 0 012.824-2.995L12 9h11z"/></g></g><rect width="37.969" height="38" x=".031" fill="#FFFAF9"
+stroke="#FFD2C3" stroke-width="2" rx="6"/><g fill="navy"><path d="M28.293 11.293a1 1 0 011.497 1.32l-.083.094-10 10a1 1
+0 01-1.32.083l-.094-.083-3-3a1 1 0 011.32-1.497l.094.083L19 20.585l9.293-9.292z"/><path d="M23 9a1 1 0 01.117 1.993L23
+11H12a1 1 0 00-.993.883L11 12v14a1 1 0 00.883.993L12 27h14a1 1 0 00.993-.883L27 26v-7a1 1 0 011.993-.117L29 19v7a3 3 0
+01-2.824 2.995L26 29H12a3 3 0 01-2.995-2.824L9 26V12a3 3 0 012.824-2.995L12 9h11z"/></g></g></g><path fill="url(#c)"
+d="M200 0h89v48h-89z" mask="url(#b)"/><path fill="url(#c)" d="M0 0h89v48H0z" mask="url(#b)" transform="rotate(-180 44.5
+24)"/></g></svg>

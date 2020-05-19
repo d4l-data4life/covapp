@@ -45,24 +45,36 @@ body {
 }
 
 @media print {
+  /* Hide basically everything */
   .c-header,
   .c-footer,
-  .qr-code__footer,
-  .card__header,
-  .recommendation,
-  .summary__risk-spreading,
-  .summary__risk-very-ill,
-  .summary h2,
-  .summary__footer,
-  d4l-cookie-bar,
+  .summary > * {
+    display: none;
+  }
+  .summary d4l-card > * {
+    display: none;
+  }
+  .summary d4l-card .summary__content > * {
+    display: none;
+  }
   d4l-button {
     display: none;
   }
+  /* Override hiding for the path we want to see */
+  .summary d4l-card {
+    display: block;
+  }
+  .summary d4l-card .summary__content {
+    display: block;
+  }
+  .summary d4l-card .summary__content .card__content {
+    display: block;
+  }
 
+  /* Slight display adjustments for paper view */
   .summary h3 {
     margin-top: 0;
   }
-
   .card {
     box-shadow: none !important;
   }

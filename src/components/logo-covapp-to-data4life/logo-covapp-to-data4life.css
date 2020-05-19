@@ -1,0 +1,20 @@
+.charite-to-data4life {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.charite-to-data4life > :not(:first-child) {
+  padding-left: 10px;
+}
+
+.charite-to-data4life__charite {
+  max-width: 66px;
+}
+
+/* FIXME: Temporary until a `size` prop to icons is added */
+.charite-to-data4life__icon svg {
+  width: 24px !important;
+  height: 24px !important;
+}

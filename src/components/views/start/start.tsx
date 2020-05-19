@@ -1,9 +1,19 @@
-import { Component, Event, EventEmitter, h, Listen, State } from '@stencil/core';
+import {
+  Component,
+  Event,
+  EventEmitter,
+  h,
+  Listen,
+  State,
+  Prop,
+} from '@stencil/core';
 import { LOCAL_STORAGE_KEYS, ROUTES } from '../../../global/constants';
 import { IS_CHARITE, IS_CUSTOM } from '../../../global/layouts';
+import { RouterHistory } from '@stencil/router';
 import i18next from '../../../global/utils/i18n';
 import { trackEvent, TRACKING_EVENTS } from '../../../global/utils/track';
 import version from '../../../global/utils/version';
+import { WHITELISTED_DATA4LIFE_ORIGINS } from '../../../global/custom';
 
 const NEXT_ROUTE = {
   DEFAULT: {
@@ -25,6 +35,8 @@ const NEXT_ROUTE = {
   tag: 'ia-start',
 })
 export class Start {
+  @Prop() history: RouterHistory;
+
   @State() language: string;
   @State() started: boolean = false;
   @State() completed: boolean = false;
@@ -48,6 +60,13 @@ export class Start {
     const completedFlag = localStorage.getItem(LOCAL_STORAGE_KEYS.COMPLETED);
     this.completed = completedFlag === 'true';
     this.started = completedFlag === 'false';
+
+    const { query: { source } = {} } = this.history.location;
+    if (source && WHITELISTED_DATA4LIFE_ORIGINS.includes(decodeURI(source))) {
+      localStorage.setItem(LOCAL_STORAGE_KEYS.SOURCE, decodeURI(source));
+    } else {
+      localStorage.removeItem(LOCAL_STORAGE_KEYS.SOURCE);
+    }
   };
 
   get getState() {
@@ -117,7 +136,7 @@ export class Start {
             ></div>
             {!IS_CHARITE && (
               <div class="u-text-align--center">
-                <ia-logo-d4l />
+                <ia-logo-d4l-powered-by />
               </div>
             )}
           </div>

@@ -51,7 +51,7 @@ To learn more about these options, see the [customization documentation](./docs/
 
 ### Questionnaire answers in FHIR format
 
-In addition to the XML representation of the questionnaire answers that is stored in the QR code, there is the possibility to generate a [FHIR R4](http://hl7.org/fhir/R4/) representation.
+In addition to the XML representation of the questionnaire answers that is stored in the QR code, there is the possibility to generate a [FHIR R4](http://hl7.org/fhir/R4/) representation. You find documentation for the FHIR version of the questionnaire and its resources on [Simplifier.net](https://simplifier.net/guide/Covid-19Pre-TestPatientAssessment/Home).
 In the `src/global/fhir` folder, you find a module that lets you create a [FHIR R4 QuestionnaireResponse](http://hl7.org/fhir/R4/questionnaireresponse.html) resource which contains the answers.
 
 To generate the FHIR format, add the following code to the `src/components/qr-code/qr-code.tsx` file:

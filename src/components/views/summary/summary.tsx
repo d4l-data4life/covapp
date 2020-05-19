@@ -16,9 +16,12 @@ import { trackEvent, TRACKING_EVENTS } from '../../../global/utils/track';
 import version from '../../../global/utils/version';
 import { RiskSpreading } from './snippets/risk-spreading';
 import { RiskVeryIll } from './snippets/risk-very-ill';
-import { RiskGroup } from './snippets/risk-group';
-import { RiskWorkingInMedical } from './snippets/risk-working-in-medical';
 import { Answers, Scores } from '../questionnaire/questionnaire';
+import { IS_CHARITE } from '../../../global/layouts';
+import {
+  WHITELISTED_DATA4LIFE_ORIGINS,
+  DATA4LIFE_URL,
+} from '../../../global/custom';
 
 @Component({
   styleUrl: 'summary.css',
@@ -37,8 +40,6 @@ export class Summary {
     livingSituation: 0,
     workspace: 0,
     caringForRelatives: false,
-    isRiskGroup: false,
-    isMedicalWorker: false,
   };
   @Event() showLogoHeader: EventEmitter;
 
@@ -71,15 +72,14 @@ export class Summary {
   setResultCase = () => {
     const scores = this.scores;
     const hasSymptoms =
-      scores[CATEGORIES.SYMPTOMS] > 0 || scores[CATEGORIES.RESPIRATORY_SYMPTOMS] > 0;
-    const hasBothSymptoms =
-      scores[CATEGORIES.SYMPTOMS] > 0 && scores[CATEGORIES.RESPIRATORY_SYMPTOMS] > 0;
+      scores[CATEGORIES.SYMPTOMS] > 0 || scores[CATEGORIES.SYMPTOMS_HIGH] > 0;
+    const hasHighSymptoms = scores[CATEGORIES.SYMPTOMS_HIGH] > 0;
 
     if (scores[CATEGORIES.CONTACT] > 0) {
       if (hasSymptoms) {
         if (this.symptomsWithinTwoWeeksOfContact) {
           this.resultCase = 1;
-        } else if (hasBothSymptoms) {
+        } else if (hasHighSymptoms) {
           this.resultCase = 2;
         } else {
           this.resultCase = 4;
@@ -93,7 +93,7 @@ export class Summary {
       }
     } else {
       if (hasSymptoms) {
-        if (hasBothSymptoms) {
+        if (hasHighSymptoms) {
           this.resultCase = 2;
         } else {
           this.resultCase = 4;
@@ -144,16 +144,6 @@ export class Summary {
       );
       this.snippetsAnswers.caringForRelatives =
         parseInt(this.answers[QUESTION.CARING] as string, 10) === 0;
-
-      this.snippetsAnswers.isRiskGroup =
-        this.scores[CATEGORIES.RESPIRATORY_SYMPTOMS] > 0 &&
-        (this.scores[CATEGORIES.ILLNESS] > 0 ||
-          this.scores[CATEGORIES.MEDICATION] > 0 ||
-          this.snippetsAnswers.ageAboveSixtyFive);
-
-      this.snippetsAnswers.isMedicalWorker =
-        this.scores[CATEGORIES.RESPIRATORY_SYMPTOMS] > 0 &&
-        this.snippetsAnswers.workspace === 0;
     }
   };
 
@@ -173,11 +163,30 @@ export class Summary {
     this.scores = availableScores ? availableScores : {};
     this.setResultCase();
     this.setSnippetState();
-    localStorage.setItem(LOCAL_STORAGE_KEYS.COMPLETED, 'true')
+    localStorage.setItem(LOCAL_STORAGE_KEYS.COMPLETED, 'true');
   };
 
+  get isFromData4Life() {
+    return localStorage.getItem(LOCAL_STORAGE_KEYS.SOURCE)
+      ? WHITELISTED_DATA4LIFE_ORIGINS.includes(
+          localStorage.getItem(LOCAL_STORAGE_KEYS.SOURCE)
+        )
+      : false;
+  }
+
+  get completedExport() {
+    return localStorage.getItem(LOCAL_STORAGE_KEYS.EXPORTED) === 'true';
+  }
+
   render() {
-    const { resetFormAndStartAgain, answers, resultCase, snippetsAnswers } = this;
+    const {
+      resetFormAndStartAgain,
+      answers,
+      resultCase,
+      snippetsAnswers,
+      isFromData4Life,
+      completedExport,
+    } = this;
 
     return (
       <div class="c-card-wrapper summary">
@@ -191,8 +200,6 @@ export class Summary {
                     ageAboveSixtyFive={snippetsAnswers.ageAboveSixtyFive}
                   />
                 )}
-                {snippetsAnswers.isRiskGroup && <RiskGroup />}
-                {snippetsAnswers.isMedicalWorker && <RiskWorkingInMedical />}
               </span>
             )}
             <ia-recommendation resultCase={resultCase} />
@@ -203,6 +210,15 @@ export class Summary {
                 caringForRelatives={snippetsAnswers.caringForRelatives}
               />
             )}
+          </div>
+        </d4l-card>
+
+        {!completedExport && IS_CHARITE && DATA4LIFE_URL && (
+          <ia-data4life long={!isFromData4Life}></ia-data4life>
+        )}
+
+        <d4l-card classes="card--desktop summary__content">
+          <div slot="card-content">
             <ia-qr-code answers={answers} resultCase={resultCase} />
           </div>
           <div class="summary__footer" slot="card-footer">

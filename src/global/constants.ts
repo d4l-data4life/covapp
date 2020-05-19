@@ -1,4 +1,4 @@
-export const QUESTIONNAIRE_VERSION = '310';
+export const QUESTIONNAIRE_VERSION = '311';
 
 export const KEY_CODES = {
   BACKSPACE: 8,
@@ -17,6 +17,7 @@ export const ROUTES = {
   DISCLAIMER: '/disclaimer',
   FAQ: '/faq',
   DATA_PRIVACY: '/data-privacy',
+  EXPORT: '/export',
 };
 
 export const LOCAL_STORAGE_KEYS = {
@@ -24,7 +25,9 @@ export const LOCAL_STORAGE_KEYS = {
   SCORES: 'scores',
   VERSION: 'version',
   DATA_SENT: 'dataSent',
-  COMPLETED: 'completed'
+  COMPLETED: 'completed',
+  SOURCE: 'source',
+  EXPORTED: 'exported',
 };
 
 export const IS_DEV =

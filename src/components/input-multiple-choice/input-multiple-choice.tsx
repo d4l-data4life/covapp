@@ -73,6 +73,7 @@ export class InputMultipleChoice {
             option.id !== '' && (
               <p>
                 <d4l-checkbox
+                  key={question.id}
                   checkbox-id={`${question.id}-option${index}`}
                   name={question.id}
                   checked={this.checkedAnswers.indexOf(option.id) > -1}

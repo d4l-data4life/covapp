@@ -1,5 +1,5 @@
 import { CATEGORIES_VALUESET } from '.';
-import { KeyValue } from '../../components/qr-code/qr-code';
+import { KeyValue } from '../../components/qr-code/utils';
 import { QUESTIONNAIRE_VERSION } from '../constants';
 import { LANGUAGE_RESOURCES } from '../custom';
 import { QUESTION } from '../questions';
