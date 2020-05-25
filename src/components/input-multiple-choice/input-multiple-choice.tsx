@@ -6,6 +6,7 @@ import {
   Listen,
   Prop,
   State,
+  Watch,
 } from '@stencil/core';
 import i18next from '../../global/utils/i18n';
 import { Question, CheckboxOption } from '../../global/questions';
@@ -33,7 +34,16 @@ export class InputMultipleChoice {
     this.updateFormData.emit({ key, value });
   }
 
+  @Watch('question')
+  onQuestionChange() {
+    this.checkedAnswers = [];
+  }
+
   componentDidLoad() {
+    this.updateFormDataHandler(this.question.id, this.checkedAnswers);
+  }
+
+  componentDidUpdate() {
     this.updateFormDataHandler(this.question.id, this.checkedAnswers);
   }
 

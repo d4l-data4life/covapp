@@ -88,7 +88,7 @@ export class Questionnaire {
       JSON.stringify(this.answerData)
     );
     localStorage.setItem(LOCAL_STORAGE_KEYS.SCORES, JSON.stringify(this.scoreData));
-    localStorage.setItem(LOCAL_STORAGE_KEYS.COMPLETED, 'false')
+    localStorage.setItem(LOCAL_STORAGE_KEYS.COMPLETED, 'false');
     version.set();
   };
 
@@ -149,20 +149,22 @@ export class Questionnaire {
       localStorage.removeItem(LOCAL_STORAGE_KEYS.ANSWERS);
       trackEvent(TRACKING_EVENTS.ABORT);
     } else {
-      if (this.answerData) {
-        const formDataKeys = Object.keys(this.answerData);
-        const previousDataKey = formDataKeys[formDataKeys.length - 1];
+      const answers = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.ANSWERS));
+      if (this.answerData && answers) {
+        const formDataKeys = Object.keys(answers);
+        let previousDataKey = formDataKeys[formDataKeys.length - 1];
+
         const previousQuestion = QUESTIONS[getQuestionIndexById(previousDataKey)];
         if (previousQuestion.scoreMap) {
-          const previousAnswer = this.answerData[previousDataKey];
+          const previousAnswer = answers[previousDataKey];
           this.scoreData[previousQuestion.category] -= getScoreChange(
             previousQuestion,
             previousAnswer
           );
         }
 
-        delete this.answerData[previousDataKey];
-
+        delete answers[previousDataKey];
+        this.answerData = answers;
         this.setLocalStorageAnswers();
 
         this.currentStep = previousDataKey
