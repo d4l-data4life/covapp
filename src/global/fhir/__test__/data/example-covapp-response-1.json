@@ -1,0 +1,369 @@
+{
+  "resourceType": "QuestionnaireResponse",
+  "language": "en",
+  "questionnaire": "http://fhir.data4life.care/covid-19/r4/Questionnaire/covid19-recommendation|3.0.0",
+  "authored": "2020-05-28T07:36:44.990Z",
+  "status": "completed",
+  "item": [
+    {
+      "linkId": "P",
+      "text": "Personal information",
+      "item": [
+        {
+          "linkId": "P0",
+          "text": "How old are you?",
+          "answer": [
+            {
+              "valueCoding": {
+                "system": "http://fhir.data4life.care/covid-19/r4/CodeSystem/age-group",
+                "code": "above-80"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "P2",
+          "text": "What is your current living situation?",
+          "answer": [
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "LA9996-5"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "P3",
+          "text": "At least once a week, do you privately care for people with age-related conditions, chronic illnesses, or frailty?",
+          "answer": [
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "LA32-8"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "P4",
+          "text": "Do you work in one of the following areas?",
+          "answer": [
+            {
+              "valueCoding": {
+                "system": "http://fhir.data4life.care/covid-19/r4/CodeSystem/occupation-class",
+                "code": "community"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "P5",
+          "text": "Do you smoke?",
+          "answer": [
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "LA32-8"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "P6",
+          "text": "Are you pregnant?",
+          "answer": [
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "LA4489-6"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "linkId": "C",
+      "text": "Contact with COVID-19 cases",
+      "item": [
+        {
+          "linkId": "C0",
+          "text": "Have you had close contact with a confirmed case?",
+          "answer": [
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "LA33-6"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "CZ",
+          "text": "What day was the last contact?",
+          "answer": [
+            {
+              "valueDate": "2020-05-20"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "linkId": "S",
+      "text": "Symptoms",
+      "item": [
+        {
+          "linkId": "S0",
+          "text": "Have you had a fever (over 38°C) in the past 24 hours?",
+          "answer": [
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "LA33-6"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "S2",
+          "text": "What was the highest temperature, approx.?",
+          "answer": [
+            {
+              "valueCoding": {
+                "system": "http://fhir.data4life.care/covid-19/r4/CodeSystem/fever-class",
+                "code": "above-42C"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "S3",
+          "text": "Have you had chills in the past 24 hours?",
+          "answer": [
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "LA32-8"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "S4",
+          "text": "In the past 24 hours, have you felt tired or worn out?",
+          "answer": [
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "LA32-8"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "S5",
+          "text": "In the past 24 hours, have you had body aches?",
+          "answer": [
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "LA32-8"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "S6",
+          "text": "In the past 24 hours, have you had a persistent cough?",
+          "answer": [
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "LA32-8"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "S7",
+          "text": "In the past 24 hours, have you had a runny nose?",
+          "answer": [
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "LA32-8"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "S8",
+          "text": "In the past 24 hours, have you had diarrhea?",
+          "answer": [
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "LA32-8"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "S9",
+          "text": "In the past 24 hours, have you had a sore throat?",
+          "answer": [
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "LA32-8"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "SA",
+          "text": "In the past 24 hours, have you had a headache?",
+          "answer": [
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "LA32-8"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "SB",
+          "text": "In the past 24 hours, did you feel that you were more quickly out of breath than usual?",
+          "answer": [
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "LA33-6"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "SC",
+          "text": "Have you had any taste and/or smell loss in the last 24 hours?",
+          "answer": [
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "LA32-8"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "SZ",
+          "text": "With regard to all questions about symptoms: since when have you had the symptoms you specified?",
+          "answer": [
+            {
+              "valueDate": "2020-05-22"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "linkId": "D",
+      "text": "Chronic illnesses",
+      "item": [
+        {
+          "linkId": "D0",
+          "text": "Have you been diagnosed with chronic lung disease by a doctor?",
+          "answer": [
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "LA33-6"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "D1",
+          "text": "Have you been diagnosed with diabetes by a doctor?",
+          "answer": [
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "LA33-6"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "D2",
+          "text": "Have you been diagnosed with heart disease by a doctor?",
+          "answer": [
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "LA12688-0"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "D3",
+          "text": "Have you been diagnosed with obesity by a doctor?",
+          "answer": [
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "LA12688-0"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "linkId": "M",
+      "text": "Medication",
+      "item": [
+        {
+          "linkId": "M0",
+          "text": "Are you currently taking steroids?",
+          "answer": [
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "LA32-8"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "M1",
+          "text": "Are you currently taking immunosuppressants?",
+          "answer": [
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "LA33-6"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "M2",
+          "text": "Have you been vaccinated against flu between October 2019 and today?",
+          "answer": [
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "LA32-8"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
