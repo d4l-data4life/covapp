@@ -1,4 +1,87 @@
-export type FHIRStatus =
+export type FHIRQuestionnaire = {
+  status: FHIRPublicationStatus;
+  resourceType: string;
+  language?: string;
+  contained?: FHIRValueSet[];
+  url?: string;
+  version?: string;
+  name?: string;
+  title?: string;
+  experimental?: boolean;
+  date?: string;
+  publisher?: string;
+  description?: string;
+  contact?: FHIRContact[];
+  copyright?: string;
+  subjectType?: string[];
+  item?: FHIRQuestionnaireItem[];
+};
+
+export type FHIRValueSet = {
+  status: FHIRPublicationStatus;
+  resourceType?: string;
+  id?: string;
+  language?: string;
+  url?: string;
+  name?: string;
+  publisher?: string;
+  contact?: FHIRContact[];
+  description?: string;
+  immutable?: boolean;
+  compose?: { include: { system: string; concept: { code: string }[] } }[];
+  expansion?: {
+    identifier: string;
+    timestamp: string;
+    contains: FHIRCoding[];
+  };
+};
+
+export type FHIRQuestionnaireItem = {
+  linkId: string;
+  type: FHIRQuestionnaireItemType;
+  text: string;
+  item?: FHIRQuestionnaireItem[];
+  answerValueSet?: string;
+  required?: boolean;
+  options?: { reference: string };
+  initialCoding?: FHIRCoding;
+  enableWhen?: FHIREnableCondition[];
+  enableBehavior?: 'any' | 'all';
+};
+
+export type FHIREnableCondition = {
+  question: string;
+  operator: '=';
+  answerCoding: FHIRCoding;
+};
+
+export type FHIRQuestionnaireItemType =
+  | 'group'
+  | 'display'
+  | 'question'
+  | 'boolean'
+  | 'decimal'
+  | 'integer'
+  | 'date'
+  | 'dateTime'
+  | 'time'
+  | 'string'
+  | 'text'
+  | 'url'
+  | 'choice'
+  | 'open-choice'
+  | 'attachment'
+  | 'reference'
+  | 'quantity';
+
+export type FHIRContact = {
+  name: string;
+  telecom: { system: string; value: string }[];
+};
+
+export type FHIRPublicationStatus = 'draft' | 'active' | 'retired' | 'unknown';
+
+export type FHIRQuestionnaireResponseStatus =
   | 'in-progress'
   | 'completed'
   | 'amended'
@@ -15,32 +98,40 @@ export type FHIRCoding = {
   display?: string;
 };
 
-export type FHIRValueCoding = {
+export type FHIRAnswerValueCoding = {
   valueCoding: FHIRCoding;
 };
 
-export type FHIRValueDate = {
+export type FHIRAnswerValueDate = {
   valueDate: string;
 };
 
-export type FHIRValue = FHIRValueCoding | FHIRValueDate;
-
-export type FHIRQuestionnaireItem = {
-  linkId: string;
-  text?: string;
-  answer?: FHIRValue[];
-  item?: FHIRQuestionnaireItem[];
+export type FHIRAnswerValueString = {
+  valueString: string;
 };
 
 export type FHIRQuestionnaireResponse = {
-  resourceType: string;
-  contained?: any;
-  language: string;
-  questionnaire: string;
-  status: FHIRStatus;
-  authored: string;
+  id?: string;
+  resourceType?: string;
+  language?: string;
+  questionnaire?: string;
+  status: FHIRQuestionnaireResponseStatus;
+  authored?: string;
+  item?: FHIRResponseItem[];
+  contained?: any[];
   subject?: FHIRReference;
   author?: FHIRReference;
   source?: FHIRReference;
-  item: FHIRQuestionnaireItem[];
+};
+
+export type FHIRAnswerValue =
+  | FHIRAnswerValueCoding
+  | FHIRAnswerValueDate
+  | FHIRAnswerValueString;
+
+export type FHIRResponseItem = {
+  linkId: string;
+  text?: string;
+  answer?: FHIRAnswerValue[];
+  item?: FHIRResponseItem[];
 };

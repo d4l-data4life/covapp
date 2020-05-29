@@ -1,0 +1,1017 @@
+{
+  "resourceType": "Questionnaire",
+  "url": "http://fhir.data4life.care/covid-19/r4/Questionnaire/covid19-recommendation",
+  "version": "3.0.0",
+  "date": "2020-04-24T22:00:00.000Z",
+  "subjectType": ["Patient"],
+  "status": "draft",
+  "publisher": "D4L data4life gGmbH",
+  "contact": [
+    {
+      "name": "D4L data4life gGmbH",
+      "telecom": [{ "system": "url", "value": "https://www.data4life.care" }]
+    }
+  ],
+  "copyright": "D4L data4life gGmbH, Charité – Universitätsmedizin Berlin, BIH - Berliner Institut für Gesundheitsforschung, hih - health innovation hub des Bundesministeriums für Gesundheit, and MOLIT Institut gGmbH",
+  "description": "COVID-19 assessment questionnaire",
+  "name": "Covid19_assesment_questionnaire",
+  "code": [
+    {
+      "system": "http://loinc.org",
+      "code": "84170-0",
+      "display": "Infectious disease Risk assessment and screening note"
+    }
+  ],
+  "item": [
+    {
+      "type": "group",
+      "required": true,
+      "linkId": "P",
+      "text": "Personal information",
+      "item": [
+        {
+          "type": "choice",
+          "required": true,
+          "linkId": "P0",
+          "code": [
+            {
+              "code": "46251-5",
+              "display": "Age group",
+              "system": "http://loinc.org"
+            }
+          ],
+          "text": "How old are you?",
+          "answerValueSet": "#age-group"
+        },
+        {
+          "type": "choice",
+          "required": true,
+          "linkId": "P1",
+          "code": [
+            {
+              "code": "21612-7",
+              "display": "Age - Reported",
+              "system": "http://loinc.org"
+            }
+          ],
+          "text": "Are you 65 years old or older?",
+          "enableWhen": [
+            {
+              "question": "P0",
+              "operator": "=",
+              "answerCoding": {
+                "system": "http://fhir.data4life.care/covid-19/r4/CodeSystem/age-group",
+                "code": "61-70"
+              }
+            }
+          ],
+          "answerValueSet": "#yesno"
+        },
+        {
+          "type": "choice",
+          "required": true,
+          "linkId": "P2",
+          "code": [
+            {
+              "code": "71802-3",
+              "display": "Housing status",
+              "system": "http://loinc.org"
+            }
+          ],
+          "text": "What is your current living situation?",
+          "answerValueSet": "#housing-situation"
+        },
+        {
+          "type": "choice",
+          "required": true,
+          "linkId": "P3",
+          "text": "At least once a week, do you privately care for people with age-related conditions, chronic illnesses, or frailty?",
+          "answerValueSet": "#yesno",
+          "item": [
+            {
+              "linkId": "P3-Explanation",
+              "type": "display",
+              "text": "Care services or support that you provide in connection with your professional activity isn't meant."
+            }
+          ]
+        },
+        {
+          "type": "choice",
+          "required": true,
+          "linkId": "P4",
+          "code": [
+            {
+              "code": "85658-3",
+              "display": "Occupation [Type]",
+              "system": "http://loinc.org"
+            }
+          ],
+          "text": "Do you work in one of the following areas?",
+          "answerValueSet": "#occupation-class"
+        },
+        {
+          "type": "choice",
+          "required": true,
+          "linkId": "P5",
+          "code": [
+            {
+              "code": "72166-2",
+              "display": "Tobacco smoking status",
+              "system": "http://loinc.org"
+            }
+          ],
+          "text": "Do you smoke?",
+          "answerValueSet": "#yesno"
+        },
+        {
+          "type": "choice",
+          "required": true,
+          "linkId": "P6",
+          "code": [
+            {
+              "code": "82810-3",
+              "display": "Pregnancy status",
+              "system": "http://loinc.org"
+            }
+          ],
+          "text": "Are you pregnant?",
+          "answerValueSet": "#LL4129-4"
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "required": true,
+      "linkId": "C",
+      "text": "Contact with COVID-19 cases",
+      "item": [
+        {
+          "type": "choice",
+          "required": true,
+          "linkId": "C0",
+          "code": [
+            {
+              "code": "840546002",
+              "display": "Exposure to SARS-CoV-2",
+              "system": "http://snomed.info/sct"
+            }
+          ],
+          "text": "Have you had close contact with a confirmed case?",
+          "answerValueSet": "#yesno",
+          "item": [
+            {
+              "linkId": "C0-Explanation",
+              "type": "display",
+              "text": "Close contact with a confirmed case means:\n\n* Face-to-face contact for longer than 15 minutes\n* Direct, physical contact (touching, shaking hands, kissing)\n* Being within 1.5 meters of the person for more than 15 minutes\n* Contact with or exchange of body fluids\n* Living in the same apartment\n\n\nChoose \"no\" if you have worn adequate protective measures (mask, smock) on contact."
+            }
+          ]
+        },
+        {
+          "type": "date",
+          "required": true,
+          "linkId": "CZ",
+          "code": [
+            {
+              "code": "94652-5",
+              "display": "Known exposure date",
+              "system": "http://loinc.org"
+            }
+          ],
+          "text": "What day was the last contact?",
+          "enableWhen": [
+            {
+              "question": "C0",
+              "operator": "=",
+              "answerCoding": { "system": "http://loinc.org", "code": "LA33-6" }
+            }
+          ],
+          "item": [
+            {
+              "linkId": "CZ-Explanation",
+              "type": "display",
+              "text": "Make sure to enter a full date in the DD MM YYYY format that isn’t in the future."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "required": true,
+      "linkId": "S",
+      "text": "Symptoms",
+      "item": [
+        {
+          "type": "choice",
+          "required": true,
+          "linkId": "S0",
+          "code": [
+            {
+              "code": "386661006",
+              "display": "Fever (finding)",
+              "system": "http://snomed.info/sct"
+            }
+          ],
+          "text": "Have you had a fever (over 38°C) in the past 24 hours?",
+          "answerValueSet": "#yesno"
+        },
+        {
+          "type": "choice",
+          "required": true,
+          "linkId": "S1",
+          "code": [
+            {
+              "code": "386661006",
+              "display": "Fever (finding)",
+              "system": "http://snomed.info/sct"
+            }
+          ],
+          "text": "Have you had a fever (over 38°C) in the past 4 days?",
+          "answerValueSet": "#yesno",
+          "enableWhen": [
+            {
+              "question": "S0",
+              "operator": "=",
+              "answerCoding": { "system": "http://loinc.org", "code": "LA32-8" }
+            }
+          ]
+        },
+        {
+          "type": "choice",
+          "required": true,
+          "linkId": "S2",
+          "code": [
+            {
+              "code": "8315-4",
+              "display": "Body temperature 24 hour maximum",
+              "system": "http://loinc.org"
+            }
+          ],
+          "text": "What was the highest temperature, approx.?",
+          "answerValueSet": "#fever-class",
+          "enableWhen": [
+            {
+              "question": "S0",
+              "operator": "=",
+              "answerCoding": { "system": "http://loinc.org", "code": "LA33-6" }
+            },
+            {
+              "question": "S1",
+              "operator": "=",
+              "answerCoding": { "system": "http://loinc.org", "code": "LA33-6" }
+            }
+          ],
+          "enableBehavior": "any"
+        },
+        {
+          "type": "choice",
+          "required": true,
+          "linkId": "S3",
+          "code": [
+            {
+              "code": "43724002",
+              "display": "Chill (finding)",
+              "system": "http://snomed.info/sct"
+            }
+          ],
+          "text": "Have you had chills in the past 24 hours?",
+          "answerValueSet": "#yesno"
+        },
+        {
+          "type": "choice",
+          "required": true,
+          "linkId": "S4",
+          "code": [
+            {
+              "code": "84229001",
+              "display": "Fatigue (finding)",
+              "system": "http://snomed.info/sct"
+            }
+          ],
+          "text": "In the past 24 hours, have you felt tired or worn out?",
+          "answerValueSet": "#yesno",
+          "item": [
+            {
+              "linkId": "S4-Explanation",
+              "type": "display",
+              "text": "The question relates to acute or exacerbated symptoms and excludes chronic complaints or seasonal or allergic complaints. If you have a chronic illness, compare your current symptoms with your previous problems to answer the question."
+            }
+          ]
+        },
+        {
+          "type": "choice",
+          "required": true,
+          "linkId": "S5",
+          "code": [
+            {
+              "code": "68962001",
+              "display": "Muscle pain (finding)",
+              "system": "http://snomed.info/sct"
+            }
+          ],
+          "text": "In the past 24 hours, have you had body aches?",
+          "answerValueSet": "#yesno",
+          "item": [
+            {
+              "linkId": "S5-Explanation",
+              "type": "display",
+              "text": "The question relates to acute or exacerbated symptoms and excludes chronic complaints or seasonal or allergic complaints. If you have a chronic illness, compare your current symptoms with your previous problems to answer the question."
+            }
+          ]
+        },
+        {
+          "type": "choice",
+          "required": true,
+          "linkId": "S6",
+          "code": [
+            {
+              "code": "49727002",
+              "display": "Cough (finding)",
+              "system": "http://snomed.info/sct"
+            }
+          ],
+          "text": "In the past 24 hours, have you had a persistent cough?",
+          "answerValueSet": "#yesno",
+          "item": [
+            {
+              "linkId": "S6-Explanation",
+              "type": "display",
+              "text": "The question relates to cold symptoms and excludes chronic cough, seasonal or allergy-related cough. If you have a chronic cough, compare your current coughing to your regular problems."
+            }
+          ]
+        },
+        {
+          "type": "choice",
+          "required": true,
+          "linkId": "S7",
+          "code": [
+            {
+              "code": "82272006",
+              "display": "Common cold (disorder)",
+              "system": "http://snomed.info/sct"
+            }
+          ],
+          "text": "In the past 24 hours, have you had a runny nose?",
+          "answerValueSet": "#yesno",
+          "item": [
+            {
+              "linkId": "S7-Explanation",
+              "type": "display",
+              "text": "The question relates to cold symptoms and excludes chronic runny nose, seasonal or allergy-related runny nose. If you have chronic sniffling, compare your current conditions with your existing problems."
+            }
+          ]
+        },
+        {
+          "type": "choice",
+          "required": true,
+          "linkId": "S8",
+          "code": [
+            {
+              "code": "62315008",
+              "display": "Diarrhea (finding)",
+              "system": "http://snomed.info/sct"
+            }
+          ],
+          "text": "In the past 24 hours, have you had diarrhea?",
+          "answerValueSet": "#yesno",
+          "item": [
+            {
+              "linkId": "S8-Explanation",
+              "type": "display",
+              "text": "The question relates to acute or exacerbated symptoms and excludes chronic complaints or seasonal or allergic complaints. If you have a chronic illness, compare your current symptoms with your previous problems to answer the question."
+            }
+          ]
+        },
+        {
+          "type": "choice",
+          "required": true,
+          "linkId": "S9",
+          "code": [
+            {
+              "code": "162397003",
+              "display": "Pain in throat (finding)",
+              "system": "http://snomed.info/sct"
+            }
+          ],
+          "text": "In the past 24 hours, have you had a sore throat?",
+          "answerValueSet": "#yesno"
+        },
+        {
+          "type": "choice",
+          "required": true,
+          "linkId": "SA",
+          "code": [
+            {
+              "code": "25064002",
+              "display": "Headache (finding)",
+              "system": "http://snomed.info/sct"
+            }
+          ],
+          "text": "In the past 24 hours, have you had a headache?",
+          "answerValueSet": "#yesno",
+          "item": [
+            {
+              "linkId": "SA-Explanation",
+              "type": "display",
+              "text": "The question relates to acute or exacerbated symptoms and excludes chronic complaints or seasonal or allergic complaints. If you have a chronic illness, compare your current symptoms with your previous problems to answer the question."
+            }
+          ]
+        },
+        {
+          "type": "choice",
+          "required": true,
+          "linkId": "SB",
+          "code": [
+            {
+              "code": "267036007",
+              "display": "Dyspnea (finding)",
+              "system": "http://snomed.info/sct"
+            }
+          ],
+          "text": "In the past 24 hours, did you feel that you were more quickly out of breath than usual?",
+          "answerValueSet": "#yesno",
+          "item": [
+            {
+              "linkId": "SB-Explanation",
+              "type": "display",
+              "text": "Choose \"Yes\" if you:\n* Become breathless faster than usual or have difficulty breathing with light loads, such as a walk or climbing a short flight of stairs\n* Experience difficulty breathing or shortness of breath when sitting or lying down\n* Have a feeling of breathlessness/shortness of breath when getting up from bed or a chair\n\n\nIf you have chronic lung disease, compare your current breathing problems with your existing breathing problems."
+            }
+          ]
+        },
+        {
+          "type": "choice",
+          "required": true,
+          "linkId": "SC",
+          "code": [
+            {
+              "code": "44169009",
+              "display": "Loss of sense of smell (finding)",
+              "system": "http://snomed.info/sct"
+            }
+          ],
+          "text": "Have you had any taste and/or smell loss in the last 24 hours?",
+          "answerValueSet": "#yesno",
+          "item": [
+            {
+              "linkId": "SC-Explanation",
+              "type": "display",
+              "text": "The question relates to acute or exacerbated symptoms and excludes chronic complaints or seasonal or allergic complaints. If you have a chronic illness, compare your current symptoms with your previous problems to answer the question."
+            }
+          ]
+        },
+        {
+          "type": "date",
+          "required": true,
+          "linkId": "SZ",
+          "code": [
+            {
+              "code": "85585-8",
+              "display": "Date of condition onset",
+              "system": "http://loinc.org"
+            }
+          ],
+          "text": "With regard to all questions about symptoms: since when have you had the symptoms you specified?",
+          "enableWhen": [
+            {
+              "question": "S0",
+              "operator": "=",
+              "answerCoding": { "system": "http://loinc.org", "code": "LA33-6" }
+            },
+            {
+              "question": "S1",
+              "operator": "=",
+              "answerCoding": { "system": "http://loinc.org", "code": "LA33-6" }
+            },
+            {
+              "question": "S3",
+              "operator": "=",
+              "answerCoding": { "system": "http://loinc.org", "code": "LA33-6" }
+            },
+            {
+              "question": "S4",
+              "operator": "=",
+              "answerCoding": { "system": "http://loinc.org", "code": "LA33-6" }
+            },
+            {
+              "question": "S5",
+              "operator": "=",
+              "answerCoding": { "system": "http://loinc.org", "code": "LA33-6" }
+            },
+            {
+              "question": "S6",
+              "operator": "=",
+              "answerCoding": { "system": "http://loinc.org", "code": "LA33-6" }
+            },
+            {
+              "question": "S7",
+              "operator": "=",
+              "answerCoding": { "system": "http://loinc.org", "code": "LA33-6" }
+            },
+            {
+              "question": "S8",
+              "operator": "=",
+              "answerCoding": { "system": "http://loinc.org", "code": "LA33-6" }
+            },
+            {
+              "question": "S9",
+              "operator": "=",
+              "answerCoding": { "system": "http://loinc.org", "code": "LA33-6" }
+            },
+            {
+              "question": "SA",
+              "operator": "=",
+              "answerCoding": { "system": "http://loinc.org", "code": "LA33-6" }
+            },
+            {
+              "question": "SB",
+              "operator": "=",
+              "answerCoding": { "system": "http://loinc.org", "code": "LA33-6" }
+            },
+            {
+              "question": "SC",
+              "operator": "=",
+              "answerCoding": { "system": "http://loinc.org", "code": "LA33-6" }
+            }
+          ],
+          "enableBehavior": "any",
+          "item": [
+            {
+              "linkId": "SZ-Explanation",
+              "type": "display",
+              "text": "Make sure to enter a full date in the DD MM YYYY format that isn’t in the future."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "required": true,
+      "linkId": "D",
+      "text": "Chronic illnesses",
+      "item": [
+        {
+          "type": "choice",
+          "required": true,
+          "linkId": "D0",
+          "code": [
+            {
+              "code": "413839001",
+              "display": "Chronic lung disease (disorder)",
+              "system": "http://snomed.info/sct"
+            }
+          ],
+          "text": "Have you been diagnosed with chronic lung disease by a doctor?",
+          "answerValueSet": "#yesnodontknow"
+        },
+        {
+          "type": "choice",
+          "required": true,
+          "linkId": "D1",
+          "code": [
+            {
+              "code": "73211009",
+              "display": "Diabetes mellitus (disorder)",
+              "system": "http://snomed.info/sct"
+            }
+          ],
+          "text": "Have you been diagnosed with diabetes by a doctor?",
+          "answerValueSet": "#yesnodontknow"
+        },
+        {
+          "type": "choice",
+          "required": true,
+          "linkId": "D2",
+          "code": [
+            {
+              "code": "56265001",
+              "display": "Heart disease (disorder)",
+              "system": "http://snomed.info/sct"
+            }
+          ],
+          "text": "Have you been diagnosed with heart disease by a doctor?",
+          "answerValueSet": "#yesnodontknow"
+        },
+        {
+          "type": "choice",
+          "required": true,
+          "linkId": "D3",
+          "code": [
+            {
+              "code": "414916001",
+              "display": "Obesity (disorder)",
+              "system": "http://snomed.info/sct"
+            }
+          ],
+          "text": "Have you been diagnosed with obesity by a doctor?",
+          "answerValueSet": "#yesnodontknow"
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "required": true,
+      "linkId": "M",
+      "text": "Medication",
+      "item": [
+        {
+          "type": "choice",
+          "required": true,
+          "linkId": "M0",
+          "code": [
+            {
+              "code": "steroid-intake",
+              "display": "Taking steroids",
+              "system": "http://fhir.data4life.care/covid-19/r4/CodeSystem/medication-questions"
+            }
+          ],
+          "text": "Are you currently taking steroids?",
+          "answerValueSet": "#yesnodontknow"
+        },
+        {
+          "type": "choice",
+          "required": true,
+          "linkId": "M1",
+          "code": [
+            {
+              "code": "immunosuppressant-intake",
+              "display": "Taking immunosuppressants",
+              "system": "http://fhir.data4life.care/covid-19/r4/CodeSystem/medication-questions"
+            }
+          ],
+          "text": "Are you currently taking immunosuppressants?",
+          "answerValueSet": "#yesnodontknow",
+          "item": [
+            {
+              "linkId": "M1-Explanation",
+              "type": "display",
+              "text": "You take or get immunosuppresives after an organ transplant, in the therapy of an autoimmune disease, or during chemotherapy."
+            }
+          ]
+        },
+        {
+          "type": "choice",
+          "required": true,
+          "linkId": "M2",
+          "code": [
+            {
+              "code": "recent-influenza-vaccine",
+              "display": "Influenza vaccine for the current influenza season",
+              "system": "http://fhir.data4life.care/covid-19/r4/CodeSystem/medication-questions"
+            }
+          ],
+          "text": "Have you been vaccinated against flu between October 2019 and today?",
+          "answerValueSet": "#yesno"
+        }
+      ]
+    }
+  ],
+  "language": "en",
+  "contained": [
+    {
+      "resourceType": "ValueSet",
+      "url": "http://fhir.data4life.care/covid-19/r4/ValueSet/age-group",
+      "publisher": "D4L data4life gGmbH",
+      "contact": [
+        {
+          "name": "D4L data4life gGmbH",
+          "telecom": [{ "system": "url", "value": "https://www.data4life.care" }]
+        }
+      ],
+      "name": "Agegroup",
+      "status": "active",
+      "description": "Age groups",
+      "immutable": false,
+      "compose": {
+        "include": [
+          {
+            "system": "http://fhir.data4life.care/covid-19/r4/CodeSystem/age-group"
+          }
+        ]
+      },
+      "language": "en",
+      "expansion": {
+        "timestamp": "2020-05-27T11:22:49.942Z",
+        "identifier": "urn:uuid:bff77d6a-8949-4827-bbb2-4036ac656e38",
+        "contains": [
+          {
+            "code": "below-40",
+            "system": "http://fhir.data4life.care/covid-19/r4/CodeSystem/age-group",
+            "display": "under 40"
+          },
+          {
+            "code": "40-50",
+            "system": "http://fhir.data4life.care/covid-19/r4/CodeSystem/age-group",
+            "display": "40-50"
+          },
+          {
+            "code": "51-60",
+            "system": "http://fhir.data4life.care/covid-19/r4/CodeSystem/age-group",
+            "display": "51-60"
+          },
+          {
+            "code": "61-70",
+            "system": "http://fhir.data4life.care/covid-19/r4/CodeSystem/age-group",
+            "display": "61-70"
+          },
+          {
+            "code": "71-80",
+            "system": "http://fhir.data4life.care/covid-19/r4/CodeSystem/age-group",
+            "display": "71-80"
+          },
+          {
+            "code": "above-80",
+            "system": "http://fhir.data4life.care/covid-19/r4/CodeSystem/age-group",
+            "display": "over 80"
+          }
+        ]
+      },
+      "id": "age-group"
+    },
+    {
+      "resourceType": "ValueSet",
+      "url": "http://fhir.data4life.care/covid-19/r4/ValueSet/yesno",
+      "publisher": "D4L data4life gGmbH",
+      "contact": [
+        {
+          "name": "D4L data4life gGmbH",
+          "telecom": [{ "system": "url", "value": "https://www.data4life.care" }]
+        }
+      ],
+      "name": "Yesno",
+      "status": "active",
+      "description": "Yes/No",
+      "immutable": false,
+      "compose": {
+        "include": [
+          {
+            "system": "http://loinc.org",
+            "concept": [{ "code": "LA33-6" }, { "code": "LA32-8" }]
+          }
+        ]
+      },
+      "language": "en",
+      "expansion": {
+        "timestamp": "2020-05-27T11:22:49.943Z",
+        "identifier": "urn:uuid:422819bd-a17f-4213-8a99-8017eb949acd",
+        "contains": [
+          { "code": "LA33-6", "system": "http://loinc.org", "display": "Yes" },
+          { "code": "LA32-8", "system": "http://loinc.org", "display": "No" }
+        ]
+      },
+      "id": "yesno"
+    },
+    {
+      "resourceType": "ValueSet",
+      "url": "http://fhir.data4life.care/covid-19/r4/ValueSet/housing-situation",
+      "publisher": "D4L data4life gGmbH",
+      "contact": [
+        {
+          "name": "D4L data4life gGmbH",
+          "telecom": [{ "system": "url", "value": "https://www.data4life.care" }]
+        }
+      ],
+      "name": "Housingsituation",
+      "status": "active",
+      "immutable": false,
+      "description": "Living situation",
+      "compose": {
+        "include": [
+          {
+            "system": "http://loinc.org",
+            "concept": [{ "code": "LA6255-9" }, { "code": "LA9996-5" }]
+          }
+        ]
+      },
+      "language": "en",
+      "expansion": {
+        "timestamp": "2020-05-27T11:22:49.942Z",
+        "identifier": "urn:uuid:dec6447f-0484-4518-afa8-8f537848777d",
+        "contains": [
+          {
+            "code": "LA6255-9",
+            "system": "http://loinc.org",
+            "display": "Lives alone"
+          },
+          {
+            "code": "LA9996-5",
+            "system": "http://loinc.org",
+            "display": "Lives with other(s)"
+          }
+        ]
+      },
+      "id": "housing-situation"
+    },
+    {
+      "resourceType": "ValueSet",
+      "url": "http://fhir.data4life.care/covid-19/r4/ValueSet/occupation-class",
+      "publisher": "D4L data4life gGmbH",
+      "contact": [
+        {
+          "name": "D4L data4life gGmbH",
+          "telecom": [{ "system": "url", "value": "https://www.data4life.care" }]
+        }
+      ],
+      "name": "Occupationclass",
+      "status": "active",
+      "description": "Occupation",
+      "immutable": false,
+      "compose": {
+        "include": [
+          {
+            "system": "http://fhir.data4life.care/covid-19/r4/CodeSystem/occupation-class"
+          },
+          { "system": "http://loinc.org", "concept": [{ "code": "LA46-8" }] }
+        ]
+      },
+      "language": "en",
+      "expansion": {
+        "timestamp": "2020-05-27T11:22:49.942Z",
+        "identifier": "urn:uuid:69612264-130d-4ac2-9a89-e813533b7323",
+        "contains": [
+          {
+            "code": "medical",
+            "system": "http://fhir.data4life.care/covid-19/r4/CodeSystem/occupation-class",
+            "display": "Medical field"
+          },
+          {
+            "code": "community",
+            "system": "http://fhir.data4life.care/covid-19/r4/CodeSystem/occupation-class",
+            "display": "Community facility (school, day care center, university, nursing home etc.)"
+          },
+          { "code": "LA46-8", "system": "http://loinc.org", "display": "Other" }
+        ]
+      },
+      "id": "occupation-class"
+    },
+    {
+      "resourceType": "ValueSet",
+      "language": "en",
+      "url": "http://loinc.org/vs/LL4129-4",
+      "identifier": [
+        {
+          "system": "urn:ietf:rfc:3986",
+          "value": "urn:oid:1.3.6.1.4.1.12009.10.1.2727"
+        }
+      ],
+      "version": "Loinc_2.67",
+      "name": "Pregnant|Not pregnant|Unknown",
+      "status": "active",
+      "publisher": "D4L data4life gGmbH",
+      "contact": [
+        {
+          "name": "D4L data4life gGmbH",
+          "telecom": [{ "system": "url", "value": "https://www.data4life.care" }]
+        }
+      ],
+      "copyright": "This content from LOINC® is copyright © 1995 Regenstrief Institute, Inc. and the LOINC Committee, and available at no cost under the license at https://loinc.org/license/",
+      "compose": {
+        "include": [
+          {
+            "system": "http://loinc.org",
+            "concept": [
+              { "code": "LA15173-0" },
+              { "code": "LA26683-5" },
+              { "code": "LA4489-6" }
+            ]
+          }
+        ]
+      },
+      "expansion": {
+        "timestamp": "2020-05-27T11:22:49.943Z",
+        "identifier": "urn:uuid:44e196bf-ace5-44e9-9a44-2165959a1ac7",
+        "contains": [
+          {
+            "code": "LA15173-0",
+            "system": "http://loinc.org",
+            "display": "Pregnant"
+          },
+          {
+            "code": "LA26683-5",
+            "system": "http://loinc.org",
+            "display": "Not pregnant"
+          },
+          {
+            "code": "LA4489-6",
+            "system": "http://loinc.org",
+            "display": "Unknown"
+          }
+        ]
+      },
+      "id": "LL4129-4"
+    },
+    {
+      "resourceType": "ValueSet",
+      "language": "en",
+      "url": "http://fhir.data4life.care/covid-19/r4/ValueSet/fever-class",
+      "publisher": "D4L data4life gGmbH",
+      "contact": [
+        {
+          "name": "D4L data4life gGmbH",
+          "telecom": [{ "system": "url", "value": "https://www.data4life.care" }]
+        }
+      ],
+      "name": "Feverclass",
+      "status": "active",
+      "description": "Fever groups",
+      "immutable": false,
+      "compose": {
+        "include": [
+          {
+            "system": "http://fhir.data4life.care/covid-19/r4/CodeSystem/fever-class"
+          },
+          { "system": "http://loinc.org", "concept": [{ "code": "LA12688-0" }] }
+        ]
+      },
+      "expansion": {
+        "timestamp": "2020-05-27T11:22:49.942Z",
+        "identifier": "urn:uuid:2cfa7f58-ce3f-4d51-a1ac-7e57cb9d9033",
+        "contains": [
+          {
+            "code": "below-38C",
+            "system": "http://fhir.data4life.care/covid-19/r4/CodeSystem/fever-class",
+            "display": "< 38 °C"
+          },
+          {
+            "code": "38C",
+            "system": "http://fhir.data4life.care/covid-19/r4/CodeSystem/fever-class",
+            "display": "38 °C"
+          },
+          {
+            "code": "39C",
+            "system": "http://fhir.data4life.care/covid-19/r4/CodeSystem/fever-class",
+            "display": "39 °C"
+          },
+          {
+            "code": "40C",
+            "system": "http://fhir.data4life.care/covid-19/r4/CodeSystem/fever-class",
+            "display": "40 °C"
+          },
+          {
+            "code": "41C",
+            "system": "http://fhir.data4life.care/covid-19/r4/CodeSystem/fever-class",
+            "display": "41 °C"
+          },
+          {
+            "code": "42C",
+            "system": "http://fhir.data4life.care/covid-19/r4/CodeSystem/fever-class",
+            "display": "42 °C"
+          },
+          {
+            "code": "above-42C",
+            "system": "http://fhir.data4life.care/covid-19/r4/CodeSystem/fever-class",
+            "display": "> 42 °C"
+          },
+          {
+            "code": "LA12688-0",
+            "system": "http://loinc.org",
+            "display": "Don't know"
+          }
+        ]
+      },
+      "id": "fever-class"
+    },
+    {
+      "resourceType": "ValueSet",
+      "url": "http://fhir.data4life.care/covid-19/r4/ValueSet/yesnodontknow",
+      "publisher": "D4L data4life gGmbH",
+      "contact": [
+        {
+          "name": "D4L data4life gGmbH",
+          "telecom": [{ "system": "url", "value": "https://www.data4life.care" }]
+        }
+      ],
+      "name": "Yesnodontknow",
+      "status": "active",
+      "description": "Yes/no/don't know",
+      "immutable": false,
+      "compose": {
+        "include": [
+          {
+            "system": "http://loinc.org",
+            "concept": [
+              { "code": "LA33-6" },
+              { "code": "LA32-8" },
+              { "code": "LA12688-0" }
+            ]
+          }
+        ]
+      },
+      "language": "en",
+      "expansion": {
+        "timestamp": "2020-05-27T11:22:49.943Z",
+        "identifier": "urn:uuid:cb2433bb-4a75-440c-a3d4-eaf216ddc8d7",
+        "contains": [
+          { "code": "LA33-6", "system": "http://loinc.org", "display": "Yes" },
+          { "code": "LA32-8", "system": "http://loinc.org", "display": "No" },
+          {
+            "code": "LA12688-0",
+            "system": "http://loinc.org",
+            "display": "Don't know"
+          }
+        ]
+      },
+      "id": "yesnodontknow"
+    }
+  ]
+}

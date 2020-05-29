@@ -11,8 +11,10 @@ import { RouterHistory } from '@stencil/router';
 import i18next from '../../../global/utils/i18n';
 import { LOCAL_STORAGE_KEYS } from '../../../global/constants';
 import { IS_CHARITE } from '../../../global/layouts';
-import { createFHIRQuestionnaireResponse } from '../../../global/fhir';
-import { generateValuePairs } from '../../qr-code/utils';
+import { FHIRQuestionnaire, buildQuestionnaireResponse } from '../../../global/fhir';
+import COVAPP_QUESTIONNAIRE_EN from '../../../global/fhir/fhir-schemas/cov-app-en-packed-r4.questionnaire.json';
+import COVAPP_QUESTIONNAIRE_DE from '../../../global/fhir/fhir-schemas/cov-app-de-packed-r4.questionnaire.json';
+
 import { WHITELISTED_DATA4LIFE_ORIGINS } from '../../../global/custom';
 
 enum EXPORT_MODE {
@@ -134,8 +136,12 @@ export class Export {
     }
 
     const answers = JSON.parse(localStorage.getItem('answers'));
-    const valuePairs = generateValuePairs(answers);
-    const fhir = createFHIRQuestionnaireResponse(valuePairs, this.currentLanguage);
+    const fhir = buildQuestionnaireResponse(
+      answers,
+      ((this.currentLanguage === 'de'
+        ? COVAPP_QUESTIONNAIRE_DE
+        : COVAPP_QUESTIONNAIRE_EN) as unknown) as FHIRQuestionnaire
+    );
 
     this.submitted = true;
     localStorage.setItem(LOCAL_STORAGE_KEYS.EXPORTED, 'true');

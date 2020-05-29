@@ -8,7 +8,8 @@ import {
   checkGuard,
   updateScoreData,
 } from '../views/questionnaire/utils';
-import { QRCode, KeyValue } from './qr-code';
+import { QRCode } from './qr-code';
+import { KeyValue } from './utils';
 
 let XMLPrefix = `<PATIENT><V0>${QUESTIONNAIRE_VERSION}</V0>`;
 const XMLSuffix = '</PATIENT>';

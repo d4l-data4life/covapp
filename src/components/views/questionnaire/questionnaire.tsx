@@ -66,8 +66,8 @@ export class Questionnaire {
 
   // TODO: https://github.com/gesundheitscloud/infection-risk-assessment/pull/76
   // This is only a temporary fix. This should be moved/handled differently
-  @Listen('onDateChange')
-  onDateChangeHandler(event: CustomEvent) {
+  @Listen('dateChange')
+  dateChangeHandler(event: CustomEvent) {
     const { currentStep } = this;
     const {
       detail: { value },
