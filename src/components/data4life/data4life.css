@@ -36,3 +36,15 @@
 .data4life__footer {
   padding: 1.5em 0 0;
 }
+
+.data4life__footer .data4life__caption {
+  color: var(--c-primary);
+  font-size: inherit;
+  margin: 0 0 1em;
+  padding: 0;
+}
+
+.data4life__app-store-links {
+  justify-content: center;
+  margin: 1em;
+}

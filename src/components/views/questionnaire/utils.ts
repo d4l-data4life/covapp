@@ -52,10 +52,8 @@ export const checkGuard = (
   answers: Answers
 ): number => {
   const nextQuestion = QUESTIONS[questionIndex];
-  if (nextQuestion && nextQuestion.guard) {
-    if (!nextQuestion.guard.evaluate(score, answers)) {
+  if (nextQuestion?.guard && !nextQuestion.guard.evaluate(score, answers)) {
       return checkGuard(questionIndex + 1, score, answers);
-    }
   }
   return questionIndex;
 };

@@ -9,13 +9,17 @@ import {
 } from '@stencil/core';
 import { RouterHistory } from '@stencil/router';
 import i18next from '../../../global/utils/i18n';
-import { LOCAL_STORAGE_KEYS } from '../../../global/constants';
+import { LOCAL_STORAGE_KEYS, MOBILE_ORIGINS } from '../../../global/constants';
 import { IS_CHARITE } from '../../../global/layouts';
 import { FHIRQuestionnaire, buildQuestionnaireResponse } from '../../../global/fhir';
 import COVAPP_QUESTIONNAIRE_EN from '../../../global/fhir/fhir-schemas/cov-app-en-packed-r4.questionnaire.json';
 import COVAPP_QUESTIONNAIRE_DE from '../../../global/fhir/fhir-schemas/cov-app-de-packed-r4.questionnaire.json';
 
-import { WHITELISTED_DATA4LIFE_ORIGINS } from '../../../global/custom';
+import {
+  WHITELISTED_DATA4LIFE_ORIGINS,
+  DATA4LIFE_ANDROID_BASEURL,
+  DATA4LIFE_IOS_BASEURL,
+} from '../../../global/custom';
 
 enum EXPORT_MODE {
   IFRAME,
@@ -90,7 +94,9 @@ export class Export {
   componentWillLoad() {
     const { origin } = this.history.location.query;
     const isIframeContext = window.parent && window.parent !== window;
-    const isOauthContext = origin && WHITELISTED_DATA4LIFE_ORIGINS.includes(origin);
+    const isOauthContext =
+      origin &&
+      (WHITELISTED_DATA4LIFE_ORIGINS.includes(origin) || !!MOBILE_ORIGINS[origin]);
 
     if (!IS_CHARITE || (!isIframeContext && !isOauthContext)) {
       this.history.replace('/');
@@ -123,7 +129,33 @@ export class Export {
     clearInterval(this.timeout);
   }
 
-  exportData = (event: Event) => {
+  exportOauth(fhir, version) {
+    const { origin } = this;
+    const encodedFhir = encodeURIComponent(window.btoa(JSON.stringify(fhir)));
+
+    if (WHITELISTED_DATA4LIFE_ORIGINS.includes(origin)) {
+      document.location.href = `${this.origin}${
+        this.origin.includes('localhost') ? '' : '/corona'
+      }/import#fhir=${encodedFhir}`;
+      return;
+    }
+
+    const mobileOrigin = MOBILE_ORIGINS[origin];
+    const mobileBaseUrl =
+      mobileOrigin &&
+      {
+        ANDROID: DATA4LIFE_ANDROID_BASEURL,
+        IOS: DATA4LIFE_IOS_BASEURL,
+      }[mobileOrigin];
+    if (mobileBaseUrl) {
+      document.location.href = `${mobileBaseUrl}?data=${encodedFhir}&version=${version}`;
+      return;
+    }
+
+    throw new Error(`Export to origin ${origin} failed`);
+  }
+
+  exportData(event: Event) {
     event.preventDefault();
 
     if (!this.origin) {
@@ -136,12 +168,10 @@ export class Export {
     }
 
     const answers = JSON.parse(localStorage.getItem('answers'));
-    const fhir = buildQuestionnaireResponse(
-      answers,
-      ((this.currentLanguage === 'de'
-        ? COVAPP_QUESTIONNAIRE_DE
-        : COVAPP_QUESTIONNAIRE_EN) as unknown) as FHIRQuestionnaire
-    );
+    const questionnaire = ((this.currentLanguage === 'de'
+      ? COVAPP_QUESTIONNAIRE_DE
+      : COVAPP_QUESTIONNAIRE_EN) as unknown) as FHIRQuestionnaire;
+    const fhir = buildQuestionnaireResponse(answers, questionnaire);
 
     this.submitted = true;
     localStorage.setItem(LOCAL_STORAGE_KEYS.EXPORTED, 'true');
@@ -151,11 +181,9 @@ export class Export {
     }
 
     if (this.mode === EXPORT_MODE.OAUTH) {
-      document.location.href = `${this.origin}${
-        this.origin.includes('localhost') ? '' : '/corona'
-      }/import#fhir=${encodeURIComponent(window.btoa(JSON.stringify(fhir)))}`;
+      this.exportOauth(fhir, questionnaire.version);
     }
-  };
+  }
 
   get button() {
     if (!this.hasFinishedQuestionnaire) {
@@ -190,12 +218,12 @@ export class Export {
   }
 
   render() {
-    const { hasFinishedQuestionnaire, submitted, exportData, origin, button } = this;
+    const { hasFinishedQuestionnaire, submitted, origin, button } = this;
     return (
       origin && (
         <div class="c-card-wrapper export">
           <form
-            onSubmit={(event: Event) => exportData(event)}
+            onSubmit={(event: Event) => this.exportData(event)}
             data-test="dataTransferForm"
           >
             <d4l-card classes="card--desktop card--text-center card--no-padding">

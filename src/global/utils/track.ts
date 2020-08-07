@@ -37,6 +37,8 @@ export const TRACKING_EVENTS: TrackingEvents = {
   SUMMARY_DELETE: ['Summary', 'Delete code and answers'],
   SUMMARY_DATA4LIFE_NO_ACCOUNT: ['Summary', 'Lets start - no account'],
   SUMMARY_DATA4LIFE_ACCOUNT: ['Summary', 'Send answers - account'],
+  SUMMARY_DATA4LIFE_DOWNLOAD_ANDROID: ['Summary', 'Download - Android'],
+  SUMMARY_DATA4LIFE_DOWNLOAD_IOS: ['Summary', 'Download - iOS'],
   DATA_DONATION_CONSENT: ['Data Donation', 'Consent'], // appending value depening on consent given or not
   DATA_DONATION_SENT: ['Data Donation', 'Sent'], // appending value depending on success or error while sending
 };

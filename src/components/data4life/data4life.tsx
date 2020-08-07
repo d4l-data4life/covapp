@@ -3,7 +3,12 @@ import i18next from 'i18next';
 
 import { DATA4LIFE_URL } from '../../global/custom';
 import { trackEvent, TRACKING_EVENTS } from '../../global/utils/track';
-import { LOCAL_STORAGE_KEYS } from '../../global/constants';
+import { LOCAL_STORAGE_KEYS, ROUTES } from '../../global/constants';
+
+const APP_STORE_LINKS = {
+  ANDROID: 'https://play.google.com/store/apps/details?id=care.data4life.hub',
+  IOS: 'https://apps.apple.com/de/app/id1506952048',
+};
 
 @Component({
   styleUrl: ' data4life.css',
@@ -27,6 +32,14 @@ export class Data4LifeComponent {
 
   get data4lifeOrigin() {
     return localStorage.getItem(LOCAL_STORAGE_KEYS.SOURCE);
+  }
+
+  get isMobile() {
+    return false; // temporary fix until the mobile apps are in their stores
+    // TODO re-enable
+    /* return /[^\w](android|iphone|ipad|ipod)[^\w].*[^\w]mobile[^\w]/i.test(
+      navigator.userAgent
+    );*/
   }
 
   render() {
@@ -77,17 +90,39 @@ export class Data4LifeComponent {
             </div>
 
             <div class="data4life__footer" slot="card-footer">
-              <a href={`${DATA4LIFE_URL}?source=CovApp`}>
-                <d4l-button
-                  classes="button--block"
-                  data-test="startExportButton"
-                  text={i18next.t('data4life_go-to_button')}
-                  onClick={() =>
-                    trackEvent(TRACKING_EVENTS.SUMMARY_DATA4LIFE_NO_ACCOUNT)
-                  }
-                  is-route-link
-                />
-              </a>
+              {this.isMobile ? (
+                <div>
+                  <h3 class="data4life__caption">
+                    {i18next.t('data4life_download-app_title')}
+                  </h3>
+                  <d4l-app-store-links
+                    classes="data4life__app-store-links"
+                    language={this.currentLanguage}
+                    link-android={APP_STORE_LINKS.ANDROID}
+                    text-android={i18next.t('data4life_download-app-android_button')}
+                    link-ios={APP_STORE_LINKS.IOS}
+                    text-ios={i18next.t('data4life_download-app-ios_button')}
+                    handleClickAndroid={() =>
+                      trackEvent(TRACKING_EVENTS.SUMMARY_DATA4LIFE_DOWNLOAD_ANDROID)
+                    }
+                    handleClickIos={() =>
+                      trackEvent(TRACKING_EVENTS.SUMMARY_DATA4LIFE_DOWNLOAD_IOS)
+                    }
+                  />
+                </div>
+              ) : (
+                <a href={`${DATA4LIFE_URL}?source=CovApp`}>
+                  <d4l-button
+                    classes="button--block"
+                    data-test="startExportButton"
+                    text={i18next.t('data4life_go-to_button')}
+                    onClick={() =>
+                      trackEvent(TRACKING_EVENTS.SUMMARY_DATA4LIFE_NO_ACCOUNT)
+                    }
+                    is-route-link
+                  />
+                </a>
+              )}
             </div>
           </d4l-card>
         ) : (
@@ -106,17 +141,19 @@ export class Data4LifeComponent {
             </div>
 
             <div class="data4life__footer" slot="card-footer">
-              <a href={`${this.data4lifeOrigin}/corona/import/?source=CovApp`}>
+              <stencil-route-link
+                url={`${ROUTES.EXPORT}?origin=${this.data4lifeOrigin}`}
+              >
                 <d4l-button
                   classes="button--block"
-                  data-test="goToData4LifeButton"
-                  text={i18next.t('data4life_go-to_button')}
+                  data-test="goToExportButton"
+                  text={i18next.t('data4life_go-to-export_button')}
                   onClick={() =>
                     trackEvent(TRACKING_EVENTS.SUMMARY_DATA4LIFE_ACCOUNT)
                   }
                   is-route-link
                 />
-              </a>
+              </stencil-route-link>
             </div>
           </d4l-card>
         )}

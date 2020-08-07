@@ -28,7 +28,9 @@
   --padding-main: 1em;
   --padding-card-default: 1.5em;
   --header-height-desktop: 154.5px;
-  --footer-height-desktop: 70px;
+  --header-height-mobile: 76px;
+  --footer-height-desktop: 82px;
+  --footer-height-mobile: 168px;
   --max-width-desktop: 600px;
 
   /* Min width media queries breakpoints */

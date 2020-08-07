@@ -8,7 +8,12 @@ import {
   State,
 } from '@stencil/core';
 import { RouterHistory } from '@stencil/router';
-import { LOCAL_STORAGE_KEYS, ROUTES, TWO_WEEKS } from '../../../global/constants';
+import {
+  LOCAL_STORAGE_KEYS,
+  ROUTES,
+  TWO_WEEKS,
+  MOBILE_ORIGINS,
+} from '../../../global/constants';
 import { CATEGORIES, QUESTION } from '../../../global/questions';
 import { getToday } from '../../../global/utils/date';
 import i18next from '../../../global/utils/i18n';
@@ -167,10 +172,9 @@ export class Summary {
   };
 
   get isFromData4Life() {
-    return localStorage.getItem(LOCAL_STORAGE_KEYS.SOURCE)
-      ? WHITELISTED_DATA4LIFE_ORIGINS.includes(
-          localStorage.getItem(LOCAL_STORAGE_KEYS.SOURCE)
-        )
+    const source = localStorage.getItem(LOCAL_STORAGE_KEYS.SOURCE);
+    return source
+      ? WHITELISTED_DATA4LIFE_ORIGINS.includes(source) || !!MOBILE_ORIGINS[source]
       : false;
   }
 

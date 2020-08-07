@@ -179,7 +179,7 @@ export class Questionnaire {
 
   submitForm = event => {
     event.preventDefault();
-    event.target.querySelector('input').focus();
+    event.target.querySelector('input')?.focus();
     this.moveToNextStep();
   };
 
