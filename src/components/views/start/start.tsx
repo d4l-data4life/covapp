@@ -7,7 +7,11 @@ import {
   State,
   Prop,
 } from '@stencil/core';
-import { LOCAL_STORAGE_KEYS, ROUTES } from '../../../global/constants';
+import {
+  LOCAL_STORAGE_KEYS,
+  ROUTES,
+  MOBILE_ORIGINS,
+} from '../../../global/constants';
 import { IS_CHARITE, IS_CUSTOM } from '../../../global/layouts';
 import { RouterHistory } from '@stencil/router';
 import i18next from '../../../global/utils/i18n';
@@ -61,9 +65,12 @@ export class Start {
     this.completed = completedFlag === 'true';
     this.started = completedFlag === 'false';
 
-    const { query: { source } = {} } = this.history.location;
-    if (source && WHITELISTED_DATA4LIFE_ORIGINS.includes(decodeURI(source))) {
-      localStorage.setItem(LOCAL_STORAGE_KEYS.SOURCE, decodeURI(source));
+    const { query = {} } = this.history.location;
+    const source = query.source && decodeURI(query.source);
+    const isWhitelistedOrigin = WHITELISTED_DATA4LIFE_ORIGINS.includes(source);
+    const isMobileOrigin = !!MOBILE_ORIGINS[source];
+    if (isWhitelistedOrigin || isMobileOrigin) {
+      localStorage.setItem(LOCAL_STORAGE_KEYS.SOURCE, source);
     } else {
       localStorage.removeItem(LOCAL_STORAGE_KEYS.SOURCE);
     }

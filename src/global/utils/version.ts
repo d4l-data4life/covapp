@@ -11,6 +11,10 @@ const set = () => {
 
 const reset = () => {
   for (const key in LOCAL_STORAGE_KEYS) {
+    if (LOCAL_STORAGE_KEYS[key] === LOCAL_STORAGE_KEYS.SOURCE) {
+      continue;
+    }
+
     localStorage.removeItem(LOCAL_STORAGE_KEYS[key]);
   }
 };

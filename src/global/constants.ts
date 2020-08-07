@@ -30,6 +30,11 @@ export const LOCAL_STORAGE_KEYS = {
   EXPORTED: 'exported',
 };
 
+export const MOBILE_ORIGINS = {
+  native_android: 'ANDROID',
+  native_ios: 'IOS',
+};
+
 export const IS_DEV =
   window.location.hostname === 'localhost' ||
   window.location.hostname === '127.0.0.1';
