@@ -1,6 +1,11 @@
+import { IS_CHARITE } from '../layouts';
+
 export const ACCEPTS_COOKIES = 'accepts_cookies';
 export const ACCEPTS_TRACKING = 'accepts_tracking';
 export const USER_LANGUAGE = 'user_language';
+export const SHOW_D4L_BANNER = 'show_d4l_banner';
+export const SOURCE = 'source';
+export const COMPLETED = 'completed';
 
 type IASettings = {
   [key: string]: string;
@@ -16,14 +21,14 @@ class Settings {
     return this.getLocalStorageValue(ACCEPTS_COOKIES) === 'true';
   }
   set acceptsCookies(isTrue: boolean) {
-    this.setLocalStorageValue(ACCEPTS_COOKIES, isTrue ? 'true' : 'false', false);
+    this.setLocalStorageValue(ACCEPTS_COOKIES, `${isTrue}`, false);
   }
 
   get acceptsTracking() {
     return this.getLocalStorageValue(ACCEPTS_TRACKING) === 'true';
   }
   set acceptsTracking(isTrue: boolean) {
-    this.setLocalStorageValue(ACCEPTS_TRACKING, isTrue ? 'true' : 'false', false);
+    this.setLocalStorageValue(ACCEPTS_TRACKING, `${isTrue}`, false);
   }
 
   get hasMadeCookieChoice() {
@@ -40,17 +45,42 @@ class Settings {
     this.setLocalStorageValue(USER_LANGUAGE, language);
   }
 
+  get showD4lBanner() {
+    return IS_CHARITE && this.getLocalStorageValue(SHOW_D4L_BANNER) !== 'false';
+  }
+  set showD4lBanner(isTrue: boolean) {
+    IS_CHARITE && this.setLocalStorageValue(SHOW_D4L_BANNER, `${isTrue}`, false);
+  }
+
+  get source() {
+    return this.getLocalStorageValue(SOURCE);
+  }
+  set source(source: string) {
+    this.setLocalStorageValue(SOURCE, source, false);
+  }
+
+  get completed() {
+    return this.getLocalStorageValue(COMPLETED) === 'true';
+  }
+  set completed(isTrue: boolean) {
+    this.setLocalStorageValue(COMPLETED, `${isTrue}`, false);
+  }
+
+  get started() {
+    return this.getLocalStorageValue(COMPLETED) === 'false';
+  }
+
   getLocalStorageValue(key: string) {
-    if (key in this) {
-      return this[key];
+    if (`_${key}` in this) {
+      return this[`_${key}`];
     }
-    if (!window.localStorage) {
+    if (!('localStorage' in window)) {
       return null;
     }
 
     const value = localStorage.getItem(key);
     if (value !== null) {
-      this[key] = value;
+      this[`_${key}`] = value;
     }
 
     return value;
@@ -62,13 +92,23 @@ class Settings {
       return;
     }
 
-    this[key] = value;
-    if (window.localStorage) {
+    this[`_${key}`] = value;
+    if ('localStorage' in window) {
       localStorage.setItem(key, value);
     }
 
     this._changeHandlers.forEach(handler => handler(key, value));
     return value;
+  }
+
+  remove(key: string) {
+    delete this[`_${key}`];
+    if ('localStorage' in window) {
+      localStorage.removeItem(key);
+    }
+
+    this._changeHandlers.forEach(handler => handler(key, undefined));
+    return undefined;
   }
 
   onChange(handler: Function) {

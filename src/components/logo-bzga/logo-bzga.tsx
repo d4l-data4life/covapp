@@ -14,7 +14,11 @@ export class LogoBZGA {
 
   render() {
     return (
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 104 39" class={this.styleClass}>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 104 39"
+        class={this.styleClass}
+      >
         <g fill="none" fill-rule="evenodd" transform="translate(.556)">
           <path fill="#FFFFFE" d="M0 39h48.48V.368H0z" clip="url(#b)" />
           <path

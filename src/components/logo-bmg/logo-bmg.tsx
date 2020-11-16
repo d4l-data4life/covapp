@@ -14,7 +14,11 @@ export class LogoBMG {
 
   render() {
     return (
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 92 47" class={this.styleClass}>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 92 47"
+        class={this.styleClass}
+      >
         <g fill="none">
           <path
             fill="#000"

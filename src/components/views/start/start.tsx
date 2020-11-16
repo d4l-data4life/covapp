@@ -7,17 +7,15 @@ import {
   State,
   Prop,
 } from '@stencil/core';
-import {
-  LOCAL_STORAGE_KEYS,
-  ROUTES,
-  MOBILE_ORIGINS,
-} from '../../../global/constants';
+import { ROUTES, MOBILE_ORIGINS } from '../../../global/constants';
 import { IS_CHARITE, IS_CUSTOM } from '../../../global/layouts';
 import { RouterHistory } from '@stencil/router';
 import i18next from '../../../global/utils/i18n';
+import { getRootCSSPropertyValue } from '../../../global/utils/css-properties';
 import { trackEvent, TRACKING_EVENTS } from '../../../global/utils/track';
 import version from '../../../global/utils/version';
 import { WHITELISTED_DATA4LIFE_ORIGINS } from '../../../global/custom';
+import settings, { SOURCE } from '../../../global/utils/settings';
 
 const NEXT_ROUTE = {
   DEFAULT: {
@@ -61,18 +59,17 @@ export class Start {
     if (!version.match()) {
       version.reset();
     }
-    const completedFlag = localStorage.getItem(LOCAL_STORAGE_KEYS.COMPLETED);
-    this.completed = completedFlag === 'true';
-    this.started = completedFlag === 'false';
+    this.completed = settings.completed;
+    this.started = settings.started;
 
     const { query = {} } = this.history.location;
     const source = query.source && decodeURI(query.source);
     const isWhitelistedOrigin = WHITELISTED_DATA4LIFE_ORIGINS.includes(source);
     const isMobileOrigin = !!MOBILE_ORIGINS[source];
     if (isWhitelistedOrigin || isMobileOrigin) {
-      localStorage.setItem(LOCAL_STORAGE_KEYS.SOURCE, source);
+      settings.source = source;
     } else {
-      localStorage.removeItem(LOCAL_STORAGE_KEYS.SOURCE);
+      settings.remove(SOURCE);
     }
   };
 
@@ -86,7 +83,18 @@ export class Start {
     this.started = false;
   };
 
+  trackAccordionToggle(index: number, expanded: boolean) {
+    trackEvent([
+      ...(expanded
+        ? TRACKING_EVENTS.LANDING_PAGE_ACCORDION_EXPAND
+        : TRACKING_EVENTS.LANDING_PAGE_ACCORDION_COLLAPSE),
+      `Accordion ${index}`,
+    ]);
+  }
+
   render() {
+    const BLOCKS_COUNT = 5;
+
     return (
       <div class="c-card-wrapper start">
         <d4l-card classes="card--desktop card--text-center">
@@ -148,17 +156,50 @@ export class Start {
             )}
           </div>
         </d4l-card>
+
         {!IS_CUSTOM && <ia-logo-component />}
-        <div class="u-padding-vertical--normal">
-          <h3 class="o-headline-3">{i18next.t('start_sub_headline_2')}</h3>
-          <div innerHTML={i18next.t('start_paragraph_2')}></div>
-          <h3 class="o-headline-3">{i18next.t('start_sub_headline_3')}</h3>
-          <div innerHTML={i18next.t('start_paragraph_3')}></div>
-          <h3 class="o-headline-3">{i18next.t('start_sub_headline_4')}</h3>
-          <div innerHTML={i18next.t('start_paragraph_4')}></div>
-          <h3 class="o-headline-3">{i18next.t('start__sub_headline_5')}</h3>
-          <ia-call-to-action type="OPEN_SOURCE" />
-          <ia-call-to-action type="WIDGET" />
+
+        <div class="u-padding-vertical--extra-small">
+          {new Array(BLOCKS_COUNT).fill(null).map((_, index) => {
+            const infotext = i18next.t(`start_block_${index + 1}_infotext`);
+            const isWidgets = infotext === '{openSourceWidgets}';
+
+            return (
+              <div class="u-padding-top--extra-small" key={index}>
+                <d4l-accordion
+                  classes="start__accordion"
+                  open={false}
+                  headerBackgroundColor={getRootCSSPropertyValue('--c-gray')}
+                  buttonProps={{
+                    'data-test': `toggleBlock${index + 1}`,
+                  }}
+                  handleToggle={expanded =>
+                    this.trackAccordionToggle(index + 1, expanded)
+                  }
+                >
+                  <h3
+                    class="o-accordion-headline u-padding-horizontal--extra-small u-text-align--left"
+                    slot="accordion-header"
+                  >
+                    {i18next.t(`start_block_${index + 1}_headline`)}
+                  </h3>
+                  <div
+                    class="u-padding-vertical--normal u-padding-horizontal--extra-small"
+                    slot="accordion-panel"
+                  >
+                    {isWidgets ? (
+                      <div>
+                        <ia-call-to-action type="OPEN_SOURCE" showCard={false} />
+                        <ia-call-to-action type="WIDGET" showCard={false} />
+                      </div>
+                    ) : (
+                      <div innerHTML={infotext} />
+                    )}
+                  </div>
+                </d4l-accordion>
+              </div>
+            );
+          })}
         </div>
       </div>
     );

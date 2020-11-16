@@ -20,6 +20,7 @@ import {
   DATA4LIFE_ANDROID_BASEURL,
   DATA4LIFE_IOS_BASEURL,
 } from '../../../global/custom';
+import settings from '../../../global/utils/settings';
 
 enum EXPORT_MODE {
   IFRAME,
@@ -108,8 +109,7 @@ export class Export {
       this.origin = origin;
     }
 
-    this.hasFinishedQuestionnaire =
-      localStorage.getItem(LOCAL_STORAGE_KEYS.COMPLETED) === 'true';
+    this.hasFinishedQuestionnaire = settings.completed;
     this.isEmbedded.emit(true);
 
     this.postMessage(this.hasFinishedQuestionnaire ? 'ready' : 'redirect');
@@ -117,8 +117,7 @@ export class Export {
 
   componentDidLoad() {
     this.timeout = setInterval(() => {
-      const hasFinishedQuestionnaire =
-        localStorage.getItem(LOCAL_STORAGE_KEYS.COMPLETED) === 'true';
+      const hasFinishedQuestionnaire = settings.completed;
       if (this.hasFinishedQuestionnaire !== hasFinishedQuestionnaire) {
         this.hasFinishedQuestionnaire = hasFinishedQuestionnaire;
       }

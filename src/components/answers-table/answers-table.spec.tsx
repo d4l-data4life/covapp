@@ -6,9 +6,7 @@ describe('answers-table', () => {
   it('builds', async () => {
     const page = await newSpecPage({
       components: [AnswersTable],
-      template: () => (
-        <ia-answers-table/>
-      ),
+      template: () => <ia-answers-table />,
     });
     expect(page.rootInstance).toBeTruthy();
   });

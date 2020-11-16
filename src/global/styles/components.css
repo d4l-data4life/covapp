@@ -73,12 +73,16 @@
 }
 
 main {
-  min-height: calc(100vh - var(--header-height-mobile) - var(--footer-height-mobile) - 80px);
+  min-height: calc(
+    100vh - var(--header-height-mobile) - var(--footer-height-mobile) - 80px
+  );
 }
 
 @media screen and (min-width: 768px) {
   main {
-    min-height: calc(100vh - var(--header-height-desktop) - var(--footer-height-desktop)) ;
+    min-height: calc(
+      100vh - var(--header-height-desktop) - var(--footer-height-desktop)
+    );
   }
 
   .c-header {

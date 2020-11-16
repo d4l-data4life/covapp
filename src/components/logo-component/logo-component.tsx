@@ -1,7 +1,14 @@
 import { Component, h, State, Prop, Listen } from '@stencil/core';
 import i18next from 'i18next';
 import { CUSTOM_LOGO } from '../../global/custom';
-import { IS_CUSTOM, IS_COLLABORATION, IS_CHARITE, IS_BMG, IS_BZGA, IS_RKI } from '../../global/layouts';
+import {
+  IS_CUSTOM,
+  IS_COLLABORATION,
+  IS_CHARITE,
+  IS_BMG,
+  IS_BZGA,
+  IS_RKI,
+} from '../../global/layouts';
 @Component({
   styleUrl: ' logo-component.css',
   tag: 'ia-logo-component',

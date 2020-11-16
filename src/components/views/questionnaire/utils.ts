@@ -53,7 +53,7 @@ export const checkGuard = (
 ): number => {
   const nextQuestion = QUESTIONS[questionIndex];
   if (nextQuestion?.guard && !nextQuestion.guard.evaluate(score, answers)) {
-      return checkGuard(questionIndex + 1, score, answers);
+    return checkGuard(questionIndex + 1, score, answers);
   }
   return questionIndex;
 };

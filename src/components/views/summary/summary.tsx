@@ -22,11 +22,9 @@ import version from '../../../global/utils/version';
 import { RiskSpreading } from './snippets/risk-spreading';
 import { RiskVeryIll } from './snippets/risk-very-ill';
 import { Answers, Scores } from '../questionnaire/questionnaire';
+import { WHITELISTED_DATA4LIFE_ORIGINS } from '../../../global/custom';
+import settings from '../../../global/utils/settings';
 import { IS_CHARITE } from '../../../global/layouts';
-import {
-  WHITELISTED_DATA4LIFE_ORIGINS,
-  DATA4LIFE_URL,
-} from '../../../global/custom';
 
 @Component({
   styleUrl: 'summary.css',
@@ -62,7 +60,7 @@ export class Summary {
     const answerKeys = Object.keys(this.answers);
     delete this.answers[answerKeys[answerKeys.length - 1]];
     localStorage.setItem(LOCAL_STORAGE_KEYS.ANSWERS, JSON.stringify(this.answers));
-    localStorage.setItem(LOCAL_STORAGE_KEYS.COMPLETED, 'false');
+    settings.completed = false;
   }
 
   get currentLanguage() {
@@ -168,11 +166,11 @@ export class Summary {
     this.scores = availableScores ? availableScores : {};
     this.setResultCase();
     this.setSnippetState();
-    localStorage.setItem(LOCAL_STORAGE_KEYS.COMPLETED, 'true');
+    settings.completed = true;
   };
 
   get isFromData4Life() {
-    const source = localStorage.getItem(LOCAL_STORAGE_KEYS.SOURCE);
+    const { source } = settings;
     return source
       ? WHITELISTED_DATA4LIFE_ORIGINS.includes(source) || !!MOBILE_ORIGINS[source]
       : false;
@@ -217,9 +215,7 @@ export class Summary {
           </div>
         </d4l-card>
 
-        {!completedExport && IS_CHARITE && DATA4LIFE_URL && (
-          <ia-data4life long={!isFromData4Life}></ia-data4life>
-        )}
+        {!completedExport && IS_CHARITE && isFromData4Life && <ia-data4life />}
 
         <d4l-card classes="card--desktop summary__content">
           <div slot="card-content">
@@ -239,6 +235,8 @@ export class Summary {
             />
           </div>
         </d4l-card>
+
+        {IS_CHARITE && <ia-app-recommendations isFromData4Life={isFromData4Life} />}
       </div>
     );
   }

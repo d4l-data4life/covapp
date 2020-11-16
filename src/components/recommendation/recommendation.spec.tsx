@@ -6,9 +6,7 @@ describe('recommendation', () => {
   it('builds', async () => {
     const page = await newSpecPage({
       components: [Recommendation],
-      template: () => (
-        <ia-recommendation/>
-      ),
+      template: () => <ia-recommendation />,
     });
     expect(page.rootInstance).toBeTruthy();
   });

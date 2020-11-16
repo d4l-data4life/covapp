@@ -1,7 +1,7 @@
-import { Component, State, Listen, h } from '@stencil/core';
+import { Component, State, Listen, h, Prop } from '@stencil/core';
 import i18next, { initialLanguage, LANGUAGES } from '../../global/utils/i18n';
 
-import { ROUTES, IS_DEV } from '../../global/constants';
+import { ROUTES, IS_DEV, APP_RECOMMENDATIONS_ID } from '../../global/constants';
 import {
   IS_CHARITE,
   IS_CUSTOM,
@@ -10,10 +10,15 @@ import {
   IS_BMG,
 } from '../../global/layouts';
 import { TRACKING_IS_ENABLED } from '../../global/custom';
-import settings from '../../global/utils/settings';
+import settings, {
+  SHOW_D4L_BANNER,
+  COMPLETED,
+  SOURCE,
+} from '../../global/utils/settings';
 
 import { Language } from '@d4l/web-components-library/dist/types/components/LanguageSwitcher/language-switcher';
-import { trackEvent } from '../../global/utils/track';
+import { trackEvent, TRACKING_EVENTS } from '../../global/utils/track';
+import { RouterHistory, injectHistory } from '@stencil/router';
 
 const dnt = navigator.doNotTrack === '1';
 
@@ -23,11 +28,13 @@ const dnt = navigator.doNotTrack === '1';
 })
 export class AppRoot {
   private connectTranslationsEl: HTMLConnectTranslationsElement;
+  @Prop() history: RouterHistory;
   @State() language: Language;
-  @State() appMessage: any = null;
   @State() showLogoHeader: boolean = false;
+  @State() d4lBannerIdentity: number = Date.now();
   @State() isEmbedded: boolean = false;
   @State() hasMadeCookieChoice: boolean;
+  @State() showErrorBanner: boolean = false;
 
   @Listen('changedLanguage', {
     target: 'window',
@@ -42,16 +49,9 @@ export class AppRoot {
     return LANGUAGES.find(({ code }) => code === languageCode);
   }
 
-  @Listen('newAppMessage', { target: 'document', passive: true })
-  handleAppMessage(event: CustomEvent) {
-    this.appMessage = null;
-
-    setTimeout(() => {
-      this.appMessage = {
-        type: event.detail.type,
-        text: event.detail.text,
-      };
-    }, 0);
+  @Listen('showErrorBanner', { target: 'window' })
+  handleShowErrorBanner() {
+    this.showErrorBanner = true;
   }
 
   @Listen('showLogoHeader')
@@ -62,6 +62,15 @@ export class AppRoot {
   @Listen('isEmbedded')
   isEmbeddedListener(event: CustomEvent) {
     this.isEmbedded = !!event.detail;
+  }
+
+  get showD4lBanner() {
+    return (
+      settings.showD4lBanner &&
+      settings.completed &&
+      !this.isEmbedded &&
+      !settings.source
+    );
   }
 
   saveSettings = ({ acceptCookies, acceptTracking }) => {
@@ -79,9 +88,47 @@ export class AppRoot {
     }
   }
 
+  handleBannerClick() {
+    const element = document.getElementById(APP_RECOMMENDATIONS_ID);
+    if (element) {
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+        inline: 'nearest',
+      });
+    } else {
+      this.history.push(`${ROUTES.SUMMARY}#${APP_RECOMMENDATIONS_ID}`, {});
+    }
+    trackEvent(TRACKING_EVENTS.HEADER_BANNER_CLICK);
+  }
+
+  handleBannerClose() {
+    settings.showD4lBanner = false;
+    trackEvent(TRACKING_EVENTS.HEADER_BANNER_CLOSE);
+  }
+
   async componentWillLoad() {
+    // check for native date picker support
+    // inspired by https://github.com/Modernizr/Modernizr/blob/master/feature-detects/inputtypes.js
+    const testDateElement = document.createElement('input');
+    testDateElement.setAttribute('type', 'date');
+    testDateElement.value = 'text'; // should be sanitized away
+    localStorage.setItem(
+      'supportsDateElement',
+      String(
+        testDateElement.getAttribute('type') !== 'text' &&
+        testDateElement.value !== 'text'
+      )
+    );
+
+
     this.language = this.getLanguageByCode(await initialLanguage);
     this.hasMadeCookieChoice = IS_DEV || settings.hasMadeCookieChoice;
+    settings.onChange(
+      key =>
+        [SHOW_D4L_BANNER, COMPLETED, SOURCE].includes(key) &&
+        (this.d4lBannerIdentity = new Date().getTime())
+    );
   }
 
   componentDidLoad() {
@@ -92,8 +139,9 @@ export class AppRoot {
   render() {
     const {
       language,
-      appMessage,
       showLogoHeader,
+      showD4lBanner,
+      showErrorBanner,
       isEmbedded,
       saveSettings,
       hasMadeCookieChoice,
@@ -101,35 +149,6 @@ export class AppRoot {
 
     return (
       <connect-translations ref={el => (this.connectTranslationsEl = el)}>
-        <div
-          class={`app-message ease-in-top ${
-            appMessage ? 'ease-in-top--active' : ''
-          }`}
-        >
-          {appMessage && (
-            <d4l-snack-bar
-              type={appMessage.type}
-              data-test="snackBar"
-              data-test-context={appMessage.type}
-            >
-              <div slot="snack-bar-icon">
-                <d4l-icon-info classes="icon--small" />
-              </div>
-              <div class="app-message__content" slot="snack-bar-content">
-                {appMessage.text}
-              </div>
-              <div class="app-message__controls" slot="snack-bar-controls">
-                <d4l-button
-                  data-test="snackBarClose"
-                  classes="button--text button--uppercase"
-                  text="Dismiss"
-                  handleClick={() => (this.appMessage = null)}
-                />
-              </div>
-            </d4l-snack-bar>
-          )}
-        </div>
-
         {TRACKING_IS_ENABLED && !hasMadeCookieChoice && !dnt && !isEmbedded && (
           <d4l-cookie-bar
             classes="cookie-bar app__cookie-bar"
@@ -150,35 +169,62 @@ export class AppRoot {
             </div>
           </d4l-cookie-bar>
         )}
+        {showD4lBanner && (
+          <d4l-banner
+            noreferrer={false}
+            classes="banner--slim"
+            handleClick={() => this.handleBannerClick()}
+            handleClose={() => this.handleBannerClose()}
+          >
+            <div class="d4l-banner__content">
+              <ia-logo-d4l link={false} compact={true} />
+              <div innerHTML={i18next.t('d4l_banner_text')}></div>
+            </div>
+          </d4l-banner>
+        )}
+        {showErrorBanner && (
+          <d4l-banner
+            noreferrer={false}
+            classes="banner--slim banner--error"
+            handleClick={() => location.reload()}
+            handleClose={() => (this.showErrorBanner = false)}
+          >
+            <div class="d4l-banner__content">
+              <div innerHTML={i18next.t('error_reload_snackbar')}></div>
+            </div>
+          </d4l-banner>
+        )}
         {showLogoHeader && !isEmbedded && IS_CUSTOM && (
           <ia-logo-component classes="logo-component--collaboration" />
         )}
         {!isEmbedded && (
-        <header class="c-header">
-          {showLogoHeader && !IS_CUSTOM && (
-            <div class="app__logo-container">
-            {IS_CHARITE && <ia-logo-charite big/>}
-            {IS_CHARITE && <ia-logo-d4l />}
-            {IS_BZGA && <ia-logo-bzga big />}
-            {IS_BMG && <ia-logo-bmg big/>}
-            {IS_RKI && <ia-logo-rki big/>}
-          </div>
-          )}
-          {!showLogoHeader && (
-            <stencil-route-link
-              url="/"
-              anchorTitle="Home link"
-              anchorClass="u-display-block c-logo"
-            >
-              <h1>CovApp</h1>
-            </stencil-route-link>
-          )}
-          <d4l-language-switcher
-            languages={LANGUAGES}
-            activeLanguage={language}
-            class="u-margin-left--auto"
-          />
-        </header>
+          <header class="c-header">
+            {showLogoHeader && !IS_CUSTOM && (
+              <div class="app__logo-container">
+                {IS_CHARITE && <ia-logo-charite big />}
+                {IS_CHARITE && <ia-logo-d4l />}
+                {IS_BZGA && <ia-logo-bzga big />}
+                {IS_BMG && <ia-logo-bmg big />}
+                {IS_RKI && <ia-logo-rki big />}
+              </div>
+            )}
+            {!showLogoHeader && (
+              <stencil-route-link
+                url="/"
+                anchorTitle="Home link"
+                anchorClass="u-display-block c-logo"
+              >
+                <h1>CovApp</h1>
+              </stencil-route-link>
+            )}
+            {LANGUAGES.length > 1 && (
+              <d4l-language-switcher
+                languages={LANGUAGES}
+                activeLanguage={language}
+                class="u-margin-left--auto"
+              />
+            )}
+          </header>
         )}
         <main class={{ 'layout--embedded': isEmbedded }}>
           <stencil-router>
@@ -245,3 +291,4 @@ export class AppRoot {
     );
   }
 }
+injectHistory(AppRoot);

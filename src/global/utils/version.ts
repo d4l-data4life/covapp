@@ -1,4 +1,5 @@
 import { LOCAL_STORAGE_KEYS, QUESTIONNAIRE_VERSION } from '../constants';
+import settings, { COMPLETED } from './settings';
 
 const match = (): boolean => {
   const setVersion = localStorage.getItem(LOCAL_STORAGE_KEYS.VERSION);
@@ -10,11 +11,9 @@ const set = () => {
 };
 
 const reset = () => {
-  for (const key in LOCAL_STORAGE_KEYS) {
-    if (LOCAL_STORAGE_KEYS[key] === LOCAL_STORAGE_KEYS.SOURCE) {
-      continue;
-    }
+  settings.remove(COMPLETED);
 
+  for (const key in LOCAL_STORAGE_KEYS) {
     localStorage.removeItem(LOCAL_STORAGE_KEYS[key]);
   }
 };
