@@ -37,10 +37,15 @@ export const TRACKING_EVENTS: TrackingEvents = {
   SUMMARY_DELETE: ['Summary', 'Delete code and answers'],
   SUMMARY_DATA4LIFE_NO_ACCOUNT: ['Summary', 'Lets start - no account'],
   SUMMARY_DATA4LIFE_ACCOUNT: ['Summary', 'Send answers - account'],
-  SUMMARY_DATA4LIFE_DOWNLOAD_ANDROID: ['Summary', 'Download - Android'],
-  SUMMARY_DATA4LIFE_DOWNLOAD_IOS: ['Summary', 'Download - iOS'],
+  SUMMARY_LEARN_MORE_RKI: ['Summary', 'Learn more RKI'],
+  SUMMARY_LEARN_MORE_FREIBURG: ['Summary', 'Learn more Symptom Tracker Freiburg'],
+  SUMMARY_LEARN_MORE_MILLION_FRIENDS: ['Summary', 'Learn more MillionFriends'],
   DATA_DONATION_CONSENT: ['Data Donation', 'Consent'], // appending value depening on consent given or not
   DATA_DONATION_SENT: ['Data Donation', 'Sent'], // appending value depending on success or error while sending
+  HEADER_BANNER_CLICK: ['Header banner', 'Click'],
+  HEADER_BANNER_CLOSE: ['Header banner', 'Close'],
+  LANDING_PAGE_ACCORDION_EXPAND: ['Landing page accordion', 'Expand'],
+  LANDING_PAGE_ACCORDION_COLLAPSE: ['Landing page accordion', 'Collapse'],
 };
 
 const initializeTracking = ({
@@ -57,8 +62,10 @@ const initializeTracking = ({
 
   const _paq = window._paq;
   _paq.push(['requireConsent']);
+  _paq.push(['alwaysUseSendBeacon']);
   _paq.push(['trackPageView']);
   _paq.push(['enableLinkTracking']);
+  _paq.push(['enableHeartBeatTimer']);
   _paq.push(['setTrackerUrl', url + 'matomo.php']);
   _paq.push(['setSiteId', siteId]);
 

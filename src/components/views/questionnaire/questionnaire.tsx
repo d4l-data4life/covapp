@@ -13,7 +13,6 @@ import { QUESTIONS, QUESTION } from '../../../global/questions';
 import i18next from '../../../global/utils/i18n';
 import { trackEvent, TRACKING_EVENTS } from '../../../global/utils/track';
 import version from '../../../global/utils/version';
-import { DateInput } from '../../input-date/input-date-functional';
 import {
   checkGoTo,
   checkGuard,
@@ -21,6 +20,7 @@ import {
   updateScoreData,
   getScoreChange,
 } from './utils';
+import settings from '../../../global/utils/settings';
 
 export type Scores = { [key: string]: number };
 export type Answers = { [key: string]: string | string[] };
@@ -58,6 +58,11 @@ export class Questionnaire {
     }
   }
 
+  @Event() showErrorBanner: EventEmitter;
+  showErrorBannerHandler() {
+    this.showErrorBanner.emit();
+  }
+
   @Listen('updateFormData')
   updateFormDataHandler(event: CustomEvent) {
     const { detail } = event;
@@ -88,7 +93,7 @@ export class Questionnaire {
       JSON.stringify(this.answerData)
     );
     localStorage.setItem(LOCAL_STORAGE_KEYS.SCORES, JSON.stringify(this.scoreData));
-    localStorage.setItem(LOCAL_STORAGE_KEYS.COMPLETED, 'false');
+    settings.completed = false;
     version.set();
   };
 
@@ -106,7 +111,11 @@ export class Questionnaire {
   }
 
   moveToNextStep = () => {
-    const answerIndex = this.answerData[QUESTIONS[this.currentStep].id];
+    let answerIndex = this.answerData[QUESTIONS[this.currentStep].id];
+    if (!answerIndex) {
+      this.showErrorBannerHandler();
+      return;
+    }
 
     if (QUESTIONS[this.currentStep].id === QUESTION.DATA_DONATION) {
       trackEvent([
@@ -177,9 +186,9 @@ export class Questionnaire {
     }
   };
 
-  submitForm = event => {
+  submitForm = (event: Event) => {
     event.preventDefault();
-    event.target.querySelector('input')?.focus();
+    (event.target as HTMLInputElement).querySelector('input')?.focus();
     this.moveToNextStep();
   };
 
@@ -210,7 +219,8 @@ export class Questionnaire {
     const { submitForm, currentStep, moveToPreviousStep, progress } = this;
 
     return (
-      currentStep < QUESTIONS.length && (
+      currentStep < QUESTIONS.length &&
+      QUESTIONS[currentStep] && (
         <div class="questionnaire c-card-wrapper">
           <form
             onSubmit={event => submitForm(event)}
@@ -251,7 +261,9 @@ export class Questionnaire {
                       <ia-input-multiple-choice question={QUESTIONS[currentStep]} />
                     )}
 
-                    {QUESTIONS[currentStep].inputType === 'date' && <DateInput />}
+                    {QUESTIONS[currentStep].inputType === 'date' && (
+                      <ia-input-date question={QUESTIONS[currentStep]} />
+                    )}
                     {QUESTIONS[currentStep].inputType === 'postal' && (
                       <ia-input-postal-code question={QUESTIONS[currentStep]} />
                     )}

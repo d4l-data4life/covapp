@@ -22,3 +22,29 @@
   padding-bottom: 1em;
   display: block;
 }
+
+.start__accordion {
+  background: #fff;
+}
+
+.start__accordion p {
+  margin: 0;
+}
+
+.start__accordion ul,
+.start__accordion ol {
+  margin: 0;
+  padding-left: 1em;
+}
+
+.start__accordion a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.start__accordion ia-call-to-action + ia-call-to-action {
+  display: block;
+  border-top: 1px solid var(--c-tertiary);
+  margin-top: 1em;
+  padding-top: 1em;
+}

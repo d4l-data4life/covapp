@@ -5,11 +5,12 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Language, } from "@d4l/web-components-library/dist/types/components/LanguageSwitcher/language-switcher";
 import { RouterHistory, } from "@stencil/router";
+import { Language, } from "@d4l/web-components-library/dist/types/components/LanguageSwitcher/language-switcher";
 import { Question, } from "./global/questions";
 export namespace Components {
     interface AppRoot {
+        "history": RouterHistory;
     }
     interface ConnectTranslations {
         "changedLanguageHandler": (language: Language) => Promise<void>;
@@ -17,7 +18,11 @@ export namespace Components {
     interface IaAnswersTable {
         "answers": any;
     }
+    interface IaAppRecommendations {
+        "isFromData4Life": boolean;
+    }
     interface IaCallToAction {
+        "showCard": boolean;
         "type": "OPEN_SOURCE" | "WIDGET";
     }
     interface IaCovappToData4life {
@@ -27,7 +32,6 @@ export namespace Components {
         "history": RouterHistory;
     }
     interface IaData4life {
-        "long": boolean;
     }
     interface IaDisclaimer {
     }
@@ -39,6 +43,9 @@ export namespace Components {
     }
     interface IaImprint {
         "history": RouterHistory;
+    }
+    interface IaInputDate {
+        "question": Question;
     }
     interface IaInputMultipleChoice {
         "question": Question;
@@ -68,6 +75,8 @@ export namespace Components {
         "classes"?: string;
     }
     interface IaLogoD4l {
+        "compact": boolean;
+        "link": boolean;
     }
     interface IaLogoD4lBordered {
         "size": "medium" | "small";
@@ -123,6 +132,12 @@ declare global {
         prototype: HTMLIaAnswersTableElement;
         new (): HTMLIaAnswersTableElement;
     };
+    interface HTMLIaAppRecommendationsElement extends Components.IaAppRecommendations, HTMLStencilElement {
+    }
+    var HTMLIaAppRecommendationsElement: {
+        prototype: HTMLIaAppRecommendationsElement;
+        new (): HTMLIaAppRecommendationsElement;
+    };
     interface HTMLIaCallToActionElement extends Components.IaCallToAction, HTMLStencilElement {
     }
     var HTMLIaCallToActionElement: {
@@ -170,6 +185,12 @@ declare global {
     var HTMLIaImprintElement: {
         prototype: HTMLIaImprintElement;
         new (): HTMLIaImprintElement;
+    };
+    interface HTMLIaInputDateElement extends Components.IaInputDate, HTMLStencilElement {
+    }
+    var HTMLIaInputDateElement: {
+        prototype: HTMLIaInputDateElement;
+        new (): HTMLIaInputDateElement;
     };
     interface HTMLIaInputMultipleChoiceElement extends Components.IaInputMultipleChoice, HTMLStencilElement {
     }
@@ -301,6 +322,7 @@ declare global {
         "app-root": HTMLAppRootElement;
         "connect-translations": HTMLConnectTranslationsElement;
         "ia-answers-table": HTMLIaAnswersTableElement;
+        "ia-app-recommendations": HTMLIaAppRecommendationsElement;
         "ia-call-to-action": HTMLIaCallToActionElement;
         "ia-covapp-to-data4life": HTMLIaCovappToData4lifeElement;
         "ia-data-privacy": HTMLIaDataPrivacyElement;
@@ -309,6 +331,7 @@ declare global {
         "ia-export": HTMLIaExportElement;
         "ia-faq": HTMLIaFaqElement;
         "ia-imprint": HTMLIaImprintElement;
+        "ia-input-date": HTMLIaInputDateElement;
         "ia-input-multiple-choice": HTMLIaInputMultipleChoiceElement;
         "ia-input-postal-code": HTMLIaInputPostalCodeElement;
         "ia-input-radio": HTMLIaInputRadioElement;
@@ -334,6 +357,7 @@ declare global {
 }
 declare namespace LocalJSX {
     interface AppRoot {
+        "history"?: RouterHistory;
     }
     interface ConnectTranslations {
         "onChangedLanguage"?: (event: CustomEvent<any>) => void;
@@ -341,7 +365,11 @@ declare namespace LocalJSX {
     interface IaAnswersTable {
         "answers"?: any;
     }
+    interface IaAppRecommendations {
+        "isFromData4Life"?: boolean;
+    }
     interface IaCallToAction {
+        "showCard"?: boolean;
         "type"?: "OPEN_SOURCE" | "WIDGET";
     }
     interface IaCovappToData4life {
@@ -352,7 +380,6 @@ declare namespace LocalJSX {
         "onShowLogoHeader"?: (event: CustomEvent<any>) => void;
     }
     interface IaData4life {
-        "long"?: boolean;
     }
     interface IaDisclaimer {
         "onShowLogoHeader"?: (event: CustomEvent<any>) => void;
@@ -368,6 +395,10 @@ declare namespace LocalJSX {
     interface IaImprint {
         "history"?: RouterHistory;
         "onShowLogoHeader"?: (event: CustomEvent<any>) => void;
+    }
+    interface IaInputDate {
+        "onUpdateFormData"?: (event: CustomEvent<any>) => void;
+        "question"?: Question;
     }
     interface IaInputMultipleChoice {
         "onUpdateFormData"?: (event: CustomEvent<any>) => void;
@@ -401,6 +432,8 @@ declare namespace LocalJSX {
         "classes"?: string;
     }
     interface IaLogoD4l {
+        "compact"?: boolean;
+        "link"?: boolean;
     }
     interface IaLogoD4lBordered {
         "size"?: "medium" | "small";
@@ -426,6 +459,7 @@ declare namespace LocalJSX {
     }
     interface IaQuestionnaire {
         "history"?: RouterHistory;
+        "onShowErrorBanner"?: (event: CustomEvent<any>) => void;
         "onShowLogoHeader"?: (event: CustomEvent<any>) => void;
     }
     interface IaRecommendation {
@@ -443,6 +477,7 @@ declare namespace LocalJSX {
         "app-root": AppRoot;
         "connect-translations": ConnectTranslations;
         "ia-answers-table": IaAnswersTable;
+        "ia-app-recommendations": IaAppRecommendations;
         "ia-call-to-action": IaCallToAction;
         "ia-covapp-to-data4life": IaCovappToData4life;
         "ia-data-privacy": IaDataPrivacy;
@@ -451,6 +486,7 @@ declare namespace LocalJSX {
         "ia-export": IaExport;
         "ia-faq": IaFaq;
         "ia-imprint": IaImprint;
+        "ia-input-date": IaInputDate;
         "ia-input-multiple-choice": IaInputMultipleChoice;
         "ia-input-postal-code": IaInputPostalCode;
         "ia-input-radio": IaInputRadio;
@@ -481,6 +517,7 @@ declare module "@stencil/core" {
             "app-root": LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
             "connect-translations": LocalJSX.ConnectTranslations & JSXBase.HTMLAttributes<HTMLConnectTranslationsElement>;
             "ia-answers-table": LocalJSX.IaAnswersTable & JSXBase.HTMLAttributes<HTMLIaAnswersTableElement>;
+            "ia-app-recommendations": LocalJSX.IaAppRecommendations & JSXBase.HTMLAttributes<HTMLIaAppRecommendationsElement>;
             "ia-call-to-action": LocalJSX.IaCallToAction & JSXBase.HTMLAttributes<HTMLIaCallToActionElement>;
             "ia-covapp-to-data4life": LocalJSX.IaCovappToData4life & JSXBase.HTMLAttributes<HTMLIaCovappToData4lifeElement>;
             "ia-data-privacy": LocalJSX.IaDataPrivacy & JSXBase.HTMLAttributes<HTMLIaDataPrivacyElement>;
@@ -489,6 +526,7 @@ declare module "@stencil/core" {
             "ia-export": LocalJSX.IaExport & JSXBase.HTMLAttributes<HTMLIaExportElement>;
             "ia-faq": LocalJSX.IaFaq & JSXBase.HTMLAttributes<HTMLIaFaqElement>;
             "ia-imprint": LocalJSX.IaImprint & JSXBase.HTMLAttributes<HTMLIaImprintElement>;
+            "ia-input-date": LocalJSX.IaInputDate & JSXBase.HTMLAttributes<HTMLIaInputDateElement>;
             "ia-input-multiple-choice": LocalJSX.IaInputMultipleChoice & JSXBase.HTMLAttributes<HTMLIaInputMultipleChoiceElement>;
             "ia-input-postal-code": LocalJSX.IaInputPostalCode & JSXBase.HTMLAttributes<HTMLIaInputPostalCodeElement>;
             "ia-input-radio": LocalJSX.IaInputRadio & JSXBase.HTMLAttributes<HTMLIaInputRadioElement>;

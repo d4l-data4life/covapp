@@ -28,6 +28,11 @@
   padding-bottom: 4em;
 }
 
+.u-padding-vertical--extra-small {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+}
+
 .u-padding-vertical--normal {
   padding: 1em 0;
 }
@@ -36,8 +41,21 @@
   padding: 1.75em 0;
 }
 
+.u-padding-top--extra-small {
+  padding-top: 0.5em;
+}
+
 .u-padding-top--normal {
   padding-top: 1em;
+}
+
+.u-padding-horizontal--extra-small {
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+
+.u-padding-horizontal--normal {
+  padding: 0 1em;
 }
 
 .u-margin-horizontal--card-negative {
@@ -64,10 +82,6 @@
   overflow: visible;
   cursor: pointer;
   background: transparent;
-}
-
-.u-fontWeight--bold {
-  font-weight: bold;
 }
 
 .u-margin-left--auto {

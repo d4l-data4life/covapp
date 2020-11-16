@@ -76,6 +76,8 @@ export class AnswersTable {
       'data-test': 'toggleAnswersButton',
     };
 
+    const canPrint = window && typeof window.print === 'function';
+
     return (
       <div class="answers-table">
         <d4l-accordion
@@ -89,16 +91,18 @@ export class AnswersTable {
           </p>
           <div slot="accordion-panel">
             <table>{Object.keys(answers).map(id => generateQuestionRow(id))}</table>
-            <d4l-button
-              type="button"
-              classes="button--block answers-table__button"
-              data-test="printButton"
-              text={i18next.t('answers_table_print')}
-              handleClick={() => {
-                trackEvent(TRACKING_EVENTS.SUMMARY_PRINT);
-                window.print();
-              }}
-            />
+            {canPrint && (
+              <d4l-button
+                type="button"
+                classes="button--block answers-table__button"
+                data-test="printButton"
+                text={i18next.t('answers_table_print')}
+                handleClick={() => {
+                  trackEvent(TRACKING_EVENTS.SUMMARY_PRINT);
+                  window.print();
+                }}
+              />
+            )}
           </div>
         </d4l-accordion>
       </div>

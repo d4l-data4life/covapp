@@ -1,0 +1,69 @@
+.app-recommendation__wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.app-recommendation--full-width {
+  width: 100%;
+}
+
+.app-recommendation--half-width {
+  width: 100%;
+}
+
+@media screen and (min-width: 768px) {
+  .app-recommendation--half-width {
+    width: calc(50% - 0.5em);
+  }
+}
+
+.app-recommendation__wrapper > * {
+  margin: 0.5em 0;
+}
+
+.app-recommendation__card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0 15px 0;
+}
+
+.app-recommendation__name {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--c-primary);
+  min-height: 54px;
+}
+
+.app-recommendation__name--with-byline {
+  margin-bottom: 0;
+}
+
+.app-recommendation__byline {
+  font-size: 12px;
+  color: var(--c-gray-light);
+}
+
+.app-recommendation__icon {
+  height: 56px;
+  width: 56px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0px 0px 24px -2px rgba(191, 191, 191, 0.6);
+}
+
+.app-recommendation__logo__wrapper {
+  height: 45px;
+}
+
+.app-recommendation__logo {
+  max-height: 45px;
+  max-width: 150px;
+}
+
+.app-recommendation__button {
+  margin-top: 30px;
+}

@@ -1,3 +1,11 @@
 :host {
   display: block;
 }
+
+.d4l-logo {
+  display: block;
+}
+
+.d4l-logo--compact {
+  height: 1em;
+}

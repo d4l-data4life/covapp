@@ -35,9 +35,9 @@ export class LogoRKI {
           x2="177.675"
           y2="58.443"
         >
-          <stop offset=".018" stop-color="#fff" />
-          <stop offset=".192" stop-color="#e8eef8" />
-          <stop offset=".341" stop-color="#d8e3f4" />
+          <stop offset=".018" stop-color="#d8e3f4" stop-opacity="0.053" />
+          <stop offset=".192" stop-color="#d8e3f4" stop-opacity="0.563" />
+          <stop offset=".341" stop-color="#d8e3f4" stop-opacity="1" />
         </linearGradient>
         <path
           d="M179.6 52.3l1.5 2s14.6-13.6 22.5-13.1c0 0-16.4 10.5-20.9 15.7l-2.4 1.7-.8.6v-6.9z"
@@ -51,9 +51,9 @@ export class LogoRKI {
           x2="182.891"
           y2="55.359"
         >
-          <stop offset=".018" stop-color="#fff" />
-          <stop offset=".239" stop-color="#e8eef8" />
-          <stop offset=".428" stop-color="#d8e3f4" />
+          <stop offset=".018" stop-color="#d8e3f4" stop-opacity="0.042" />
+          <stop offset=".239" stop-color="#d8e3f4" stop-opacity="0.558" />
+          <stop offset=".428" stop-color="#d8e3f4" stop-opacity="1" />
         </linearGradient>
         <path
           d="M180.4 58.6s10 13.7 14.8 11.6l.5-.3s-6.7-3.7-13-13l-1-.9-1.3 2.6z"
@@ -67,9 +67,9 @@ export class LogoRKI {
           x2="133.074"
           y2="57.777"
         >
-          <stop offset="0" stop-color="#fff" />
-          <stop offset=".246" stop-color="#e4ecf7" />
-          <stop offset=".404" stop-color="#d8e3f4" />
+          <stop offset="0" stop-color="#d8e3f4" stop-opacity="0" />
+          <stop offset=".246" stop-color="#d8e3f4" stop-opacity="0.609" />
+          <stop offset=".404" stop-color="#d8e3f4" stop-opacity="1" />
         </linearGradient>
         <path
           d="M130.4 58.1s.6-.6.2-1l-4.9-5.3s-2.3-3-1.2-3.8c0 0 .8-.7 3.2 2.3 2.4 3 5.1 5.5 5.1 5.5s.5.7 1.7 0L134 57l-3.6 1.1z"
@@ -91,8 +91,8 @@ export class LogoRKI {
           x2="154.85"
           y2="47.159"
         >
-          <stop offset=".276" stop-color="#fff" />
-          <stop offset=".904" stop-color="#d2dff2" />
+          <stop offset=".276" stop-color="#d2dff2" stop-opacity="0.305" />
+          <stop offset=".904" stop-color="#d2dff2" stop-opacity="1" />
         </linearGradient>
         <path
           d="M150.9 49.5c4.2-2.5 7.4-3.7 8.3-4-.8.2-4.1 1.4-8.3 4z"
@@ -106,9 +106,9 @@ export class LogoRKI {
           x2="146.697"
           y2="53.58"
         >
-          <stop offset="0" stop-color="#fff" />
-          <stop offset=".57" stop-color="#dfe9f6" />
-          <stop offset=".904" stop-color="#d2dff2" />
+          <stop offset="0" stop-color="#d2dff2" stop-opacity="0" />
+          <stop offset=".57" stop-color="#d2dff2" stop-opacity="0.63" />
+          <stop offset=".904" stop-color="#d2dff2" stop-opacity="1" />
         </linearGradient>
         <path
           d="M150.2 58.9c-1.5-.4-2.7-3.3 1.7-6.3l-2-2.4c.3-.2.6-.4 1-.6-2.5 1.5-5.3 3.6-8.2 6.2v2.9s2.9 3 7.5 1.7c0-.1 2.2-.9 0-1.5z"
@@ -122,8 +122,8 @@ export class LogoRKI {
           x2="153.892"
           y2="49.585"
         >
-          <stop offset=".106" stop-color="#fff" />
-          <stop offset=".904" stop-color="#d2dff2" />
+          <stop offset=".106" stop-color="#d2dff2" stop-opacity="0.117" />
+          <stop offset=".904" stop-color="#d2dff2" stop-opacity="1" />
         </linearGradient>
         <path
           d="M159.5 45.4s-4.2 1.3-9.6 4.8l2 2.4c4.4-3.6 11.2-7.3 11.3-7.3-1.2-.2-2.5-.3-3.7.1z"

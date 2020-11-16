@@ -12,22 +12,6 @@ main.layout--embedded {
   justify-content: center;
 }
 
-.app-message {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.15);
-}
-
-.app-message__content {
-  margin-left: 1em;
-}
-
-.app-message__controls {
-  padding-top: 1em;
-}
-
 .app__logo-container {
   display: flex;
   flex-flow: row nowrap;
@@ -42,6 +26,15 @@ main.layout--embedded {
   box-shadow: var(--shadow-soft);
 }
 
+.banner--error {
+  background-color: var(--c-error) !important;
+  color: var(--c-tertiary) !important;
+}
+
+.banner--error .banner__close .sc-d4l-banner .icon {
+  color: var(--c-tertiary);
+}
+
 @media screen and (min-width: 768px) {
   main {
     min-height: calc(
@@ -50,10 +43,6 @@ main.layout--embedded {
     display: flex;
     align-items: center;
     flex-direction: column;
-  }
-
-  .app-message__controls {
-    padding-top: 0;
   }
 
   .app__logo-container ia-logo-charite {
@@ -68,4 +57,19 @@ main.layout--embedded {
 .cookie-bar__content {
   font-size: 14px;
   color: var(--c-gray);
+}
+
+.d4l-banner__content {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.d4l-banner__content > * {
+  flex: 0 1 auto;
+}
+
+.d4l-banner__content > * + * {
+  margin-left: 1rem;
 }

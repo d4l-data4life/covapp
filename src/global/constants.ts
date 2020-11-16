@@ -25,8 +25,6 @@ export const LOCAL_STORAGE_KEYS = {
   SCORES: 'scores',
   VERSION: 'version',
   DATA_SENT: 'dataSent',
-  COMPLETED: 'completed',
-  SOURCE: 'source',
   EXPORTED: 'exported',
 };
 
@@ -38,3 +36,6 @@ export const MOBILE_ORIGINS = {
 export const IS_DEV =
   window.location.hostname === 'localhost' ||
   window.location.hostname === '127.0.0.1';
+
+export const APP_RECOMMENDATIONS_ID = 'app-recommendations';
+export const DATA4LIFE_ID = 'data4life';
