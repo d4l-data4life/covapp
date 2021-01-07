@@ -15,6 +15,7 @@ import {
   IS_BMG,
   IS_BZGA,
   IS_RKI,
+  IS_D4L,
 } from '../../../global/layouts';
 
 @Component({
@@ -57,6 +58,7 @@ export class Legal {
             {IS_BMG && <p innerHTML={i18next.t('legal_content_bmg')} />}
             {IS_BZGA && <p innerHTML={i18next.t('legal_content_bzga')} />}
             {IS_RKI && <p innerHTML={i18next.t('legal_content_rki')} />}
+            {IS_D4L && <p innerHTML={i18next.t('legal_content_d4l')} />}
           </div>
         </d4l-card>
       </div>

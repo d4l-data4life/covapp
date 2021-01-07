@@ -1,4 +1,4 @@
-import { IS_CHARITE } from '../layouts';
+import { IS_CHARITE, IS_D4L } from '../layouts';
 
 export const ACCEPTS_COOKIES = 'accepts_cookies';
 export const ACCEPTS_TRACKING = 'accepts_tracking';
@@ -46,10 +46,14 @@ class Settings {
   }
 
   get showD4lBanner() {
-    return IS_CHARITE && this.getLocalStorageValue(SHOW_D4L_BANNER) !== 'false';
+    return (
+      (IS_CHARITE || IS_D4L) &&
+      this.getLocalStorageValue(SHOW_D4L_BANNER) !== 'false'
+    );
   }
   set showD4lBanner(isTrue: boolean) {
-    IS_CHARITE && this.setLocalStorageValue(SHOW_D4L_BANNER, `${isTrue}`, false);
+    (IS_CHARITE || IS_D4L) &&
+      this.setLocalStorageValue(SHOW_D4L_BANNER, `${isTrue}`, false);
   }
 
   get source() {

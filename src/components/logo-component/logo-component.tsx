@@ -8,6 +8,7 @@ import {
   IS_BMG,
   IS_BZGA,
   IS_RKI,
+  IS_D4L,
 } from '../../global/layouts';
 @Component({
   styleUrl: ' logo-component.css',
@@ -38,9 +39,15 @@ export class LogoComponent {
               <div innerHTML={CUSTOM_LOGO} class="logo-component__customLogo"></div>
             ) : (
               <div class="logo-component__container">
-                {(IS_CHARITE || IS_COLLABORATION) && !IS_BMG && <ia-logo-bmg />}
-                {(IS_CHARITE || IS_COLLABORATION) && !IS_BZGA && <ia-logo-bzga />}
-                {(IS_CHARITE || IS_COLLABORATION) && !IS_RKI && <ia-logo-rki />}
+                {(IS_CHARITE || IS_COLLABORATION || IS_D4L) && !IS_BMG && (
+                  <ia-logo-bmg />
+                )}
+                {(IS_CHARITE || IS_COLLABORATION || IS_D4L) && !IS_BZGA && (
+                  <ia-logo-bzga />
+                )}
+                {(IS_CHARITE || IS_COLLABORATION || IS_D4L) && !IS_RKI && (
+                  <ia-logo-rki />
+                )}
                 {IS_COLLABORATION && <ia-logo-charite />}
                 <ia-logo-bih />
               </div>

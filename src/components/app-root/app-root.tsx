@@ -8,6 +8,7 @@ import {
   IS_BZGA,
   IS_RKI,
   IS_BMG,
+  IS_D4L,
 } from '../../global/layouts';
 import { TRACKING_IS_ENABLED } from '../../global/custom';
 import settings, {
@@ -205,8 +206,8 @@ export class AppRoot {
           <header class="c-header">
             {showLogoHeader && !IS_CUSTOM && (
               <div class="app__logo-container">
-                {IS_CHARITE && <ia-logo-charite big />}
-                {IS_CHARITE && <ia-logo-d4l />}
+                {(IS_CHARITE || IS_D4L) && <ia-logo-charite big />}
+                {(IS_CHARITE || IS_D4L) && <ia-logo-d4l />}
                 {IS_BZGA && <ia-logo-bzga big />}
                 {IS_BMG && <ia-logo-bmg big />}
                 {IS_RKI && <ia-logo-rki big />}

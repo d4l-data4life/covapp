@@ -1,5 +1,6 @@
 import settings, { ACCEPTS_TRACKING } from './settings';
 import { MATOMO_URL, MATOMO_SITE_ID, TRACKING_IS_ENABLED } from '../custom';
+import { IS_D4L } from '../layouts';
 
 type TrackingEvent = string[];
 interface TrackingEvents {
@@ -7,7 +8,7 @@ interface TrackingEvents {
 }
 
 interface MatomoWindow extends Window {
-  _paq?: Array<Array<String>>;
+  _paq?: Array<Array<String | Number>>;
 }
 
 const FEATURE_FLAG_TRACKING_EVENTS_QUEUE = true;
@@ -23,6 +24,8 @@ settings.onChange(key => {
     );
   }
 });
+
+const parentUrl = IS_D4L && parent !== window ? document.referrer : null;
 
 export const TRACKING_EVENTS: TrackingEvents = {
   START: ['Questionnaire', 'Start questionnaire'],
@@ -62,6 +65,7 @@ const initializeTracking = ({
 
   const _paq = window._paq;
   _paq.push(['requireConsent']);
+  parentUrl && _paq.push(['setCustomDimension', 1, parentUrl]);
   _paq.push(['alwaysUseSendBeacon']);
   _paq.push(['trackPageView']);
   _paq.push(['enableLinkTracking']);
