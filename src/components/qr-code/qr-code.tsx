@@ -11,12 +11,14 @@ import { trackEvent, TRACKING_EVENTS } from '../../global/utils/track';
 import { Answers } from '../views/questionnaire/questionnaire';
 
 import { generateValuePairs, KeyValue } from './utils';
+import { RouterHistory } from '@stencil/router';
 
 @Component({
   styleUrl: 'qr-code.css',
   tag: 'ia-qr-code',
 })
 export class QRCode {
+  @Prop() history: RouterHistory;
   @Prop() answers: any = {};
   @Prop() resultCase: number = 5;
   @State() language: string;
@@ -116,18 +118,31 @@ export class QRCode {
 
   render() {
     const { generateCode, answers } = this;
+    const canPrint = window && typeof window.print === 'function';
 
     return (
       <div class="qr-code">
-        <h3>{i18next.t('qr_code_headline')}</h3>
-        <p>{i18next.t('qr_code_paragraph')}</p>
-        <ia-answers-table answers={answers} />
+        <h2>{i18next.t('answers_table_headline')}</h2>
+        {canPrint && (
+          <d4l-button
+            type="button"
+            classes="button--block answers-table__button"
+            data-test="printButton"
+            text={i18next.t('answers_table_print')}
+            handleClick={() => {
+              trackEvent(TRACKING_EVENTS.SUMMARY_PRINT);
+              window.print();
+            }}
+          />
+        )}
+        <p innerHTML={i18next.t('qr_code_paragraph')} />
         <div class="qr-code__img-code u-text-align--center">
           <img
             src={generateCode()}
             alt="QR code generated based on the provided answers"
           />
         </div>
+        <ia-answers-table answers={answers} />
       </div>
     );
   }

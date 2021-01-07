@@ -17,6 +17,10 @@
   font-weight: 500;
 }
 
+.o-link--underline {
+  text-decoration: underline;
+}
+
 .o-error {
   color: var(--c-error);
 }

@@ -11,7 +11,6 @@ import { ROUTES, MOBILE_ORIGINS } from '../../../global/constants';
 import { IS_CHARITE, IS_CUSTOM } from '../../../global/layouts';
 import { RouterHistory } from '@stencil/router';
 import i18next from '../../../global/utils/i18n';
-import { getRootCSSPropertyValue } from '../../../global/utils/css-properties';
 import { trackEvent, TRACKING_EVENTS } from '../../../global/utils/track';
 import version from '../../../global/utils/version';
 import { WHITELISTED_DATA4LIFE_ORIGINS } from '../../../global/custom';
@@ -93,6 +92,7 @@ export class Start {
   }
 
   render() {
+    const ILLUSTRATIONS = ['phone-app.svg', 'clipboard.svg', 'hospital.svg'];
     const BLOCKS_COUNT = 5;
 
     return (
@@ -102,14 +102,26 @@ export class Start {
             <h1 class="start__headline-1">CovApp</h1>
             <h2 class="start__headline-2">{i18next.t('start_headline')}</h2>
           </div>
-          <div class="start__content u-text-align--left" slot="card-content">
-            <ul class="u-no-margin-top u-padding-bottom--normal">
-              <li>{i18next.t('start_paragraph_1_option_1')}</li>
-              <li>{i18next.t('start_paragraph_1_option_2')}</li>
-              <li>{i18next.t('start_paragraph_1_option_3')}</li>
-              <li>{i18next.t('start_paragraph_1_option_4')}</li>
-            </ul>
-            {this.completed && <h3>{i18next.t('found_code')}</h3>}
+          <div class="u-text-align--left" slot="card-content">
+            {ILLUSTRATIONS.map((illustration, index) => (
+              <div class="start__section" key={index}>
+                <img
+                  src={`/assets/images/${illustration}`}
+                  class="start__section-illustration"
+                />
+                <h3 class="start__section-headline">
+                  {i18next.t(`start_section_${index + 1}_headline`)}
+                </h3>
+                <p class="start__section-infotext">
+                  {i18next.t(`start_section_${index + 1}_infotext`)}
+                </p>
+              </div>
+            ))}
+            {this.completed && (
+              <h3 class="u-text-align--center u-padding-top--normal">
+                {i18next.t('found_code')}
+              </h3>
+            )}
             <stencil-route-link
               anchor-id="d4l-button-register"
               anchor-class="start__next-link"
@@ -166,37 +178,24 @@ export class Start {
 
             return (
               <div class="u-padding-top--extra-small" key={index}>
-                <d4l-accordion
-                  classes="start__accordion"
-                  open={false}
-                  headerBackgroundColor={getRootCSSPropertyValue('--c-gray')}
+                <ia-accordion
+                  /* @ts-ignore */
                   buttonProps={{
                     'data-test': `toggleBlock${index + 1}`,
                   }}
                   handleToggle={expanded =>
                     this.trackAccordionToggle(index + 1, expanded)
                   }
+                  headline={i18next.t(`start_block_${index + 1}_headline`)}
+                  slotContent={isWidgets ? undefined : infotext}
                 >
-                  <h3
-                    class="o-accordion-headline u-padding-horizontal--extra-small u-text-align--left"
-                    slot="accordion-header"
-                  >
-                    {i18next.t(`start_block_${index + 1}_headline`)}
-                  </h3>
-                  <div
-                    class="u-padding-vertical--normal u-padding-horizontal--extra-small"
-                    slot="accordion-panel"
-                  >
-                    {isWidgets ? (
-                      <div>
-                        <ia-call-to-action type="OPEN_SOURCE" showCard={false} />
-                        <ia-call-to-action type="WIDGET" showCard={false} />
-                      </div>
-                    ) : (
-                      <div innerHTML={infotext} />
-                    )}
-                  </div>
-                </d4l-accordion>
+                  {isWidgets && (
+                    <div slot="accordion-children">
+                      <ia-call-to-action type="OPEN_SOURCE" showCard={false} />
+                      <ia-call-to-action type="WIDGET" showCard={false} />
+                    </div>
+                  )}
+                </ia-accordion>
               </div>
             );
           })}

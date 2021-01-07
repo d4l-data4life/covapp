@@ -89,15 +89,20 @@ export class AppRoot {
   }
 
   handleBannerClick() {
-    const element = document.getElementById(APP_RECOMMENDATIONS_ID);
+    const element = document.getElementById(
+      APP_RECOMMENDATIONS_ID
+    ) as HTMLD4lAccordionElement;
     if (element) {
+      element.open = true;
       element.scrollIntoView({
         behavior: 'smooth',
         block: 'start',
         inline: 'nearest',
       });
     } else {
-      this.history.push(`${ROUTES.SUMMARY}#${APP_RECOMMENDATIONS_ID}`, {});
+      this.history.push(`${ROUTES.SUMMARY}#${APP_RECOMMENDATIONS_ID}`, {
+        openAppRecommendationsAccordion: true,
+      });
     }
     trackEvent(TRACKING_EVENTS.HEADER_BANNER_CLICK);
   }
@@ -117,10 +122,9 @@ export class AppRoot {
       'supportsDateElement',
       String(
         testDateElement.getAttribute('type') !== 'text' &&
-        testDateElement.value !== 'text'
+          testDateElement.value !== 'text'
       )
     );
-
 
     this.language = this.getLanguageByCode(await initialLanguage);
     this.hasMadeCookieChoice = IS_DEV || settings.hasMadeCookieChoice;
@@ -241,6 +245,11 @@ export class AppRoot {
               <stencil-route url={ROUTES.FAQ} component="ia-faq" />
               <stencil-route url={ROUTES.DATA_PRIVACY} component="ia-data-privacy" />
               <stencil-route url={ROUTES.EXPORT} component="ia-export" />
+              <stencil-route
+                url={ROUTES.RECOMMENDATIONS}
+                component="ia-recommendation"
+              />
+              <stencil-route url={ROUTES.ANSWERS} component="ia-answers-overview" />
               <stencil-route component="ia-start" />
             </stencil-route-switch>
           </stencil-router>

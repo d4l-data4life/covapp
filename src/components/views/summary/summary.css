@@ -11,7 +11,7 @@
   color: var(--c-primary);
 }
 
-.summary h3 {
+.summary h3:not(.o-accordion-headline) {
   font-size: 1.25rem;
   font-weight: 500;
   margin-top: 2.5rem;
@@ -31,4 +31,44 @@
 
 .summary__footer {
   margin-bottom: 2rem;
+}
+
+.summary d4l-accordion {
+  margin-top: var(--padding-main);
+}
+
+.summary d4l-accordion p,
+.summary d4l-accordion ul {
+  margin-bottom: var(--padding-main);
+}
+
+.summary .recommendation {
+  border: 2px solid var(--c-primary);
+  padding: var(--padding-main);
+}
+
+.summary .recommendation__eyebrow {
+  color: var(--c-primary);
+  text-align: center;
+  margin-top: 0;
+}
+
+.summary h3.recommendation__headline {
+  color: var(--c-primary);
+  margin-top: var(--padding-main);
+  text-align: center;
+}
+
+.summary__content--export {
+  margin-top: var(--padding-main);
+  margin-left: calc(var(--padding-main) * -1);
+  margin-right: calc(var(--padding-main) * -1);
+  padding-top: var(--padding-main);
+  padding-left: var(--padding-main);
+  padding-right: var(--padding-main);
+  border-top: 1px solid var(--c-gray-lightest);
+}
+
+.accordion d4l-slider .slider__container {
+  padding-left: 0;
 }

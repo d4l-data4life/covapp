@@ -1,0 +1,25 @@
+.accordion {
+  background: #fff;
+}
+
+.accordion p {
+  margin: 0;
+}
+
+.accordion ul,
+.accordion ol {
+  margin: 0;
+  padding-left: var(--padding-main);
+}
+
+.accordion a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.accordion ia-call-to-action + ia-call-to-action {
+  display: block;
+  border-top: 1px solid var(--c-tertiary);
+  margin-top: var(--padding-main);
+  padding-top: var(--padding-main);
+}

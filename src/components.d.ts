@@ -15,10 +15,24 @@ export namespace Components {
     interface ConnectTranslations {
         "changedLanguageHandler": (language: Language) => Promise<void>;
     }
+    interface IaAccordion {
+        "buttonProps"?: {
+            [key: string]: string;
+        };
+        "elementId"?: string;
+        "handleToggle"?: (boolean) => void;
+        "headline": string;
+        "open"?: boolean;
+        "slotContent"?: string;
+    }
+    interface IaAnswersOverview {
+        "history": RouterHistory;
+    }
     interface IaAnswersTable {
         "answers": any;
     }
     interface IaAppRecommendations {
+        "history": RouterHistory;
         "isFromData4Life": boolean;
     }
     interface IaCallToAction {
@@ -98,13 +112,13 @@ export namespace Components {
     }
     interface IaQrCode {
         "answers": any;
+        "history": RouterHistory;
         "resultCase": number;
     }
     interface IaQuestionnaire {
         "history": RouterHistory;
     }
     interface IaRecommendation {
-        "resultCase": number;
     }
     interface IaStart {
         "history": RouterHistory;
@@ -125,6 +139,18 @@ declare global {
     var HTMLConnectTranslationsElement: {
         prototype: HTMLConnectTranslationsElement;
         new (): HTMLConnectTranslationsElement;
+    };
+    interface HTMLIaAccordionElement extends Components.IaAccordion, HTMLStencilElement {
+    }
+    var HTMLIaAccordionElement: {
+        prototype: HTMLIaAccordionElement;
+        new (): HTMLIaAccordionElement;
+    };
+    interface HTMLIaAnswersOverviewElement extends Components.IaAnswersOverview, HTMLStencilElement {
+    }
+    var HTMLIaAnswersOverviewElement: {
+        prototype: HTMLIaAnswersOverviewElement;
+        new (): HTMLIaAnswersOverviewElement;
     };
     interface HTMLIaAnswersTableElement extends Components.IaAnswersTable, HTMLStencilElement {
     }
@@ -321,6 +347,8 @@ declare global {
     interface HTMLElementTagNameMap {
         "app-root": HTMLAppRootElement;
         "connect-translations": HTMLConnectTranslationsElement;
+        "ia-accordion": HTMLIaAccordionElement;
+        "ia-answers-overview": HTMLIaAnswersOverviewElement;
         "ia-answers-table": HTMLIaAnswersTableElement;
         "ia-app-recommendations": HTMLIaAppRecommendationsElement;
         "ia-call-to-action": HTMLIaCallToActionElement;
@@ -362,10 +390,24 @@ declare namespace LocalJSX {
     interface ConnectTranslations {
         "onChangedLanguage"?: (event: CustomEvent<any>) => void;
     }
+    interface IaAccordion {
+        "buttonProps"?: {
+            [key: string]: string;
+        };
+        "elementId"?: string;
+        "handleToggle"?: (boolean) => void;
+        "headline"?: string;
+        "open"?: boolean;
+        "slotContent"?: string;
+    }
+    interface IaAnswersOverview {
+        "history"?: RouterHistory;
+    }
     interface IaAnswersTable {
         "answers"?: any;
     }
     interface IaAppRecommendations {
+        "history"?: RouterHistory;
         "isFromData4Life"?: boolean;
     }
     interface IaCallToAction {
@@ -455,6 +497,7 @@ declare namespace LocalJSX {
     }
     interface IaQrCode {
         "answers"?: any;
+        "history"?: RouterHistory;
         "resultCase"?: number;
     }
     interface IaQuestionnaire {
@@ -463,7 +506,6 @@ declare namespace LocalJSX {
         "onShowLogoHeader"?: (event: CustomEvent<any>) => void;
     }
     interface IaRecommendation {
-        "resultCase"?: number;
     }
     interface IaStart {
         "history"?: RouterHistory;
@@ -476,6 +518,8 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "app-root": AppRoot;
         "connect-translations": ConnectTranslations;
+        "ia-accordion": IaAccordion;
+        "ia-answers-overview": IaAnswersOverview;
         "ia-answers-table": IaAnswersTable;
         "ia-app-recommendations": IaAppRecommendations;
         "ia-call-to-action": IaCallToAction;
@@ -516,6 +560,8 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "app-root": LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
             "connect-translations": LocalJSX.ConnectTranslations & JSXBase.HTMLAttributes<HTMLConnectTranslationsElement>;
+            "ia-accordion": LocalJSX.IaAccordion & JSXBase.HTMLAttributes<HTMLIaAccordionElement>;
+            "ia-answers-overview": LocalJSX.IaAnswersOverview & JSXBase.HTMLAttributes<HTMLIaAnswersOverviewElement>;
             "ia-answers-table": LocalJSX.IaAnswersTable & JSXBase.HTMLAttributes<HTMLIaAnswersTableElement>;
             "ia-app-recommendations": LocalJSX.IaAppRecommendations & JSXBase.HTMLAttributes<HTMLIaAppRecommendationsElement>;
             "ia-call-to-action": LocalJSX.IaCallToAction & JSXBase.HTMLAttributes<HTMLIaCallToActionElement>;

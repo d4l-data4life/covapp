@@ -1,0 +1,4 @@
+a + d4l-button button,
+d4l-button + d4l-button button {
+  margin-top: var(--padding-main);
+}

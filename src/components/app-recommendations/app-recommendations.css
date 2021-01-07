@@ -5,20 +5,6 @@
   justify-content: space-between;
 }
 
-.app-recommendation--full-width {
-  width: 100%;
-}
-
-.app-recommendation--half-width {
-  width: 100%;
-}
-
-@media screen and (min-width: 768px) {
-  .app-recommendation--half-width {
-    width: calc(50% - 0.5em);
-  }
-}
-
 .app-recommendation__wrapper > * {
   margin: 0.5em 0;
 }
@@ -47,12 +33,18 @@
   color: var(--c-gray-light);
 }
 
+.app-recommendation__paragraph {
+  color: var(--c-gray);
+  font-weight: 400;
+  padding-top: var(--padding-main);
+}
+
 .app-recommendation__icon {
   height: 56px;
   width: 56px;
   background: white;
   border-radius: 12px;
-  box-shadow: 0px 0px 24px -2px rgba(191, 191, 191, 0.6);
+  box-shadow: 0 0 24px -2px rgba(191, 191, 191, 0.6);
 }
 
 .app-recommendation__logo__wrapper {

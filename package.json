@@ -1,7 +1,7 @@
 {
   "name": "infection-risk-assessment-app",
   "private": true,
-  "version": "1.22.0",
+  "version": "1.23.0",
   "description": "Assessing the risk of contagious viral infections (COVID-19)",
   "scripts": {
     "analyze": "stencil build",
@@ -37,7 +37,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@d4l/web-components-library": "^1.28.10",
+    "@d4l/web-components-library": "^2.2.1",
     "@sentry/browser": "^5.15.4",
     "i18next": "^19.3.2",
     "i18next-browser-languagedetector": "^4.0.2",

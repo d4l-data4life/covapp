@@ -8,23 +8,15 @@ import {
   State,
 } from '@stencil/core';
 import { RouterHistory } from '@stencil/router';
-import {
-  LOCAL_STORAGE_KEYS,
-  ROUTES,
-  TWO_WEEKS,
-  MOBILE_ORIGINS,
-} from '../../../global/constants';
+import { LOCAL_STORAGE_KEYS, ROUTES, TWO_WEEKS } from '../../../global/constants';
 import { CATEGORIES, QUESTION } from '../../../global/questions';
 import { getToday } from '../../../global/utils/date';
 import i18next from '../../../global/utils/i18n';
-import { trackEvent, TRACKING_EVENTS } from '../../../global/utils/track';
 import version from '../../../global/utils/version';
 import { RiskSpreading } from './snippets/risk-spreading';
 import { RiskVeryIll } from './snippets/risk-very-ill';
 import { Answers, Scores } from '../questionnaire/questionnaire';
-import { WHITELISTED_DATA4LIFE_ORIGINS } from '../../../global/custom';
 import settings from '../../../global/utils/settings';
-import { IS_CHARITE } from '../../../global/layouts';
 
 @Component({
   styleUrl: 'summary.css',
@@ -169,26 +161,8 @@ export class Summary {
     settings.completed = true;
   };
 
-  get isFromData4Life() {
-    const { source } = settings;
-    return source
-      ? WHITELISTED_DATA4LIFE_ORIGINS.includes(source) || !!MOBILE_ORIGINS[source]
-      : false;
-  }
-
-  get completedExport() {
-    return localStorage.getItem(LOCAL_STORAGE_KEYS.EXPORTED) === 'true';
-  }
-
   render() {
-    const {
-      resetFormAndStartAgain,
-      answers,
-      resultCase,
-      snippetsAnswers,
-      isFromData4Life,
-      completedExport,
-    } = this;
+    const { resultCase, snippetsAnswers } = this;
 
     return (
       <div class="c-card-wrapper summary">
@@ -204,39 +178,50 @@ export class Summary {
                 )}
               </span>
             )}
-            <ia-recommendation resultCase={resultCase} />
-            {resultCase !== 5 && (
-              <RiskSpreading
-                livingSituation={snippetsAnswers.livingSituation}
-                workspace={snippetsAnswers.workspace}
-                caringForRelatives={snippetsAnswers.caringForRelatives}
+
+            <div slot="card-content">
+              <div class="recommendation">
+                <p class="recommendation__eyebrow">
+                  {i18next.t(`recommendation_eyebrow`)}
+                </p>
+                <h3 class="recommendation__headline">
+                  {i18next.t(`recommendation_case_${resultCase}_headline`)}
+                </h3>
+                <div
+                  innerHTML={i18next.t(`recommendation_case_${resultCase}_text`)}
+                />
+              </div>
+              <h3 class="u-text-align--center">{i18next.t('summary_next')}</h3>
+
+              <ia-accordion
+                headline={i18next.t('summary_contact_health_headline')}
+                slotContent={i18next.t('summary_contact_health_content')}
               />
-            )}
+              {resultCase !== 5 && (
+                <RiskSpreading
+                  livingSituation={snippetsAnswers.livingSituation}
+                  workspace={snippetsAnswers.workspace}
+                  caringForRelatives={snippetsAnswers.caringForRelatives}
+                />
+              )}
+
+              <ia-accordion headline={i18next.t('summary_show_doctor_headline')}>
+                <div slot="accordion-children">
+                  <div innerHTML={i18next.t('summary_show_doctor_content')} />
+                  <a href="/answers">
+                    <d4l-button
+                      classes="button--block"
+                      data-test="answers-button"
+                      text={i18next.t('summary_show_doctor_button')}
+                      is-route-link
+                    />
+                  </a>
+                </div>
+              </ia-accordion>
+              <ia-app-recommendations />
+            </div>
           </div>
         </d4l-card>
-
-        {!completedExport && IS_CHARITE && isFromData4Life && <ia-data4life />}
-
-        <d4l-card classes="card--desktop summary__content">
-          <div slot="card-content">
-            <ia-qr-code answers={answers} resultCase={resultCase} />
-          </div>
-          <div class="summary__footer" slot="card-footer">
-            <h3>{i18next.t('summary_reset_headline')}</h3>
-            <d4l-button
-              type="button"
-              classes="button--block button--secondary "
-              data-test="continueButton"
-              text={i18next.t('summary_reset_button')}
-              handleClick={() => {
-                resetFormAndStartAgain();
-                trackEvent(TRACKING_EVENTS.SUMMARY_DELETE);
-              }}
-            />
-          </div>
-        </d4l-card>
-
-        {IS_CHARITE && <ia-app-recommendations isFromData4Life={isFromData4Life} />}
       </div>
     );
   }
