@@ -18,6 +18,8 @@ export const ROUTES = {
   FAQ: '/faq',
   DATA_PRIVACY: '/data-privacy',
   EXPORT: '/export',
+  RECOMMENDATIONS: '/recommendations',
+  ANSWERS: '/answers',
 };
 
 export const LOCAL_STORAGE_KEYS = {

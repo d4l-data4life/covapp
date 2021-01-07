@@ -1,8 +1,6 @@
 import { Component, h, Listen, Prop, State } from '@stencil/core';
 import { QUESTIONS } from '../../global/questions';
 import i18next from '../../global/utils/i18n';
-import { trackEvent, TRACKING_EVENTS } from '../../global/utils/track';
-import { getRootCSSPropertyValue } from '../../global/utils/css-properties';
 
 @Component({
   styleUrl: 'answers-table.css',
@@ -72,39 +70,9 @@ export class AnswersTable {
   render() {
     const { answers, generateQuestionRow } = this;
 
-    const props = {
-      'data-test': 'toggleAnswersButton',
-    };
-
-    const canPrint = window && typeof window.print === 'function';
-
     return (
       <div class="answers-table">
-        <d4l-accordion
-          open={false}
-          headerBackgroundColor={getRootCSSPropertyValue('--c-gray')}
-          classes="accordion--no-panel-border accordion--no-panel-padding"
-          buttonProps={props}
-        >
-          <p class="o-accordion-headline" slot="accordion-header">
-            {i18next.t('answers_table_headline')}
-          </p>
-          <div slot="accordion-panel">
-            <table>{Object.keys(answers).map(id => generateQuestionRow(id))}</table>
-            {canPrint && (
-              <d4l-button
-                type="button"
-                classes="button--block answers-table__button"
-                data-test="printButton"
-                text={i18next.t('answers_table_print')}
-                handleClick={() => {
-                  trackEvent(TRACKING_EVENTS.SUMMARY_PRINT);
-                  window.print();
-                }}
-              />
-            )}
-          </div>
-        </d4l-accordion>
+        <table>{Object.keys(answers).map(generateQuestionRow)}</table>
       </div>
     );
   }

@@ -10,7 +10,6 @@ import {
 import { RouterHistory } from '@stencil/router';
 import i18next from '../../../global/utils/i18n';
 import { LOCAL_STORAGE_KEYS, MOBILE_ORIGINS } from '../../../global/constants';
-import { IS_CHARITE } from '../../../global/layouts';
 import { FHIRQuestionnaire, buildQuestionnaireResponse } from '../../../global/fhir';
 import COVAPP_QUESTIONNAIRE_EN from '../../../global/fhir/fhir-schemas/cov-app-en-packed-r4.questionnaire.json';
 import COVAPP_QUESTIONNAIRE_DE from '../../../global/fhir/fhir-schemas/cov-app-de-packed-r4.questionnaire.json';
@@ -21,6 +20,7 @@ import {
   DATA4LIFE_IOS_BASEURL,
 } from '../../../global/custom';
 import settings from '../../../global/utils/settings';
+import { canExport, isOauthContext } from '../../../global/utils/canExport';
 
 enum EXPORT_MODE {
   IFRAME,
@@ -81,30 +81,25 @@ export class Export {
       return;
     }
 
-    window.parent &&
-      window.parent.postMessage(
-        {
-          type: 'covapp_export',
-          event,
-          payload,
-        },
-        this.origin || '*'
-      );
+    window.parent?.postMessage(
+      {
+        type: 'covapp_export',
+        event,
+        payload,
+      },
+      this.origin || '*'
+    );
   }
 
   componentWillLoad() {
     const { origin } = this.history.location.query;
-    const isIframeContext = window.parent && window.parent !== window;
-    const isOauthContext =
-      origin &&
-      (WHITELISTED_DATA4LIFE_ORIGINS.includes(origin) || !!MOBILE_ORIGINS[origin]);
 
-    if (!IS_CHARITE || (!isIframeContext && !isOauthContext)) {
+    if (!canExport(origin)) {
       this.history.replace('/');
       return;
     }
 
-    if (isOauthContext) {
+    if (isOauthContext(origin)) {
       this.mode = EXPORT_MODE.OAUTH;
       this.origin = origin;
     }

@@ -5,3 +5,13 @@
 .qr-code__img-code > img {
   width: 100%;
 }
+
+.qr-code p {
+  white-space: pre-wrap;
+}
+
+.qr-code h2 {
+  color: var(--c-primary);
+  text-align: center;
+  margin-bottom: calc(var(--padding-main) * 1.5);
+}
