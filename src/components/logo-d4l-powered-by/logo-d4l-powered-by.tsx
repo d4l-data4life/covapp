@@ -11,7 +11,7 @@ export class LogoD4LPoweredBy {
       <a
         href="https://www.data4life.care/"
         target="_blank"
-        rel="noopener noreferrer"
+        rel="noopener"
         aria-label="data4life"
       >
         <svg
