@@ -11,6 +11,8 @@ import { trackEvent, TRACKING_EVENTS } from '../../global/utils/track';
   assetsDirs: ['assets'],
 })
 export class AppRecommendationsComponent {
+  protected containerElement: HTMLElement;
+
   @Prop() history: RouterHistory;
   @State() language: string;
   @Listen('changedLanguage', {
@@ -21,6 +23,14 @@ export class AppRecommendationsComponent {
   }
 
   @Prop() isFromData4Life: boolean = false;
+
+  componentDidRender() {
+    this.containerElement
+      .querySelectorAll('a')
+      .forEach(
+        el => el.href?.includes(DATA4LIFE_URL) && el.setAttribute('rel', 'noopener')
+      );
+  }
 
   render() {
     const slides = [
@@ -85,6 +95,7 @@ export class AppRecommendationsComponent {
         elementId={APP_RECOMMENDATIONS_ID}
         headline={i18next.t('app_recommendation_headline')}
         open={this.history.location?.state?.openAppRecommendationsAccordion}
+        ref={el => (this.containerElement = el)}
       >
         <d4l-slider slides={slides} slot="accordion-children" />
       </ia-accordion>
