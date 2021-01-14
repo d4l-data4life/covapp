@@ -1,7 +1,7 @@
 {
   "name": "infection-risk-assessment-app",
   "private": true,
-  "version": "1.23.2",
+  "version": "1.23.3",
   "description": "Assessing the risk of contagious viral infections (COVID-19)",
   "scripts": {
     "analyze": "stencil build",
