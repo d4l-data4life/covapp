@@ -94,12 +94,26 @@ export class AppRoot {
       APP_RECOMMENDATIONS_ID
     ) as HTMLD4lAccordionElement;
     if (element) {
-      element.open = true;
-      element.scrollIntoView({
+      const scrollOptions = {
         behavior: 'smooth',
         block: 'start',
         inline: 'nearest',
-      });
+      } as ScrollIntoViewOptions;
+      // https://caniuse.com/mdn-api_resizeobserver
+      // @ts-ignore
+      if (window.ResizeObserver) {
+        // @ts-ignore
+        const resizeObserver = new ResizeObserver(() => {
+          element.scrollIntoView(scrollOptions);
+          resizeObserver.unobserve(element);
+        });
+        // CC-515 wait for opening so scroll into view has correct position
+        resizeObserver.observe(element);
+        element.open = true;
+      } else {
+        element.open = true;
+        element.scrollIntoView(scrollOptions);
+      }
     } else {
       this.history.push(`${ROUTES.SUMMARY}#${APP_RECOMMENDATIONS_ID}`, {
         openAppRecommendationsAccordion: true,

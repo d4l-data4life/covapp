@@ -10,6 +10,7 @@ import {
   State,
 } from '@stencil/core';
 import { Question } from '../../global/questions';
+import isDevice from '../../global/utils/isDevice';
 
 // TODO: https://github.com/gesundheitscloud/infection-risk-assessment/pull/76
 // This is only a temporary fix. This should be moved/handled differently
@@ -54,6 +55,9 @@ export class InputDate {
             new Date().getMonth() + 1
           ).padStart(2, '0')}-${String(new Date().getDate()).padStart(2, '0')}`}
         />
+        {isDevice.ios && (
+          <div class="input-date__help">{i18next.t('input_date_help_info')}</div>
+        )}
       </div>
     ) : (
       <div>
