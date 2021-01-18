@@ -45,7 +45,7 @@ export class AppRecommendationsComponent {
         text: '',
         label: i18next.t('app_recommendation_d4l_app_name'),
         ctaText: i18next.t('app_recommendation_learn_more_button'),
-        ctaLink: `${DATA4LIFE_URL}?source=CovApp`,
+        ctaLink: `${DATA4LIFE_URL}?source=CovApp&lng=${this.language}`,
         ctaEventHandler: () =>
           trackEvent(TRACKING_EVENTS.SUMMARY_DATA4LIFE_NO_ACCOUNT),
       },
