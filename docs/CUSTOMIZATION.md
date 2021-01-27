@@ -112,10 +112,10 @@ An example `app.css` with adjusted colores could look as follows.
 @import '../../global/app.css';
 
 :root {
-  --c-primary: #ff3f97;
-  --c-primary-light: #ff4ebb;
-  --c-primary-lighter: #ff5fdf;
-  --c-primary-lightest: #ff81ff;
+  --color-primary: #ff3f97;
+  --color-primary-light: #ff4ebb;
+  --color-primary-lighter: #ff5fdf;
+  --color-primary-lightest: #ff81ff;
 }
 ```
 

@@ -17,6 +17,7 @@ import { RiskSpreading } from './snippets/risk-spreading';
 import { RiskVeryIll } from './snippets/risk-very-ill';
 import { Answers, Scores } from '../questionnaire/questionnaire';
 import settings from '../../../global/utils/settings';
+import { IS_COLLABORATION } from '../../../global/layouts';
 
 @Component({
   styleUrl: 'summary.css',
@@ -208,17 +209,17 @@ export class Summary {
               <ia-accordion headline={i18next.t('summary_show_doctor_headline')}>
                 <div slot="accordion-children">
                   <div innerHTML={i18next.t('summary_show_doctor_content')} />
-                  <a href="/answers">
+                  <stencil-route-link url={ROUTES.ANSWERS}>
                     <d4l-button
                       classes="button--block"
                       data-test="answers-button"
                       text={i18next.t('summary_show_doctor_button')}
                       is-route-link
                     />
-                  </a>
+                  </stencil-route-link>
                 </div>
               </ia-accordion>
-              <ia-app-recommendations />
+              {!IS_COLLABORATION && <ia-app-recommendations />}
             </div>
           </div>
         </d4l-card>

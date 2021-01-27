@@ -19,7 +19,7 @@
 
 .accordion ia-call-to-action + ia-call-to-action {
   display: block;
-  border-top: 1px solid var(--c-tertiary);
+  border-top: 1px solid var(--color-tertiary);
   margin-top: var(--padding-main);
   padding-top: var(--padding-main);
 }

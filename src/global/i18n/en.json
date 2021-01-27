@@ -250,6 +250,7 @@
     "start_block_5_infotext": "{openSourceWidgets}",
     "start_headline": "Do you have symptoms? CovApp shows you potential next steps.",
     "start_legal_paragraph": "<strong>CovApp is not a medical device. It offers neither diagnostic services nor monitoring or treatment of diseases. This app does not replace medical advice or treatment.</strong>",
+    "start_legal_paragraph_partners": "<strong>This application is not an application that provides diagnostic services. The application serves to simplify the procedures in care.</strong>",
     "start_section_1_headline": "1) Fill out a questionnaire",
     "start_section_1_infotext": "It’s anonymous and only takes 3 minutes.",
     "start_section_2_headline": "2) Get recommendations",

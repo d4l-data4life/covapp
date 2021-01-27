@@ -29,7 +29,7 @@ export class Accordion {
         open={this.open}
         buttonProps={this.buttonProps}
         handleToggle={this.handleToggle}
-        headerBackgroundColor={getRootCSSPropertyValue('--c-gray')}
+        headerBackgroundColor={getRootCSSPropertyValue('--color-neutral')}
       >
         <h3
           class="o-accordion-headline u-padding-horizontal--extra-small u-text-align--left"
