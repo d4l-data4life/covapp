@@ -20,7 +20,7 @@
 .app-recommendation__name {
   font-size: 18px;
   font-weight: 500;
-  color: var(--c-primary);
+  color: var(--color-primary);
   min-height: 54px;
 }
 
@@ -30,11 +30,11 @@
 
 .app-recommendation__byline {
   font-size: 12px;
-  color: var(--c-gray-light);
+  color: var(--color-neutral-light);
 }
 
 .app-recommendation__paragraph {
-  color: var(--c-gray);
+  color: var(--color-neutral);
   font-weight: 400;
   padding-top: var(--padding-main);
 }

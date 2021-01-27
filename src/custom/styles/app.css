@@ -9,9 +9,9 @@ E.g. you can uncomment the CSS below to adjust the primary color
 
 /*
 :root {
-  --c-primary: #003f97;
-  --c-primary-light: #004ebb;
-  --c-primary-lighter: #005fdf;
-  --c-primary-lightest: #2481ff;
+  --color-primary: #003f97;
+  --color-primary-light: #004ebb;
+  --color-primary-lighter: #005fdf;
+  --color-primary-lightest: #2481ff;
 }
 */

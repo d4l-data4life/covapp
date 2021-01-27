@@ -36,8 +36,8 @@ body {
   margin: 0;
   padding: 0;
   font-family: var(--font-sans);
-  color: var(--c-gray);
-  background-color: var(--c-tertiary);
+  color: var(--color-neutral);
+  background-color: var(--color-tertiary);
 }
 
 .radio strong {

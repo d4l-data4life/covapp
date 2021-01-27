@@ -9,7 +9,7 @@
 }
 
 .c-header h1 {
-  color: var(--c-primary);
+  color: var(--color-primary);
 }
 
 .c-footer {
@@ -21,7 +21,7 @@
   margin: 30px auto 0;
   width: 100%;
   max-width: var(--max-width-desktop);
-  color: var(--c-gray);
+  color: var(--color-neutral);
 }
 
 .c-footer ul {
@@ -38,7 +38,7 @@
   font-size: 14px;
   font-weight: 500;
   height: 18px;
-  color: var(--c-scorpion);
+  color: var(--color-neutral);
 }
 
 .c-footer > ul li:last-of-type {
@@ -64,7 +64,7 @@
 
 .c-logo {
   text-decoration: none;
-  color: var(--c-gray);
+  color: var(--color-neutral);
 }
 
 .c-logo > h1 {

@@ -8,7 +8,7 @@
   font-weight: 500;
   margin-top: 2rem;
   margin-bottom: 1.5rem;
-  color: var(--c-primary);
+  color: var(--color-primary);
 }
 
 .summary h3:not(.o-accordion-headline) {
@@ -16,13 +16,13 @@
   font-weight: 500;
   margin-top: 2.5rem;
   margin-bottom: 1.5rem;
-  color: var(--c-primary);
+  color: var(--color-primary);
 }
 
 .summary h4 {
   font-weight: 500;
   margin-bottom: 0.5rem;
-  color: var(--c-gray);
+  color: var(--color-neutral);
 }
 
 .summary__risk-very-ill {
@@ -43,18 +43,18 @@
 }
 
 .summary .recommendation {
-  border: 2px solid var(--c-primary);
+  border: 2px solid var(--color-primary);
   padding: var(--padding-main);
 }
 
 .summary .recommendation__eyebrow {
-  color: var(--c-primary);
+  color: var(--color-primary);
   text-align: center;
   margin-top: 0;
 }
 
 .summary h3.recommendation__headline {
-  color: var(--c-primary);
+  color: var(--color-primary);
   margin-top: var(--padding-main);
   text-align: center;
 }
@@ -66,7 +66,7 @@
   padding-top: var(--padding-main);
   padding-left: var(--padding-main);
   padding-right: var(--padding-main);
-  border-top: 1px solid var(--c-gray-lightest);
+  border-top: 1px solid var(--color-neutral-lightest);
 }
 
 .accordion d4l-slider .slider__container {

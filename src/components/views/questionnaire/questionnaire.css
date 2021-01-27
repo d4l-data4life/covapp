@@ -10,14 +10,14 @@
 
 /* Important is used due to the scoped styles */
 .questionnaire input[type='radio'] + label::before {
-  border-color: var(--c-gray) !important;
+  border-color: var(--color-neutral) !important;
 }
 
 .questionnaire input[type='radio']:checked + label::after {
-  background-color: var(--c-gray) !important;
+  background-color: var(--color-neutral) !important;
 }
 
 d4l-button .button.sc-d4l-button:disabled {
-  background-color: var(--c-gray-lighter);
-  border-color: var(--c-gray-lighter);
+  background-color: var(--color-neutral-lighter);
+  border-color: var(--color-neutral-lighter);
 }

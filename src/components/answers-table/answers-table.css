@@ -17,5 +17,5 @@
 }
 
 .answers-table tr:nth-child(even) {
-  background-color: var(--c-gray-lighter);
+  background-color: var(--color-neutral-lighter);
 }

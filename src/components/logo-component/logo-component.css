@@ -8,7 +8,7 @@
 
 .logo-component__label {
   margin-top: 0.375rem;
-  color: var(--c-gray);
+  color: var(--color-neutral);
   text-align: center;
   font-size: 0.75rem;
 }

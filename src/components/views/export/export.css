@@ -13,7 +13,7 @@
 
 .export__content,
 .export__footer {
-  border-top: 1px solid var(--c-gray-lightest);
+  border-top: 1px solid var(--color-neutral-lightest);
 }
 
 .export__content {
@@ -28,7 +28,7 @@
 }
 
 .export__checkbox {
-  border-top: 1px solid var(--c-gray-lightest);
+  border-top: 1px solid var(--color-neutral-lightest);
 }
 
 .export__checkbox {

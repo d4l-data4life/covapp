@@ -14,14 +14,14 @@
 }
 
 .navigation-header > button {
-  color: var(--c-gray);
+  color: var(--color-neutral);
   padding: 1em 1em 1em 0.5em;
 }
 
 .navigation-header svg.icon {
-  color: var(--c-gray);
+  color: var(--color-neutral);
 }
 
 .navigation-header--border-bottom {
-  border-bottom: 1px solid var(--c-gray-lightest);
+  border-bottom: 1px solid var(--color-neutral-lightest);
 }

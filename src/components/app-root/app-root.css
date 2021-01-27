@@ -27,12 +27,12 @@ main.layout--embedded {
 }
 
 .banner--error {
-  background-color: var(--c-error) !important;
-  color: var(--c-tertiary) !important;
+  background-color: var(--color-error) !important;
+  color: var(--color-tertiary) !important;
 }
 
 .banner--error .banner__close .sc-d4l-banner .icon {
-  color: var(--c-tertiary);
+  color: var(--color-tertiary);
 }
 
 @media screen and (min-width: 768px) {
@@ -56,7 +56,7 @@ main.layout--embedded {
 
 .cookie-bar__content {
   font-size: 14px;
-  color: var(--c-gray);
+  color: var(--color-neutral);
 }
 
 .d4l-banner__content {

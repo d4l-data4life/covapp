@@ -1,7 +1,7 @@
 .o-link {
   text-decoration: none;
   cursor: pointer;
-  color: var(--c-primary);
+  color: var(--color-primary);
 }
 
 .o-link:hover,
@@ -10,7 +10,7 @@
 }
 
 .o-link--gray {
-  color: var(--c-gray);
+  color: var(--color-neutral);
 }
 
 .o-link--bold {
@@ -22,7 +22,7 @@
 }
 
 .o-error {
-  color: var(--c-error);
+  color: var(--color-error);
 }
 
 .o-error--small {
@@ -52,7 +52,7 @@
 }
 
 .o-accordion-headline {
-  color: var(--c-white);
+  color: var(--color-white);
   font-size: 1rem;
   font-weight: 500;
   margin: 0;

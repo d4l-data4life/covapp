@@ -11,7 +11,7 @@
 }
 
 .qr-code h2 {
-  color: var(--c-primary);
+  color: var(--color-primary);
   text-align: center;
   margin-bottom: calc(var(--padding-main) * 1.5);
 }

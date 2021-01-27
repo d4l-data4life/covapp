@@ -31,7 +31,7 @@ export class Recommendation {
               <div class="u-padding-top--normal">
                 <d4l-accordion
                   open
-                  headerBackgroundColor={getRootCSSPropertyValue('--c-gray')}
+                  headerBackgroundColor={getRootCSSPropertyValue('--color-neutral')}
                   buttonProps={{
                     'data-test': 'toggleInformationHotline',
                   }}
@@ -57,7 +57,9 @@ export class Recommendation {
                 <div class="u-padding-top--normal">
                   <d4l-accordion
                     open
-                    headerBackgroundColor={getRootCSSPropertyValue('--c-gray')}
+                    headerBackgroundColor={getRootCSSPropertyValue(
+                      '--color-neutral'
+                    )}
                     buttonProps={{
                       'data-test': 'toggleTelemedicine',
                     }}
