@@ -21,8 +21,8 @@
   --color-success: #46960a;
 
   /* Border radius */
-  --border-radius-medium: 12px;
-  --border-radius-large: 20px;
+  --border-radius-m: 12px;
+  --border-radius-l: 20px;
 
   /* Layout */
   --padding-main: 1em;

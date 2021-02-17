@@ -66,7 +66,7 @@ export class AnswersOverview {
             <p>{i18next.t('summary_reset_paragraph')}</p>
             <d4l-button
               type="button"
-              classes="button--block button--secondary "
+              classes="button--block button--secondary"
               data-test="continueButton"
               text={i18next.t('summary_reset_button')}
               handleClick={() => {

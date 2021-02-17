@@ -29,7 +29,7 @@ export class AnswersTable {
 
     if (question.inputType === 'date') {
       return (
-        <tr class="answers-tabl__row">
+        <tr class="answers-table__row">
           <td>{i18next.t(question.text)}</td>
           <td>
             {this.answers[id]
@@ -45,6 +45,13 @@ export class AnswersTable {
         <tr class="answers-table__row">
           <td>{i18next.t(question.text)}</td>
           <td>{i18next.t(response)}</td>
+        </tr>
+      );
+    } else if (question.inputType === 'decimal') {
+      return (
+        <tr class="answers-table__row">
+          <td>{i18next.t(question.text)}</td>
+          <td>{this.answers[id]}</td>
         </tr>
       );
     } else if (question.inputType === 'checkbox') {

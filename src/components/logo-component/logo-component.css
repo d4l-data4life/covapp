@@ -39,7 +39,7 @@
 }
 
 .logo-component--collaboration .card {
-  --border-radius-medium: 0;
+  --border-radius-m: 0;
   --shadow-soft: none;
 }
 

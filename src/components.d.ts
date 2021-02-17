@@ -63,12 +63,18 @@ export namespace Components {
     }
     interface IaInputMultipleChoice {
         "question": Question;
+        "value"?: string[];
+    }
+    interface IaInputNumber {
+        "question": Question;
+        "value": string;
     }
     interface IaInputPostalCode {
         "question": Question;
+        "value": string;
     }
     interface IaInputRadio {
-        "currentSelection": any;
+        "currentSelection": string;
         "question": Question;
     }
     interface IaLegal {
@@ -224,6 +230,12 @@ declare global {
         prototype: HTMLIaInputMultipleChoiceElement;
         new (): HTMLIaInputMultipleChoiceElement;
     };
+    interface HTMLIaInputNumberElement extends Components.IaInputNumber, HTMLStencilElement {
+    }
+    var HTMLIaInputNumberElement: {
+        prototype: HTMLIaInputNumberElement;
+        new (): HTMLIaInputNumberElement;
+    };
     interface HTMLIaInputPostalCodeElement extends Components.IaInputPostalCode, HTMLStencilElement {
     }
     var HTMLIaInputPostalCodeElement: {
@@ -361,6 +373,7 @@ declare global {
         "ia-imprint": HTMLIaImprintElement;
         "ia-input-date": HTMLIaInputDateElement;
         "ia-input-multiple-choice": HTMLIaInputMultipleChoiceElement;
+        "ia-input-number": HTMLIaInputNumberElement;
         "ia-input-postal-code": HTMLIaInputPostalCodeElement;
         "ia-input-radio": HTMLIaInputRadioElement;
         "ia-legal": HTMLIaLegalElement;
@@ -445,13 +458,20 @@ declare namespace LocalJSX {
     interface IaInputMultipleChoice {
         "onUpdateFormData"?: (event: CustomEvent<any>) => void;
         "question"?: Question;
+        "value"?: string[];
+    }
+    interface IaInputNumber {
+        "onUpdateFormData"?: (event: CustomEvent<any>) => void;
+        "question"?: Question;
+        "value"?: string;
     }
     interface IaInputPostalCode {
         "onUpdateFormData"?: (event: CustomEvent<any>) => void;
         "question"?: Question;
+        "value"?: string;
     }
     interface IaInputRadio {
-        "currentSelection"?: any;
+        "currentSelection"?: string;
         "onUpdateFormData"?: (event: CustomEvent<any>) => void;
         "question"?: Question;
     }
@@ -532,6 +552,7 @@ declare namespace LocalJSX {
         "ia-imprint": IaImprint;
         "ia-input-date": IaInputDate;
         "ia-input-multiple-choice": IaInputMultipleChoice;
+        "ia-input-number": IaInputNumber;
         "ia-input-postal-code": IaInputPostalCode;
         "ia-input-radio": IaInputRadio;
         "ia-legal": IaLegal;
@@ -574,6 +595,7 @@ declare module "@stencil/core" {
             "ia-imprint": LocalJSX.IaImprint & JSXBase.HTMLAttributes<HTMLIaImprintElement>;
             "ia-input-date": LocalJSX.IaInputDate & JSXBase.HTMLAttributes<HTMLIaInputDateElement>;
             "ia-input-multiple-choice": LocalJSX.IaInputMultipleChoice & JSXBase.HTMLAttributes<HTMLIaInputMultipleChoiceElement>;
+            "ia-input-number": LocalJSX.IaInputNumber & JSXBase.HTMLAttributes<HTMLIaInputNumberElement>;
             "ia-input-postal-code": LocalJSX.IaInputPostalCode & JSXBase.HTMLAttributes<HTMLIaInputPostalCodeElement>;
             "ia-input-radio": LocalJSX.IaInputRadio & JSXBase.HTMLAttributes<HTMLIaInputRadioElement>;
             "ia-legal": LocalJSX.IaLegal & JSXBase.HTMLAttributes<HTMLIaLegalElement>;

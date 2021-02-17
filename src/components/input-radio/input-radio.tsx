@@ -16,7 +16,7 @@ import { Question } from '../../global/questions';
 })
 export class InputRadio {
   @Prop() question: Question;
-  @Prop() currentSelection: any;
+  @Prop() currentSelection: string;
 
   @State() language?: string;
 

@@ -17,6 +17,7 @@ import { Question, CheckboxOption } from '../../global/questions';
 })
 export class InputMultipleChoice {
   @Prop() question: Question;
+  @Prop() value?: string[];
 
   @State() language?: string;
   @State() checkedAnswers: string[] = [];
@@ -37,6 +38,15 @@ export class InputMultipleChoice {
   @Watch('question')
   onQuestionChange() {
     this.checkedAnswers = [];
+  }
+
+  @Watch('value')
+  onValueChange() {
+    this.checkedAnswers = this.value ?? [];
+  }
+
+  componentWillLoad() {
+    this.checkedAnswers = this.value ?? [];
   }
 
   componentDidLoad() {
@@ -86,7 +96,7 @@ export class InputMultipleChoice {
                   key={question.id}
                   checkbox-id={`${question.id}-option${index}`}
                   name={question.id}
-                  checked={this.checkedAnswers.indexOf(option.id) > -1}
+                  checked={this.checkedAnswers.indexOf(String(index)) > -1}
                   label={i18next.t(option.label)}
                   value={index.toString()}
                   handleChange={(event: Event) => onInputChange(event, null)}
