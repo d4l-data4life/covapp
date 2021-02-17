@@ -37,6 +37,7 @@ export class Questionnaire {
   @State() previousStep: number;
   @State() answerData: Answers = {};
   @State() scoreData: Scores = {};
+
   @Event() showLogoHeader: EventEmitter;
 
   formElement: HTMLFormElement;
@@ -111,13 +112,15 @@ export class Questionnaire {
   }
 
   moveToNextStep = () => {
-    let answerIndex = this.answerData[QUESTIONS[this.currentStep].id];
-    if (!answerIndex) {
+    const question = QUESTIONS[this.currentStep];
+    let answerIndex = this.answerData[question.id];
+
+    if (!answerIndex && !question.optional) {
       this.showErrorBannerHandler();
       return;
     }
 
-    if (QUESTIONS[this.currentStep].id === QUESTION.DATA_DONATION) {
+    if (question.id === QUESTION.DATA_DONATION) {
       trackEvent([
         ...TRACKING_EVENTS.DATA_DONATION_CONSENT,
         this.answerData[QUESTION.DATA_DONATION] === '0' ? '1' : '0',
@@ -151,7 +154,6 @@ export class Questionnaire {
     return false;
   };
 
-  // TODO: (Radimir) optimise for displaying the last answered question
   moveToPreviousStep = () => {
     if (this.currentStep === 0) {
       this.history.push(`/`, {});
@@ -159,13 +161,14 @@ export class Questionnaire {
       trackEvent(TRACKING_EVENTS.ABORT);
     } else {
       const answers = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.ANSWERS));
+
       if (this.answerData && answers) {
         const formDataKeys = Object.keys(answers);
         let previousDataKey = formDataKeys[formDataKeys.length - 1];
 
         const previousQuestion = QUESTIONS[getQuestionIndexById(previousDataKey)];
+        const previousAnswer = answers[previousDataKey];
         if (previousQuestion.scoreMap) {
-          const previousAnswer = answers[previousDataKey];
           this.scoreData[previousQuestion.category] -= getScoreChange(
             previousQuestion,
             previousAnswer
@@ -179,9 +182,20 @@ export class Questionnaire {
         this.currentStep = previousDataKey
           ? getQuestionIndexById(previousDataKey)
           : 0;
+
+        // reset previous answer so that fields are still filled out
+        // answerData needs reassignment to avoid race condition
+        requestAnimationFrame(
+          () =>
+            (this.answerData = {
+              ...this.answerData,
+              [previousDataKey]: previousAnswer,
+            })
+        );
       } else {
         this.currentStep--;
       }
+
       this.trackStepMove(true);
     }
   };
@@ -191,6 +205,10 @@ export class Questionnaire {
     (event.target as HTMLInputElement).querySelector('input')?.focus();
     this.moveToNextStep();
   };
+
+  get currentAnswerValue() {
+    return this.answerData[QUESTIONS[this.currentStep].id];
+  }
 
   componentWillLoad = () => {
     this.showLogoHeader.emit({ show: false });
@@ -203,8 +221,9 @@ export class Questionnaire {
     const availableScores = JSON.parse(
       localStorage.getItem(LOCAL_STORAGE_KEYS.SCORES)
     );
-    this.answerData = availableAnswers ? availableAnswers : {};
-    this.scoreData = availableScores ? availableScores : {};
+
+    this.answerData = availableAnswers ?? {};
+    this.scoreData = availableScores ?? {};
 
     const formDataKeys = Object.keys(this.answerData);
 
@@ -254,18 +273,31 @@ export class Questionnaire {
                       <ia-input-radio
                         data-test="questionnaireRadioInputs"
                         question={QUESTIONS[currentStep]}
-                        currentSelection={this.answerData[QUESTIONS[currentStep].id]}
+                        currentSelection={this.currentAnswerValue as string}
                       />
                     )}
                     {QUESTIONS[currentStep].inputType === 'checkbox' && (
-                      <ia-input-multiple-choice question={QUESTIONS[currentStep]} />
+                      <ia-input-multiple-choice
+                        question={QUESTIONS[currentStep]}
+                        value={this.currentAnswerValue as string[]}
+                      />
                     )}
 
+                    {/* TODO date-input component library component doesn't support setting initial value -> skipped */}
                     {QUESTIONS[currentStep].inputType === 'date' && (
                       <ia-input-date question={QUESTIONS[currentStep]} />
                     )}
                     {QUESTIONS[currentStep].inputType === 'postal' && (
-                      <ia-input-postal-code question={QUESTIONS[currentStep]} />
+                      <ia-input-postal-code
+                        question={QUESTIONS[currentStep]}
+                        value={this.currentAnswerValue as string}
+                      />
+                    )}
+                    {QUESTIONS[currentStep].inputType === 'decimal' && (
+                      <ia-input-number
+                        question={QUESTIONS[currentStep]}
+                        value={this.currentAnswerValue as string}
+                      />
                     )}
                   </div>
                 </fieldset>

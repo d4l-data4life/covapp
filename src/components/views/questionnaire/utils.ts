@@ -35,9 +35,23 @@ export const getScoreChange = (question: Question, answer: string | string[]) =>
   return scoreChange;
 };
 
-export const checkGoTo = (questionIndex: number, answerIndex: any): number => {
+export const checkGoTo = (questionIndex: number, answerValue: any): number => {
   const nextQuestionMap = QUESTIONS[questionIndex].nextQuestionMap;
-  if (Array.isArray(nextQuestionMap)) {
+  if (Array.isArray(nextQuestionMap) && Array.isArray(answerValue)) {
+    const hasDefault =
+      nextQuestionMap.length > QUESTIONS[questionIndex].options.length;
+
+    return (
+      answerValue
+        .map(answerIndex => getQuestionIndexById(nextQuestionMap[answerIndex]))
+        .sort((a, b) => a - b)
+        .shift() ??
+      (hasDefault
+        ? getQuestionIndexById(nextQuestionMap[nextQuestionMap.length - 1])
+        : questionIndex + 1)
+    );
+  } else if (Array.isArray(nextQuestionMap)) {
+    const answerIndex = answerValue;
     return getQuestionIndexById(nextQuestionMap[answerIndex]);
   } else if (typeof nextQuestionMap === 'string') {
     return getQuestionIndexById(nextQuestionMap);

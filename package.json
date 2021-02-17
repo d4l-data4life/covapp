@@ -1,7 +1,7 @@
 {
   "name": "infection-risk-assessment-app",
   "private": true,
-  "version": "1.24.0",
+  "version": "1.25.0",
   "description": "Assessing the risk of contagious viral infections (COVID-19)",
   "scripts": {
     "analyze": "stencil build",
@@ -22,7 +22,7 @@
     "@lokalise/node-api": "^2.1.0",
     "@stencil/core": "^1.9.2",
     "@stencil/router": "^1.0.1",
-    "@types/jest": "24.0.20",
+    "@types/jest": "25.2.3",
     "@types/puppeteer": "1.19.0",
     "deep-assign": "^3.0.0",
     "dotenv": "^8.2.0",

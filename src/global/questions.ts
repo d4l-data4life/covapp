@@ -12,12 +12,18 @@ export type Question = {
   id: string;
   category: string;
   comment?: string;
-  text: string;
-  inputType: 'radio' | 'date' | 'checkbox' | 'postal';
+  text?: string;
+  inputType: 'radio' | 'date' | 'checkbox' | 'postal' | 'decimal' | 'hidden';
   options?: string[] | CheckboxOption[];
   nextQuestionMap?: string | string[];
   scoreMap?: number[];
   guard?: Guard;
+  xmlValueMapping?: number[];
+  inputMin?: number;
+  inputMax?: number;
+  inputStep?: number;
+  xmlValue?: (answers: any) => string | number;
+  optional?: boolean;
 };
 
 export type CheckboxOption = {
@@ -37,7 +43,6 @@ export const CATEGORIES = {
 export const NO_XML = 'X';
 export const QUESTION = {
   POSTAL_CODE: 'V1',
-  AGE: 'P0',
   ABOVE_65: 'P1',
   HOUSING: 'P2',
   CARING: 'P3',
@@ -51,21 +56,6 @@ export const QUESTION = {
 export const XML_ORDER = ['V', 'P', 'C', 'S', 'D', 'M'];
 
 export const QUESTIONS: Question[] = [
-  {
-    id: QUESTION.AGE,
-    category: CATEGORIES.PERSONAL,
-    text: 'q_P0_text',
-    inputType: 'radio',
-    options: [
-      'q_P0_option0',
-      'q_P0_option1',
-      'q_P0_option2',
-      'q_P0_option3',
-      'q_P0_option4',
-      'q_P0_option5',
-    ],
-    nextQuestionMap: ['P2', 'P2', 'P2', 'P1', 'P2', 'P2'],
-  },
   {
     id: QUESTION.ABOVE_65,
     category: CATEGORIES.PERSONAL,
@@ -93,7 +83,14 @@ export const QUESTIONS: Question[] = [
     category: CATEGORIES.PERSONAL,
     text: 'q_P4_text',
     inputType: 'radio',
-    options: ['q_P4_option0', 'q_P4_option1', 'q_P4_option2'],
+    options: [
+      'q_P4_option0',
+      'q_P4_option3',
+      'q_P4_option1',
+      'q_P4_option4',
+      'q_P4_option2',
+    ],
+    xmlValueMapping: [1, 4, 2, 5, 3],
   },
   {
     id: 'P5',
@@ -116,7 +113,7 @@ export const QUESTIONS: Question[] = [
     text: 'q_C0_text',
     inputType: 'radio',
     options: ['answer_yes', 'answer_no'],
-    nextQuestionMap: ['CZ', 'S0'],
+    nextQuestionMap: ['CZ', 'X0'],
     scoreMap: [1, 0],
   },
   {
@@ -126,54 +123,18 @@ export const QUESTIONS: Question[] = [
     inputType: 'date',
   },
   {
-    id: 'S0',
-    category: CATEGORIES.SYMPTOMS_HIGH,
-    comment: null,
-    text: 'q_S0_text',
-    inputType: 'radio',
-    options: ['answer_yes', 'answer_no'],
-    nextQuestionMap: ['S2', 'S1'],
-    scoreMap: [1, 0],
-  },
-  {
-    id: 'S1',
-    category: CATEGORIES.SYMPTOMS_HIGH,
-    comment: null,
-    text: 'q_S1_text',
-    inputType: 'radio',
-    options: ['answer_yes', 'answer_no'],
-    nextQuestionMap: ['S2', 'X0'],
-    scoreMap: [1, 0],
-  },
-  {
-    id: 'S2',
-    category: CATEGORIES.SYMPTOMS_HIGH,
-    comment: null,
-    text: 'q_S2_text',
-    inputType: 'radio',
-    options: [
-      '',
-      'q_S2_option1',
-      'q_S2_option2',
-      'q_S2_option3',
-      'q_S2_option4',
-      'q_S2_option5',
-      'q_S2_option6',
-      'q_S2_option7',
-    ],
-  },
-  {
     id: 'X0',
     category: CATEGORIES.SYMPTOMS_HIGH,
     text: 'q_X0_text',
     comment: 'q_X0_comment',
     inputType: 'checkbox',
     options: [
+      { label: 'q_X0_option_S0', id: 'S0' },
       { label: 'q_X0_option_S3', id: 'S3' },
       { label: 'q_X0_option_S5', id: 'S5' },
       { label: 'q_X0_option_SC', id: 'SC' },
     ],
-    scoreMap: [1, 1, 1],
+    scoreMap: [1, 1, 1, 1],
   },
   {
     id: 'X2',
@@ -211,36 +172,61 @@ export const QUESTIONS: Question[] = [
     ]),
   },
   {
-    id: 'D0',
+    id: 'X3',
     category: CATEGORIES.ILLNESS,
-    text: 'q_D0_text',
-    inputType: 'radio',
-    options: ['answer_yes', 'answer_no', 'answer_unknown'],
-    scoreMap: [1, 0, 0],
+    comment: 'q_X3_comment',
+    text: 'q_X3_text',
+    inputType: 'checkbox',
+    options: [
+      { label: 'q_X3_option_D0', id: 'D0' },
+      { label: 'q_X3_option_D1', id: 'D1' },
+      { label: 'q_X3_option_D2', id: 'D2' },
+      { label: 'q_X3_option_D4', id: 'D4' },
+    ],
+    scoreMap: [1, 1, 1, 1],
   },
   {
-    id: 'D1',
-    category: CATEGORIES.ILLNESS,
-    text: 'q_D1_text',
-    inputType: 'radio',
-    options: ['answer_yes', 'answer_no', 'answer_unknown'],
-    scoreMap: [1, 0, 0],
+    id: 'D6',
+    category: CATEGORIES.PERSONAL,
+    comment: 'q_D6_comment',
+    text: 'q_D6_text',
+    inputType: 'decimal',
+    inputMin: 50,
+    inputMax: 300,
+    inputStep: 1,
+    optional: true,
   },
   {
-    id: 'D2',
-    category: CATEGORIES.ILLNESS,
-    text: 'q_D2_text',
-    inputType: 'radio',
-    options: ['answer_yes', 'answer_no', 'answer_unknown'],
-    scoreMap: [1, 0, 0],
+    id: 'D5',
+    category: CATEGORIES.PERSONAL,
+    comment: 'q_D5_comment',
+    text: 'q_D5_text',
+    inputType: 'decimal',
+    inputMin: 0,
+    inputMax: 600,
+    inputStep: 1,
+    optional: true,
   },
   {
-    id: 'D3',
-    category: CATEGORIES.ILLNESS,
-    text: 'q_D3_text',
-    inputType: 'radio',
-    options: ['answer_yes', 'answer_no', 'answer_unknown'],
-    scoreMap: [1, 0, 0],
+    id: 'D7',
+    category: CATEGORIES.PERSONAL,
+    inputType: 'hidden',
+    xmlValue({ D5, D6 }) {
+      if (!D5 || !D6) {
+        return null;
+      }
+
+      const weight = parseInt(D5, 10);
+      const height = parseInt(D6, 10) / 100;
+      const bmi = String(Math.min(Math.round(weight / (height * height)), 99));
+
+      if (bmi === 'NaN') {
+        return null; // superfluous, but extra check doesn't harm
+      }
+
+      return '00'.substr(bmi.length) + bmi.slice(0, 2);
+    },
+    guard: new BoolCondition(false),
   },
   {
     id: 'M0',
@@ -281,6 +267,9 @@ export const QUESTIONS: Question[] = [
     comment: 'q_V1_comment',
     text: 'q_V1_text',
     inputType: 'postal',
+    xmlValue() {
+      return null; // don't store in xml
+    },
     guard: new Conjunction([
       new BoolCondition(PANDEMIC_TRACKING_IS_ENABLED),
       new RadioAnswerCondition('X1', ['0']),

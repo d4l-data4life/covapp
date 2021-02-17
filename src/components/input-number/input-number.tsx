@@ -11,9 +11,10 @@ import i18next from '../../global/utils/i18n';
 import { Question } from '../../global/questions';
 
 @Component({
-  tag: 'ia-input-postal-code',
+  styleUrl: 'input-number.css',
+  tag: 'ia-input-number',
 })
-export class InputPostalCode {
+export class InputNumber {
   @Prop() question: Question;
   @Prop() value: string;
 
@@ -43,11 +44,15 @@ export class InputPostalCode {
     return (
       <span>
         <d4l-input
+          class="input-number"
           name={question.id}
-          pattern="(?!01000|99999)(0[1-9]\d{3}|[1-9]\d{4})"
           inputmode="numeric"
-          required
-          label={i18next.t('input_postal_code_label')}
+          type="number"
+          required={!question.optional}
+          label={i18next.t('input_number_label')}
+          step={question.inputStep ?? 1}
+          min={question.inputMin ?? 0}
+          max={question.inputMax}
           value={value}
           onInput={(event: Event) => onInputChange(event)}
         ></d4l-input>

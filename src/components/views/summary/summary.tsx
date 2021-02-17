@@ -128,7 +128,6 @@ export class Summary {
       this.snippetsAnswers.outOfBreath =
         parseInt(this.answers[QUESTION.OUT_OF_BREATH] as string, 10) === 0;
       this.snippetsAnswers.ageAboveSixtyFive =
-        parseInt(this.answers[QUESTION.AGE] as string, 10) > 3 ||
         parseInt(this.answers[QUESTION.ABOVE_65] as string, 10) === 0;
       this.snippetsAnswers.livingSituation = parseInt(
         this.answers[QUESTION.HOUSING] as string,
