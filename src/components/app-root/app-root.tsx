@@ -194,6 +194,7 @@ export class AppRoot {
             classes="banner--slim"
             handleClick={() => this.handleBannerClick()}
             handleClose={() => this.handleBannerClose()}
+            closeButtonText={i18next.t('d4l_banner_close_button_text')}
           >
             <div class="d4l-banner__content">
               <ia-logo-d4l link={false} compact={true} />

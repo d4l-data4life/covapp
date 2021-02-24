@@ -252,7 +252,11 @@ export class Questionnaire {
                   headline={i18next.t(QUESTIONS[currentStep].text)}
                   handleClick={() => moveToPreviousStep()}
                 />
-                <d4l-linear-progress data-test="progressBar" value={progress} />
+                <d4l-linear-progress
+                  data-test="progressBar"
+                  value={progress}
+                  label={i18next.t('questionnaire_progress_bar_label')}
+                />
               </div>
               <div
                 class="questionnaire__content u-padding-vertical--medium u-text-align--left"

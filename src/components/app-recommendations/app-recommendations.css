@@ -30,7 +30,7 @@
 
 .app-recommendation__byline {
   font-size: 12px;
-  color: var(--color-neutral-light);
+  color: var(--color-neutral-dark);
 }
 
 .app-recommendation__paragraph {

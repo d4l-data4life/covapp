@@ -1,4 +1,4 @@
-export const QUESTIONNAIRE_VERSION = '311';
+export const QUESTIONNAIRE_VERSION = '400';
 
 export const KEY_CODES = {
   BACKSPACE: 8,
