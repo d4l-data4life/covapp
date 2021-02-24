@@ -50,7 +50,7 @@ export class AppRecommendationsComponent {
           trackEvent(TRACKING_EVENTS.SUMMARY_DATA4LIFE_NO_ACCOUNT),
       },
       {
-        headerContent: `<img src="/assets/images/rki-app.png" class="app-recommendation__icon" /><p class="app-recommendation__name">${i18next.t(
+        headerContent: `<img src="/assets/images/rki-app.png" class="app-recommendation__icon" alt="RKI diary app logo — coronavirus cell colored in blue" /><p class="app-recommendation__name">${i18next.t(
           'app_recommendation_rki_app_name'
         )}</p><ia-logo-rki></ia-logo-rki><p class="app-recommendation__paragraph">${i18next.t(
           'app_recommendation_rki_app_paragraph'
@@ -63,9 +63,9 @@ export class AppRecommendationsComponent {
         ctaEventHandler: () => trackEvent(TRACKING_EVENTS.SUMMARY_LEARN_MORE_RKI),
       },
       {
-        headerContent: `<img src="/assets/images/uni-freiburg-app.png" class="app-recommendation__icon" /><p class="app-recommendation__name">${i18next.t(
+        headerContent: `<img src="/assets/images/uni-freiburg-app.png" class="app-recommendation__icon" alt="Uni Freiburg COVID app logo - palm of a hand colored in blue with white heart in the middle" /><p class="app-recommendation__name">${i18next.t(
           'app_recommendation_uni-freiburg_app_name'
-        )}</p><img src="/assets/images/uni-freiburg-logo.png" class="app-recommendation__logo" /><p class="app-recommendation__paragraph">${i18next.t(
+        )}</p><img src="/assets/images/uni-freiburg-logo.png" alt="Uni Freiburg logo" class="app-recommendation__logo" /><p class="app-recommendation__paragraph">${i18next.t(
           'app_recommendation_uni-freiburg_app_paragraph'
         )}</p>`,
         label: i18next.t('app_recommendation_uni-freiburg_app_name'),
@@ -76,9 +76,9 @@ export class AppRecommendationsComponent {
           trackEvent(TRACKING_EVENTS.SUMMARY_LEARN_MORE_FREIBURG),
       },
       {
-        headerContent: `<img src="/assets/images/million-friends-app.png" class="app-recommendation__icon"/><p class="app-recommendation__name">${i18next.t(
+        headerContent: `<img src="/assets/images/million-friends-app.png" class="app-recommendation__icon" alt="MillionFriends App logo — abstract, crossed blue lines"/><p class="app-recommendation__name">${i18next.t(
           'app_recommendation_million-friends_app_name'
-        )}</p><img src="/assets/images/million-friends-logo.png" class="app-recommendation__logo" /><p class="app-recommendation__paragraph">${i18next.t(
+        )}</p><img src="/assets/images/million-friends-logo.png" alt="MillionFriends App logo — abstract, crossed blue lines" class="app-recommendation__logo" /><p class="app-recommendation__paragraph">${i18next.t(
           'app_recommendation_million-friends_app_paragraph'
         )}</p>`,
         label: i18next.t('app_recommendation_million-friends_app_name'),

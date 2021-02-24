@@ -44,6 +44,7 @@ export class InputNumber {
     return (
       <span>
         <d4l-input
+          inputId={`input-question-${question.id}`}
           class="input-number"
           name={question.id}
           inputmode="numeric"

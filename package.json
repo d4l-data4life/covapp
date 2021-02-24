@@ -1,7 +1,7 @@
 {
   "name": "infection-risk-assessment-app",
   "private": true,
-  "version": "1.25.0",
+  "version": "1.25.1",
   "description": "Assessing the risk of contagious viral infections (COVID-19)",
   "scripts": {
     "analyze": "stencil build",
@@ -19,7 +19,7 @@
     "code-format": "npx prettier --write 'src/**/*.{tsx,css,ts}'"
   },
   "devDependencies": {
-    "@lokalise/node-api": "^2.1.0",
+    "@lokalise/node-api": "^6.0.0",
     "@stencil/core": "^1.9.2",
     "@stencil/router": "^1.0.1",
     "@types/jest": "25.2.3",
@@ -37,7 +37,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@d4l/web-components-library": "^2.2.1",
+    "@d4l/web-components-library": "^2.13.4",
     "@sentry/browser": "^5.15.4",
     "i18next": "^19.3.2",
     "i18next-browser-languagedetector": "^4.0.2",

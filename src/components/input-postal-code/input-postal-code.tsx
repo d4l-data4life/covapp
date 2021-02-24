@@ -43,6 +43,7 @@ export class InputPostalCode {
     return (
       <span>
         <d4l-input
+          inputId={`input-question-${question.id}`}
           name={question.id}
           pattern="(?!01000|99999)(0[1-9]\d{3}|[1-9]\d{4})"
           inputmode="numeric"
