@@ -103,6 +103,8 @@ export namespace Components {
     }
     interface IaLogoD4lPoweredBy {
     }
+    interface IaLogoHeader {
+    }
     interface IaLogoOpenSource {
     }
     interface IaLogoRki {
@@ -125,6 +127,7 @@ export namespace Components {
         "history": RouterHistory;
     }
     interface IaRecommendation {
+        "resultCase": number;
     }
     interface IaStart {
         "history": RouterHistory;
@@ -302,6 +305,12 @@ declare global {
         prototype: HTMLIaLogoD4lPoweredByElement;
         new (): HTMLIaLogoD4lPoweredByElement;
     };
+    interface HTMLIaLogoHeaderElement extends Components.IaLogoHeader, HTMLStencilElement {
+    }
+    var HTMLIaLogoHeaderElement: {
+        prototype: HTMLIaLogoHeaderElement;
+        new (): HTMLIaLogoHeaderElement;
+    };
     interface HTMLIaLogoOpenSourceElement extends Components.IaLogoOpenSource, HTMLStencilElement {
     }
     var HTMLIaLogoOpenSourceElement: {
@@ -385,6 +394,7 @@ declare global {
         "ia-logo-d4l": HTMLIaLogoD4lElement;
         "ia-logo-d4l-bordered": HTMLIaLogoD4lBorderedElement;
         "ia-logo-d4l-powered-by": HTMLIaLogoD4lPoweredByElement;
+        "ia-logo-header": HTMLIaLogoHeaderElement;
         "ia-logo-open-source": HTMLIaLogoOpenSourceElement;
         "ia-logo-rki": HTMLIaLogoRkiElement;
         "ia-logo-widget": HTMLIaLogoWidgetElement;
@@ -502,6 +512,8 @@ declare namespace LocalJSX {
     }
     interface IaLogoD4lPoweredBy {
     }
+    interface IaLogoHeader {
+    }
     interface IaLogoOpenSource {
     }
     interface IaLogoRki {
@@ -526,6 +538,7 @@ declare namespace LocalJSX {
         "onShowLogoHeader"?: (event: CustomEvent<any>) => void;
     }
     interface IaRecommendation {
+        "resultCase"?: number;
     }
     interface IaStart {
         "history"?: RouterHistory;
@@ -564,6 +577,7 @@ declare namespace LocalJSX {
         "ia-logo-d4l": IaLogoD4l;
         "ia-logo-d4l-bordered": IaLogoD4lBordered;
         "ia-logo-d4l-powered-by": IaLogoD4lPoweredBy;
+        "ia-logo-header": IaLogoHeader;
         "ia-logo-open-source": IaLogoOpenSource;
         "ia-logo-rki": IaLogoRki;
         "ia-logo-widget": IaLogoWidget;
@@ -607,6 +621,7 @@ declare module "@stencil/core" {
             "ia-logo-d4l": LocalJSX.IaLogoD4l & JSXBase.HTMLAttributes<HTMLIaLogoD4lElement>;
             "ia-logo-d4l-bordered": LocalJSX.IaLogoD4lBordered & JSXBase.HTMLAttributes<HTMLIaLogoD4lBorderedElement>;
             "ia-logo-d4l-powered-by": LocalJSX.IaLogoD4lPoweredBy & JSXBase.HTMLAttributes<HTMLIaLogoD4lPoweredByElement>;
+            "ia-logo-header": LocalJSX.IaLogoHeader & JSXBase.HTMLAttributes<HTMLIaLogoHeaderElement>;
             "ia-logo-open-source": LocalJSX.IaLogoOpenSource & JSXBase.HTMLAttributes<HTMLIaLogoOpenSourceElement>;
             "ia-logo-rki": LocalJSX.IaLogoRki & JSXBase.HTMLAttributes<HTMLIaLogoRkiElement>;
             "ia-logo-widget": LocalJSX.IaLogoWidget & JSXBase.HTMLAttributes<HTMLIaLogoWidgetElement>;
