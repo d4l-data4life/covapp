@@ -27,6 +27,7 @@ jobs:
           name: app
           path: ./www
 
+      # Set Credentials Guide: https://github.com/Azure/login
       - name: Publish to blob storage
         uses: bacongobbler/azure-blob-storage-upload@v1.0.0
         with:
