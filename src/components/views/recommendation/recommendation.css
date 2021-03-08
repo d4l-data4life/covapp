@@ -1,0 +1,8 @@
+.recommendations h2 {
+  font-size: 1.625rem;
+  text-align: center;
+  font-weight: 500;
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
+  color: var(--color-primary);
+}

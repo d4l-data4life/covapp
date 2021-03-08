@@ -127,7 +127,6 @@ export namespace Components {
         "history": RouterHistory;
     }
     interface IaRecommendation {
-        "resultCase": number;
     }
     interface IaStart {
         "history": RouterHistory;
@@ -538,7 +537,6 @@ declare namespace LocalJSX {
         "onShowLogoHeader"?: (event: CustomEvent<any>) => void;
     }
     interface IaRecommendation {
-        "resultCase"?: number;
     }
     interface IaStart {
         "history"?: RouterHistory;
