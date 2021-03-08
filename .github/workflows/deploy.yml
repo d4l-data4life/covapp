@@ -1,0 +1,36 @@
+name: deploy to preview
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+
+      - name: Install Packages
+        run: npm install
+
+      - name: Build package
+        run: npm run build
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v1.0.0
+        with:
+          name: app
+          path: ./www
+
+      - name: Publish to blob storage
+        uses: bacongobbler/azure-blob-storage-upload@v1.0.0
+        with:
+          source_dir: ./www
+          container_name: $web
+          connection_string: ${{ secrets.AZURE_CREDENTIALS }}
+          extra_args: ""
