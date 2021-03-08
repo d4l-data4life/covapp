@@ -9,18 +9,13 @@ import {
 } from '@stencil/core';
 import { RouterHistory } from '@stencil/router';
 import { LOCAL_STORAGE_KEYS, ROUTES } from '../../../global/constants';
-import { QUESTIONS, QUESTION } from '../../../global/questions';
+import { QUESTIONS } from '../../../global/questions';
 import i18next from '../../../global/utils/i18n';
 import { trackEvent, TRACKING_EVENTS } from '../../../global/utils/track';
 import version from '../../../global/utils/version';
-import {
-  checkGoTo,
-  checkGuard,
-  getQuestionIndexById,
-  updateScoreData,
-  getScoreChange,
-} from './utils';
+import { getQuestionIndexById, getScoreChange } from './utils';
 import settings from '../../../global/utils/settings';
+import { Question, QuestionnaireEngine } from '@covopen/covquestions-js';
 
 export type Scores = { [key: string]: number };
 export type Answers = { [key: string]: string | string[] };
@@ -41,7 +36,8 @@ export class Questionnaire {
   @Event() showLogoHeader: EventEmitter;
 
   formElement: HTMLFormElement;
-
+  questionnaireEngine: QuestionnaireEngine;
+  @State() currentQuestion: Question;
   @Listen('changedLanguage', {
     target: 'window',
   })
@@ -112,37 +108,38 @@ export class Questionnaire {
   }
 
   moveToNextStep = () => {
-    const question = QUESTIONS[this.currentStep];
-    let answerIndex = this.answerData[question.id];
+    this.currentQuestion = this.questionnaireEngine.nextQuestion();
+    // const question = QUESTIONS[this.currentStep];
+    // let answerIndex = this.answerData[question.id];
 
-    if (!answerIndex && !question.optional) {
-      this.showErrorBannerHandler();
-      return;
-    }
+    // if (!answerIndex && !question.optional) {
+    //   this.showErrorBannerHandler();
+    //   return;
+    // }
 
-    if (question.id === QUESTION.DATA_DONATION) {
-      trackEvent([
-        ...TRACKING_EVENTS.DATA_DONATION_CONSENT,
-        this.answerData[QUESTION.DATA_DONATION] === '0' ? '1' : '0',
-      ]);
-    }
+    // if (question.id === QUESTION.DATA_DONATION) {
+    //   trackEvent([
+    //     ...TRACKING_EVENTS.DATA_DONATION_CONSENT,
+    //     this.answerData[QUESTION.DATA_DONATION] === '0' ? '1' : '0',
+    //   ]);
+    // }
 
-    this.scoreData = updateScoreData(this.currentStep, answerIndex, this.scoreData);
-    this.setLocalStorageAnswers();
-    if (!this.checkFinished()) {
-      this.currentStep = checkGoTo(this.currentStep, answerIndex);
-      const stepBeforeGuard = this.currentStep;
-      this.currentStep = checkGuard(
-        this.currentStep,
-        this.scoreData,
-        this.answerData
-      );
-      if (stepBeforeGuard !== this.currentStep) {
-        this.checkFinished();
-        return;
-      }
-      this.trackStepMove(false);
-    }
+    // this.scoreData = updateScoreData(this.currentStep, answerIndex, this.scoreData);
+    // this.setLocalStorageAnswers();
+    // if (!this.checkFinished()) {
+    //   this.currentStep = checkGoTo(this.currentStep, answerIndex);
+    //   const stepBeforeGuard = this.currentStep;
+    //   this.currentStep = checkGuard(
+    //     this.currentStep,
+    //     this.scoreData,
+    //     this.answerData
+    //   );
+    //   if (stepBeforeGuard !== this.currentStep) {
+    //     this.checkFinished();
+    //     return;
+    //   }
+    //   this.trackStepMove(false);
+    // }
   };
 
   checkFinished = () => {
@@ -225,102 +222,176 @@ export class Questionnaire {
     this.answerData = availableAnswers ?? {};
     this.scoreData = availableScores ?? {};
 
-    const formDataKeys = Object.keys(this.answerData);
+    // const formDataKeys = Object.keys(this.answerData);
 
-    if (formDataKeys.length) {
-      this.currentStep = getQuestionIndexById(formDataKeys[formDataKeys.length - 1]);
+    // if (formDataKeys.length) {
+    //   this.currentStep = getQuestionIndexById(formDataKeys[formDataKeys.length - 1]);
 
-      this.moveToNextStep();
-    }
+    //   this.moveToNextStep();
+    // }
+    this.newQuestionnaire({
+      target: {
+        value:
+          'https://covopen.github.io/CovQuestions/questionnaires/covapp_original/1/en.json',
+      },
+    } as any);
+    // this.questionnaireEngine = new QuestionnaireEngine(testQuestionnaire);
+    // this.currentQuestion = this.questionnaireEngine.nextQuestion();
+    // this.questionnaireEngine
+  };
+
+  newQuestionnaire = (event: Event) => {
+    fetch((event.target as HTMLInputElement).value)
+      .then((response: Response) => response.json())
+      .then(response => {
+        this.questionnaireEngine = new QuestionnaireEngine(response);
+        this.currentQuestion = this.questionnaireEngine.nextQuestion();
+
+        // debugger;
+      })
+      .catch(() => {
+        // do nothing for now
+      });
   };
 
   render() {
-    const { submitForm, currentStep, moveToPreviousStep, progress } = this;
+    const {
+      submitForm,
+      newQuestionnaire,
+      moveToPreviousStep,
+      progress,
+      currentQuestion,
+    } = this;
 
     return (
-      currentStep < QUESTIONS.length &&
-      QUESTIONS[currentStep] && (
-        <div class="questionnaire c-card-wrapper">
-          <form
-            onSubmit={event => submitForm(event)}
-            ref={el => (this.formElement = el as HTMLFormElement)}
-            data-test="questionnaireForm"
-          >
-            <d4l-card classes="card--desktop card--text-center">
-              <div class="u-margin-horizontal--card-negative" slot="card-header">
-                <ia-navigation-header
-                  headline={i18next.t(QUESTIONS[currentStep].text)}
-                  handleClick={() => moveToPreviousStep()}
-                />
-                <d4l-linear-progress
-                  data-test="progressBar"
-                  value={progress}
-                  label={i18next.t('questionnaire_progress_bar_label')}
-                />
-              </div>
-              <div
-                class="questionnaire__content u-padding-vertical--medium u-text-align--left"
-                slot="card-content"
-              >
-                <fieldset>
-                  <legend class="u-visually-hidden">
-                    {i18next.t(QUESTIONS[currentStep].text)}
-                  </legend>
-                  {QUESTIONS[currentStep].comment && (
-                    <p
-                      class="questionnaire__comment"
-                      innerHTML={`${i18next.t(QUESTIONS[currentStep].comment)}`}
-                    ></p>
-                  )}
+      <div class="questionnaire c-card-wrapper">
+        <input
+          placeholder="CovQuesionnaire Link"
+          value="https://covopen.github.io/CovQuestions/questionnaires/covapp_original/1/en.json"
+          onInput={newQuestionnaire}
+        ></input>
+        <form
+          onSubmit={event => submitForm(event)}
+          ref={el => (this.formElement = el as HTMLFormElement)}
+          data-test="questionnaireForm"
+        >
+          <d4l-card classes="card--desktop card--text-center">
+            <div class="u-margin-horizontal--card-negative" slot="card-header">
+              <ia-navigation-header
+                headline={currentQuestion ? currentQuestion.text : ''}
+                handleClick={() => moveToPreviousStep()}
+              />
+              <d4l-linear-progress
+                data-test="progressBar"
+                value={progress}
+                label={i18next.t('questionnaire_progress_bar_label')}
+              />
+            </div>
+            <div
+              class="questionnaire__content u-padding-vertical--medium u-text-align--left"
+              slot="card-content"
+            >
+              <fieldset>
+                <legend class="u-visually-hidden">
+                  {currentQuestion ? currentQuestion.text : ''}
+                </legend>
+                {/* {QUESTIONS[currentStep].comment && (
+                      <p
+                        class="questionnaire__comment"
+                        innerHTML={`${i18next.t(QUESTIONS[currentStep].comment)}`}
+                      ></p>
+                    )} */}
+                {currentQuestion ? (
                   <div class="questionnaire__form u-padding-vertical--normal ">
-                    {QUESTIONS[currentStep].inputType === 'radio' && (
+                    {currentQuestion.type === 'select' && (
                       <ia-input-radio
                         data-test="questionnaireRadioInputs"
-                        question={QUESTIONS[currentStep]}
+                        question={{
+                          id: currentQuestion.id,
+                          category: '',
+                          inputType: 'checkbox',
+                          options: currentQuestion.options.map(o => o.text),
+                        }}
                         currentSelection={this.currentAnswerValue as string}
                       />
                     )}
-                    {QUESTIONS[currentStep].inputType === 'checkbox' && (
+                    {currentQuestion.type === 'multiselect' && (
+                      <ia-input-radio
+                        data-test="questionnaireRadioInputs"
+                        question={{
+                          id: currentQuestion.id,
+                          category: '',
+                          inputType: 'checkbox',
+                          options: currentQuestion.options.map(o => o.text),
+                        }}
+                        currentSelection={this.currentAnswerValue as string}
+                      />
+                    )}
+                    {currentQuestion.type === 'boolean' && (
+                      <ia-input-radio
+                        data-test="questionnaireRadioInputs"
+                        question={{
+                          id: currentQuestion.id,
+                          category: '',
+                          inputType: 'checkbox',
+                          options: ['Yes', 'No'],
+                        }}
+                        currentSelection={this.currentAnswerValue as string}
+                      />
+                    )}
+                    {/* {currentQuestion.type === 'checkbox' && (
                       <ia-input-multiple-choice
                         question={QUESTIONS[currentStep]}
                         value={this.currentAnswerValue as string[]}
                       />
-                    )}
+                    )} */}
 
                     {/* TODO date-input component library component doesn't support setting initial value -> skipped */}
-                    {QUESTIONS[currentStep].inputType === 'date' && (
-                      <ia-input-date question={QUESTIONS[currentStep]} />
+                    {currentQuestion.type === 'date' && (
+                      <ia-input-date
+                        question={{
+                          id: currentQuestion.id,
+                          category: '',
+                          inputType: 'checkbox',
+                        }}
+                      />
                     )}
-                    {QUESTIONS[currentStep].inputType === 'postal' && (
+                    {currentQuestion.type === 'text' && (
                       <ia-input-postal-code
-                        question={QUESTIONS[currentStep]}
+                        question={{
+                          id: currentQuestion.id,
+                          category: '',
+                          inputType: 'checkbox',
+                        }}
                         value={this.currentAnswerValue as string}
                       />
                     )}
-                    {QUESTIONS[currentStep].inputType === 'decimal' && (
+                    {currentQuestion.type === 'number' && (
                       <ia-input-number
-                        question={QUESTIONS[currentStep]}
+                        question={{
+                          id: currentQuestion.id,
+                          category: '',
+                          inputType: 'checkbox',
+                        }}
                         value={this.currentAnswerValue as string}
                       />
                     )}
                   </div>
-                </fieldset>
-              </div>
-              <div slot="card-footer">
-                <d4l-button
-                  classes="button--block"
-                  data-test="continueButton"
-                  text={
-                    currentStep === QUESTIONS.length - 1
-                      ? i18next.t('questionnaire_button_generate_qr')
-                      : i18next.t('questionnaire_button_next')
-                  }
-                />
-              </div>
-            </d4l-card>
-          </form>
-        </div>
-      )
+                ) : (
+                  undefined
+                )}
+              </fieldset>
+            </div>
+            <div slot="card-footer">
+              <d4l-button
+                classes="button--block"
+                data-test="continueButton"
+                text={i18next.t('questionnaire_button_next')}
+              />
+            </div>
+          </d4l-card>
+        </form>
+      </div>
     );
   }
 }
