@@ -8,12 +8,9 @@ import {
   State,
 } from '@stencil/core';
 import { RouterHistory } from '@stencil/router';
-import { LOCAL_STORAGE_KEYS, ROUTES } from '../../../global/constants';
-import { QUESTIONS } from '../../../global/questions';
+import { LOCAL_STORAGE_KEYS } from '../../../global/constants';
 import i18next from '../../../global/utils/i18n';
-import { trackEvent, TRACKING_EVENTS } from '../../../global/utils/track';
 import version from '../../../global/utils/version';
-import { getQuestionIndexById, getScoreChange } from './utils';
 import settings from '../../../global/utils/settings';
 import { Question, QuestionnaireEngine } from '@covopen/covquestions-js';
 
@@ -28,7 +25,7 @@ export class Questionnaire {
   @Prop() history: RouterHistory;
 
   @State() language: string;
-  @State() currentStep: number = 0;
+  //   @State() currentStep: number = 0;
   @State() previousStep: number;
   @State() answerData: Answers = {};
   @State() scoreData: Scores = {};
@@ -49,10 +46,11 @@ export class Questionnaire {
     target: 'window',
   })
   handlePopStateChange() {
-    if (this.currentStep > 0) {
-      this.history.push(ROUTES.QUESTIONNAIRE, {});
-      this.moveToPreviousStep();
-    }
+    // TODO
+    // if (this.currentStep > 0) {
+    //   this.history.push(ROUTES.QUESTIONNAIRE, {});
+    //   this.moveToPreviousStep();
+    // }
   }
 
   @Event() showErrorBanner: EventEmitter;
@@ -68,14 +66,14 @@ export class Questionnaire {
 
   // TODO: https://github.com/gesundheitscloud/infection-risk-assessment/pull/76
   // This is only a temporary fix. This should be moved/handled differently
-  @Listen('dateChange')
-  dateChangeHandler(event: CustomEvent) {
-    const { currentStep } = this;
-    const {
-      detail: { value },
-    } = event;
-    this.setFormData(QUESTIONS[currentStep].id, value.split('-').join('.'));
-  }
+  //   @Listen('dateChange')
+  //   dateChangeHandler(event: CustomEvent) {
+  //     const { currentStep } = this;
+  //     const {
+  //       detail: { value },
+  //     } = event;
+  //     this.setFormData(QUESTIONS[currentStep].id, value.split('-').join('.'));
+  //   }
 
   setFormData(key: string, value: string | string[]) {
     this.answerData = {
@@ -94,28 +92,32 @@ export class Questionnaire {
     version.set();
   };
 
-  get progress() {
-    return Math.floor(((this.currentStep + 1) / QUESTIONS.length) * 100);
-  }
+  progress: number = 0.01;
 
-  trackStepMove(isPreviousStep: Boolean) {
-    const { id } = QUESTIONS[this.currentStep];
-    if (isPreviousStep) {
-      trackEvent([...TRACKING_EVENTS.QUESTION_PREVIOUS, id]);
-    } else {
-      trackEvent([...TRACKING_EVENTS.QUESTION_NEXT, id]);
-    }
-  }
+  //   trackStepMove(isPreviousStep: Boolean) {
+  //     const { id } = QUESTIONS[this.currentStep];
+  //     if (isPreviousStep) {
+  //       trackEvent([...TRACKING_EVENTS.QUESTION_PREVIOUS, id]);
+  //     } else {
+  //       trackEvent([...TRACKING_EVENTS.QUESTION_NEXT, id]);
+  //     }
+  //   }
 
   moveToNextStep = () => {
+    try {
+      this.questionnaireEngine.setAnswer(
+        this.currentQuestion.id,
+        this.currentAnswerValue
+      );
+    } catch (error) {
+      this.showErrorBannerHandler();
+      console.log(error);
+      return;
+    }
     this.currentQuestion = this.questionnaireEngine.nextQuestion();
+    this.progress = this.questionnaireEngine.getProgress();
     // const question = QUESTIONS[this.currentStep];
     // let answerIndex = this.answerData[question.id];
-
-    // if (!answerIndex && !question.optional) {
-    //   this.showErrorBannerHandler();
-    //   return;
-    // }
 
     // if (question.id === QUESTION.DATA_DONATION) {
     //   trackEvent([
@@ -143,57 +145,38 @@ export class Questionnaire {
   };
 
   checkFinished = () => {
-    if (this.currentStep >= QUESTIONS.length - 1) {
-      this.history.push(ROUTES.SUMMARY, {});
-      trackEvent(TRACKING_EVENTS.FINISH);
-      return true;
-    }
+    //TODO
+    // if (this.currentStep >= QUESTIONS.length - 1) {
+    //   this.history.push(ROUTES.SUMMARY, {});
+    //   trackEvent(TRACKING_EVENTS.FINISH);
+    //   return true;
+    // }
     return false;
   };
 
   moveToPreviousStep = () => {
-    if (this.currentStep === 0) {
+    if (this.questionnaireEngine.getProgress() === 0) {
       this.history.push(`/`, {});
       localStorage.removeItem(LOCAL_STORAGE_KEYS.ANSWERS);
-      trackEvent(TRACKING_EVENTS.ABORT);
     } else {
+      const { question, answer } = this.questionnaireEngine.previousQuestion(
+        this.currentQuestion.id
+      );
+      this.currentQuestion = question;
       const answers = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.ANSWERS));
-
       if (this.answerData && answers) {
-        const formDataKeys = Object.keys(answers);
-        let previousDataKey = formDataKeys[formDataKeys.length - 1];
-
-        const previousQuestion = QUESTIONS[getQuestionIndexById(previousDataKey)];
-        const previousAnswer = answers[previousDataKey];
-        if (previousQuestion.scoreMap) {
-          this.scoreData[previousQuestion.category] -= getScoreChange(
-            previousQuestion,
-            previousAnswer
-          );
-        }
-
-        delete answers[previousDataKey];
         this.answerData = answers;
         this.setLocalStorageAnswers();
-
-        this.currentStep = previousDataKey
-          ? getQuestionIndexById(previousDataKey)
-          : 0;
-
         // reset previous answer so that fields are still filled out
         // answerData needs reassignment to avoid race condition
         requestAnimationFrame(
           () =>
             (this.answerData = {
               ...this.answerData,
-              [previousDataKey]: previousAnswer,
+              [this.currentQuestion.id]: answer as string[],
             })
         );
-      } else {
-        this.currentStep--;
       }
-
-      this.trackStepMove(true);
     }
   };
 
@@ -204,7 +187,7 @@ export class Questionnaire {
   };
 
   get currentAnswerValue() {
-    return this.answerData[QUESTIONS[this.currentStep].id];
+    return this.answerData[this.currentQuestion.id];
   }
 
   componentWillLoad = () => {
@@ -283,7 +266,7 @@ export class Questionnaire {
               />
               <d4l-linear-progress
                 data-test="progressBar"
-                value={progress}
+                value={progress * 100}
                 label={i18next.t('questionnaire_progress_bar_label')}
               />
             </div>
