@@ -9,7 +9,6 @@ import {
   Prop,
   State,
 } from '@stencil/core';
-import { Question } from '../../global/questions';
 import isDevice from '../../global/utils/isDevice';
 
 // TODO: https://github.com/gesundheitscloud/infection-risk-assessment/pull/76
@@ -19,8 +18,8 @@ import isDevice from '../../global/utils/isDevice';
   tag: 'ia-input-date',
 })
 export class InputDate {
-  @Prop() question: Question;
-
+  @Prop() inputId: string;
+  @Prop() value: Date;
   @State() language?: string;
 
   @Listen('changedLanguage', {
@@ -32,28 +31,27 @@ export class InputDate {
   }
 
   @Event() updateFormData: EventEmitter;
-  updateFormDataHandler(key: string, value: string) {
+  updateFormDataHandler(key: string, value: number) {
     this.updateFormData.emit({ key, value });
   }
   render() {
-    const onInputChange = (event: Event) => {
-      const target = event.target as HTMLInputElement;
-      const value = target.value.replace(/-/g, '.');
-      this.updateFormDataHandler(this.question.id, value);
+    const onInputChange = (date: string) => {
+      this.updateFormDataHandler(this.inputId, Date.parse(date));
     };
 
     return localStorage.getItem('supportsDateElement') === 'true' ? (
       <div>
         <d4l-input
-          name={this.question.id}
+          name={this.inputId}
           type="date"
+          value={this.value ? dateToDateString(this.value) : undefined}
           label={i18next.t('input_date_label')}
-          onInput={(event: Event) => onInputChange(event)}
+          onInput={(event: Event) =>
+            onInputChange((event.target as HTMLInputElement).value as string)
+          }
           required={true}
           min={'2019-01-01'}
-          max={`${new Date().getFullYear()}-${String(
-            new Date().getMonth() + 1
-          ).padStart(2, '0')}-${String(new Date().getDate()).padStart(2, '0')}`}
+          max={dateToDateString(new Date())}
         />
         {isDevice.ios && (
           <div class="input-date__help">{i18next.t('input_date_help_info')}</div>
@@ -65,6 +63,7 @@ export class InputDate {
           data-test="questionnaireDateInputs"
           label={i18next.t('input_date_label')}
           errorMessage={i18next.t('input_date_error')}
+          handleChange={(date: string) => onInputChange(date)}
           fields={{
             day: {
               label: `${i18next.t('input_date_label_day')}`,
@@ -85,4 +84,11 @@ export class InputDate {
       </div>
     );
   }
+}
+
+function dateToDateString(date: Date) {
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
+    2,
+    '0'
+  )}-${String(date.getDate()).padStart(2, '0')}`;
 }

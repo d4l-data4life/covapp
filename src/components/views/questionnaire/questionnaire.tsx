@@ -12,7 +12,12 @@ import { LOCAL_STORAGE_KEYS } from '../../../global/constants';
 import i18next from '../../../global/utils/i18n';
 import version from '../../../global/utils/version';
 import settings from '../../../global/utils/settings';
-import { Question, QuestionnaireEngine } from '@covopen/covquestions-js';
+import {
+  isQuestionWithOptions,
+  Question,
+  QuestionnaireEngine,
+  RawAnswer,
+} from '@covopen/covquestions-js';
 
 export type Scores = { [key: string]: number };
 export type Answers = { [key: string]: string | string[] };
@@ -58,11 +63,15 @@ export class Questionnaire {
     this.showErrorBanner.emit();
   }
 
-  @Listen('updateFormData')
-  updateFormDataHandler(event: CustomEvent) {
+  updateFormData = (event: CustomEvent) => {
     const { detail } = event;
+    if (this.currentQuestion.type === 'date') {
+      // Calculate Custom Timestamp
+      // TODO: https://github.com/CovOpen/CovQuestions/issues/143
+      detail.value = detail.value / 1000;
+    }
     this.setFormData(detail.key, detail.value);
-  }
+  };
 
   // TODO: https://github.com/gesundheitscloud/infection-risk-assessment/pull/76
   // This is only a temporary fix. This should be moved/handled differently
@@ -186,7 +195,7 @@ export class Questionnaire {
     this.moveToNextStep();
   };
 
-  get currentAnswerValue() {
+  get currentAnswerValue(): RawAnswer {
     return this.answerData[this.currentQuestion.id];
   }
 
@@ -215,7 +224,8 @@ export class Questionnaire {
     this.newQuestionnaire({
       target: {
         value:
-          'https://covopen.github.io/CovQuestions/questionnaires/covapp_original/1/en.json',
+          'https://covopen.github.io/CovQuestions/questionnaires/covapp/2/de.json',
+        //   '/assets/questionnaire.json',
       },
     } as any);
     // this.questionnaireEngine = new QuestionnaireEngine(testQuestionnaire);
@@ -244,13 +254,14 @@ export class Questionnaire {
       moveToPreviousStep,
       progress,
       currentQuestion,
+      updateFormData,
     } = this;
 
     return (
       <div class="questionnaire c-card-wrapper">
         <input
           placeholder="CovQuesionnaire Link"
-          value="https://covopen.github.io/CovQuestions/questionnaires/covapp_original/1/en.json"
+          value="https://covopen.github.io/CovQuestions/questionnaires/covapp/2/de.json"
           onInput={newQuestionnaire}
         ></input>
         <form
@@ -286,57 +297,44 @@ export class Questionnaire {
                     )} */}
                 {currentQuestion ? (
                   <div class="questionnaire__form u-padding-vertical--normal ">
-                    {currentQuestion.type === 'select' && (
-                      <ia-input-radio
-                        data-test="questionnaireRadioInputs"
-                        question={{
-                          id: currentQuestion.id,
-                          category: '',
-                          inputType: 'checkbox',
-                          options: currentQuestion.options.map(o => o.text),
-                        }}
-                        currentSelection={this.currentAnswerValue as string}
-                      />
-                    )}
-                    {currentQuestion.type === 'multiselect' && (
-                      <ia-input-radio
-                        data-test="questionnaireRadioInputs"
-                        question={{
-                          id: currentQuestion.id,
-                          category: '',
-                          inputType: 'checkbox',
-                          options: currentQuestion.options.map(o => o.text),
-                        }}
-                        currentSelection={this.currentAnswerValue as string}
-                      />
-                    )}
+                    {isQuestionWithOptions(currentQuestion) &&
+                      ((currentQuestion.type === 'multiselect' && (
+                        <ia-input-multiple-choice
+                          data-test="questionnaireRadioInputs"
+                          inputId={currentQuestion.id}
+                          options={currentQuestion.options}
+                          value={this.currentAnswerValue as any}
+                          onUpdateFormData={updateFormData}
+                        />
+                      )) ||
+                        (currentQuestion.type === 'select' && (
+                          <ia-input-radio
+                            data-test="questionnaireRadioInputs"
+                            inputId={currentQuestion.id}
+                            options={currentQuestion.options}
+                            value={this.currentAnswerValue as string}
+                            onUpdateFormData={updateFormData}
+                          />
+                        )))}
                     {currentQuestion.type === 'boolean' && (
-                      <ia-input-radio
-                        data-test="questionnaireRadioInputs"
-                        question={{
-                          id: currentQuestion.id,
-                          category: '',
-                          inputType: 'checkbox',
-                          options: ['Yes', 'No'],
-                        }}
-                        currentSelection={this.currentAnswerValue as string}
-                      />
+                      <input-boolean
+                        inputId={currentQuestion.id}
+                        value={this.currentAnswerValue as boolean}
+                        onUpdateFormData={updateFormData}
+                      ></input-boolean>
                     )}
-                    {/* {currentQuestion.type === 'checkbox' && (
-                      <ia-input-multiple-choice
-                        question={QUESTIONS[currentStep]}
-                        value={this.currentAnswerValue as string[]}
-                      />
-                    )} */}
-
                     {/* TODO date-input component library component doesn't support setting initial value -> skipped */}
                     {currentQuestion.type === 'date' && (
                       <ia-input-date
-                        question={{
-                          id: currentQuestion.id,
-                          category: '',
-                          inputType: 'checkbox',
-                        }}
+                        inputId={currentQuestion.id}
+                        value={
+                          this.currentAnswerValue
+                            ? // Calculate Custom Timestamp
+                              // TODO: https://github.com/CovOpen/CovQuestions/issues/143
+                              new Date((this.currentAnswerValue as number) * 1000)
+                            : undefined
+                        }
+                        onUpdateFormData={updateFormData}
                       />
                     )}
                     {currentQuestion.type === 'text' && (
@@ -347,6 +345,7 @@ export class Questionnaire {
                           inputType: 'checkbox',
                         }}
                         value={this.currentAnswerValue as string}
+                        onUpdateFormData={updateFormData}
                       />
                     )}
                     {currentQuestion.type === 'number' && (
@@ -357,6 +356,7 @@ export class Questionnaire {
                           inputType: 'checkbox',
                         }}
                         value={this.currentAnswerValue as string}
+                        onUpdateFormData={updateFormData}
                       />
                     )}
                   </div>

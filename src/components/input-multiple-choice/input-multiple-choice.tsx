@@ -1,78 +1,44 @@
-import {
-  Component,
-  Event,
-  EventEmitter,
-  h,
-  Listen,
-  Prop,
-  State,
-  Watch,
-} from '@stencil/core';
-import i18next from '../../global/utils/i18n';
-import { Question, CheckboxOption } from '../../global/questions';
+import { Component, Event, EventEmitter, h, Prop } from '@stencil/core';
 
 @Component({
   styleUrl: 'input-multiple-choice.css',
   tag: 'ia-input-multiple-choice',
 })
 export class InputMultipleChoice {
-  @Prop() question: Question;
-  @Prop() value?: string[];
+  @Prop() inputId: string;
+  @Prop() options: {
+    value: string;
+    text: string;
+  }[];
+  @Prop() value: string[] = undefined;
 
-  @State() language?: string;
-  @State() checkedAnswers: string[] = [];
-
-  @Listen('changedLanguage', {
-    target: 'window',
-  })
-  async changedLanguageHandler(event: CustomEvent) {
-    const { detail: language } = event;
-    this.language = language;
+  getValue(): string[] {
+    return this.value ? this.value : [];
   }
 
-  @Event() updateFormData: EventEmitter;
+  @Event({
+    bubbles: false,
+  })
+  updateFormData: EventEmitter;
   updateFormDataHandler(key: string, value: string[]) {
+    // TODO: This Handler is called multiple times
     this.updateFormData.emit({ key, value });
   }
-
-  @Watch('question')
-  onQuestionChange() {
-    this.checkedAnswers = [];
-  }
-
-  @Watch('value')
-  onValueChange() {
-    this.checkedAnswers = this.value ?? [];
-  }
-
-  componentWillLoad() {
-    this.checkedAnswers = this.value ?? [];
-  }
-
   componentDidLoad() {
-    this.updateFormDataHandler(this.question.id, this.checkedAnswers);
-  }
-
-  componentDidUpdate() {
-    this.updateFormDataHandler(this.question.id, this.checkedAnswers);
+    this.updateFormDataHandler(this.inputId, this.getValue());
   }
 
   updateCheckedAnswers(checked: boolean, value: string) {
     if (checked) {
-      this.checkedAnswers = [
-        ...Array.from(new Set([...this.checkedAnswers, value])),
-      ];
+      this.value = [...Array.from(new Set([...this.getValue(), value]))];
     } else {
-      this.checkedAnswers = this.checkedAnswers.filter(
-        (option: string) => option !== value
-      );
+      this.value = this.getValue().filter((option: string) => option !== value);
     }
-    this.updateFormDataHandler(this.question.id, this.checkedAnswers);
+    this.updateFormDataHandler(this.inputId, this.getValue());
   }
 
   render() {
-    const { question } = this;
-
+    const { options, inputId } = this;
     const onInputChange = (event: Event, inputId: string) => {
       const { type } = event;
       const target = event.target as HTMLInputElement;
@@ -87,21 +53,21 @@ export class InputMultipleChoice {
 
     return (
       <span>
-        {(question.options as CheckboxOption[]).map(
-          (option: CheckboxOption, index: number) =>
-            option.label !== '' &&
-            option.id !== '' && (
+        {options.map(
+          option =>
+            option.text !== '' &&
+            option.value !== '' && (
               <p>
                 <d4l-checkbox
-                  key={question.id}
-                  checkbox-id={`${question.id}-option${index}`}
-                  name={question.id}
-                  checked={this.checkedAnswers.indexOf(String(index)) > -1}
-                  label={i18next.t(option.label)}
-                  value={index.toString()}
+                  key={inputId}
+                  checkbox-id={`${inputId}-option${option.value}`}
+                  name={inputId}
+                  checked={this.getValue().indexOf(option.value) > -1}
+                  label={option.text}
+                  value={option.value}
                   handleChange={(event: Event) => onInputChange(event, null)}
                   onClick={(event: Event) =>
-                    onInputChange(event, `${question.id}-option${index}`)
+                    onInputChange(event, `${inputId}-option${option.value}`)
                   }
                 ></d4l-checkbox>
               </p>

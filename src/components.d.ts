@@ -59,11 +59,16 @@ export namespace Components {
         "history": RouterHistory;
     }
     interface IaInputDate {
-        "question": Question;
+        "inputId": string;
+        "value": Date;
     }
     interface IaInputMultipleChoice {
-        "question": Question;
-        "value"?: string[];
+        "inputId": string;
+        "options": {
+            value: string;
+            text: string;
+        }[];
+        "value": string[];
     }
     interface IaInputNumber {
         "question": Question;
@@ -74,8 +79,12 @@ export namespace Components {
         "value": string;
     }
     interface IaInputRadio {
-        "currentSelection": string;
-        "question": Question;
+        "inputId": string;
+        "options": {
+            value: string;
+            text: string;
+        }[];
+        "value": string;
     }
     interface IaLegal {
         "history": RouterHistory;
@@ -133,6 +142,10 @@ export namespace Components {
     }
     interface IaSummary {
         "history": RouterHistory;
+    }
+    interface InputBoolean {
+        "inputId": string;
+        "value": boolean;
     }
 }
 declare global {
@@ -364,6 +377,12 @@ declare global {
         prototype: HTMLIaSummaryElement;
         new (): HTMLIaSummaryElement;
     };
+    interface HTMLInputBooleanElement extends Components.InputBoolean, HTMLStencilElement {
+    }
+    var HTMLInputBooleanElement: {
+        prototype: HTMLInputBooleanElement;
+        new (): HTMLInputBooleanElement;
+    };
     interface HTMLElementTagNameMap {
         "app-root": HTMLAppRootElement;
         "connect-translations": HTMLConnectTranslationsElement;
@@ -403,6 +422,7 @@ declare global {
         "ia-recommendation": HTMLIaRecommendationElement;
         "ia-start": HTMLIaStartElement;
         "ia-summary": HTMLIaSummaryElement;
+        "input-boolean": HTMLInputBooleanElement;
     }
 }
 declare namespace LocalJSX {
@@ -461,12 +481,17 @@ declare namespace LocalJSX {
         "onShowLogoHeader"?: (event: CustomEvent<any>) => void;
     }
     interface IaInputDate {
+        "inputId"?: string;
         "onUpdateFormData"?: (event: CustomEvent<any>) => void;
-        "question"?: Question;
+        "value"?: Date;
     }
     interface IaInputMultipleChoice {
+        "inputId"?: string;
         "onUpdateFormData"?: (event: CustomEvent<any>) => void;
-        "question"?: Question;
+        "options"?: {
+            value: string;
+            text: string;
+        }[];
         "value"?: string[];
     }
     interface IaInputNumber {
@@ -480,9 +505,13 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface IaInputRadio {
-        "currentSelection"?: string;
+        "inputId"?: string;
         "onUpdateFormData"?: (event: CustomEvent<any>) => void;
-        "question"?: Question;
+        "options"?: {
+            value: string;
+            text: string;
+        }[];
+        "value"?: string;
     }
     interface IaLegal {
         "history"?: RouterHistory;
@@ -546,6 +575,11 @@ declare namespace LocalJSX {
         "history"?: RouterHistory;
         "onShowLogoHeader"?: (event: CustomEvent<any>) => void;
     }
+    interface InputBoolean {
+        "inputId"?: string;
+        "onUpdateFormData"?: (event: CustomEvent<any>) => void;
+        "value"?: boolean;
+    }
     interface IntrinsicElements {
         "app-root": AppRoot;
         "connect-translations": ConnectTranslations;
@@ -585,6 +619,7 @@ declare namespace LocalJSX {
         "ia-recommendation": IaRecommendation;
         "ia-start": IaStart;
         "ia-summary": IaSummary;
+        "input-boolean": InputBoolean;
     }
 }
 export { LocalJSX as JSX };
@@ -629,6 +664,7 @@ declare module "@stencil/core" {
             "ia-recommendation": LocalJSX.IaRecommendation & JSXBase.HTMLAttributes<HTMLIaRecommendationElement>;
             "ia-start": LocalJSX.IaStart & JSXBase.HTMLAttributes<HTMLIaStartElement>;
             "ia-summary": LocalJSX.IaSummary & JSXBase.HTMLAttributes<HTMLIaSummaryElement>;
+            "input-boolean": LocalJSX.InputBoolean & JSXBase.HTMLAttributes<HTMLInputBooleanElement>;
         }
     }
 }
