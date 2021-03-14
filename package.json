@@ -5,6 +5,7 @@
   "description": "Assessing the risk of contagious viral infections (COVID-19)",
   "scripts": {
     "analyze": "stencil build",
+    "generate": "stencil generate",
     "prebuild": "npm run prepare-customization",
     "build": "stencil build && echo $(date) > www/version.txt",
     "prestart": "npm run prepare-customization",
@@ -37,7 +38,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@covopen/covquestions-js": "1.0.1",
+    "@covopen/covquestions-js": "1.0.5",
     "@d4l/web-components-library": "^2.13.4",
     "@sentry/browser": "^5.15.4",
     "i18next": "^19.3.2",
