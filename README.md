@@ -1,3 +1,4 @@
+Preview: https://covappquestions.z19.web.core.windows.net/
 # CovApp
 
 > 😷 Solution for assessing the risk of contagious viral infections (COVID-19)
