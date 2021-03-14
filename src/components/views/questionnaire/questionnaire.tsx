@@ -8,7 +8,7 @@ import {
   State,
 } from '@stencil/core';
 import { RouterHistory } from '@stencil/router';
-import { LOCAL_STORAGE_KEYS } from '../../../global/constants';
+import { LOCAL_STORAGE_KEYS, ROUTES } from '../../../global/constants';
 import i18next from '../../../global/utils/i18n';
 import version from '../../../global/utils/version';
 import settings from '../../../global/utils/settings';
@@ -17,6 +17,7 @@ import {
   Question,
   QuestionnaireEngine,
   RawAnswer,
+  Result,
 } from '@covopen/covquestions-js';
 
 export type Scores = { [key: string]: number };
@@ -30,10 +31,10 @@ export class Questionnaire {
   @Prop() history: RouterHistory;
 
   @State() language: string;
-  //   @State() currentStep: number = 0;
   @State() previousStep: number;
-  @State() answerData: Answers = {};
-  @State() scoreData: Scores = {};
+  // TODO: Export DataType from CovQuestions
+  @State() answerData: { [key: string]: any } = undefined;
+  @State() result: Result = undefined;
 
   @Event() showLogoHeader: EventEmitter;
 
@@ -51,11 +52,7 @@ export class Questionnaire {
     target: 'window',
   })
   handlePopStateChange() {
-    // TODO
-    // if (this.currentStep > 0) {
-    //   this.history.push(ROUTES.QUESTIONNAIRE, {});
-    //   this.moveToPreviousStep();
-    // }
+    this.moveToPreviousStep();
   }
 
   @Event() showErrorBanner: EventEmitter;
@@ -72,18 +69,6 @@ export class Questionnaire {
     }
     this.setFormData(detail.key, detail.value);
   };
-
-  // TODO: https://github.com/gesundheitscloud/infection-risk-assessment/pull/76
-  // This is only a temporary fix. This should be moved/handled differently
-  //   @Listen('dateChange')
-  //   dateChangeHandler(event: CustomEvent) {
-  //     const { currentStep } = this;
-  //     const {
-  //       detail: { value },
-  //     } = event;
-  //     this.setFormData(QUESTIONS[currentStep].id, value.split('-').join('.'));
-  //   }
-
   setFormData(key: string, value: string | string[]) {
     this.answerData = {
       ...this.answerData,
@@ -91,16 +76,15 @@ export class Questionnaire {
     };
   }
 
-  setLocalStorageAnswers = () => {
+  persistStateToLocalStorage = () => {
     localStorage.setItem(
       LOCAL_STORAGE_KEYS.ANSWERS,
       JSON.stringify(this.answerData)
     );
-    localStorage.setItem(LOCAL_STORAGE_KEYS.SCORES, JSON.stringify(this.scoreData));
+    localStorage.setItem(LOCAL_STORAGE_KEYS.RESULT, JSON.stringify(this.result));
     settings.completed = false;
     version.set();
   };
-
   progress: number = 0.01;
 
   //   trackStepMove(isPreviousStep: Boolean) {
@@ -123,8 +107,16 @@ export class Questionnaire {
       console.log(error);
       return;
     }
-    this.currentQuestion = this.questionnaireEngine.nextQuestion();
+    const nextQuestion = this.questionnaireEngine.nextQuestion();
     this.progress = this.questionnaireEngine.getProgress();
+    if (nextQuestion === undefined) {
+      this.history.push(ROUTES.SUMMARY, {});
+      //   trackEvent(TRACKING_EVENTS.FINISH);
+    } else {
+      this.currentQuestion = nextQuestion;
+    }
+    this.persistStateToLocalStorage();
+
     // const question = QUESTIONS[this.currentStep];
     // let answerIndex = this.answerData[question.id];
 
@@ -136,31 +128,6 @@ export class Questionnaire {
     // }
 
     // this.scoreData = updateScoreData(this.currentStep, answerIndex, this.scoreData);
-    // this.setLocalStorageAnswers();
-    // if (!this.checkFinished()) {
-    //   this.currentStep = checkGoTo(this.currentStep, answerIndex);
-    //   const stepBeforeGuard = this.currentStep;
-    //   this.currentStep = checkGuard(
-    //     this.currentStep,
-    //     this.scoreData,
-    //     this.answerData
-    //   );
-    //   if (stepBeforeGuard !== this.currentStep) {
-    //     this.checkFinished();
-    //     return;
-    //   }
-    //   this.trackStepMove(false);
-    // }
-  };
-
-  checkFinished = () => {
-    //TODO
-    // if (this.currentStep >= QUESTIONS.length - 1) {
-    //   this.history.push(ROUTES.SUMMARY, {});
-    //   trackEvent(TRACKING_EVENTS.FINISH);
-    //   return true;
-    // }
-    return false;
   };
 
   moveToPreviousStep = () => {
@@ -175,7 +142,7 @@ export class Questionnaire {
       const answers = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.ANSWERS));
       if (this.answerData && answers) {
         this.answerData = answers;
-        this.setLocalStorageAnswers();
+        this.persistStateToLocalStorage();
         // reset previous answer so that fields are still filled out
         // answerData needs reassignment to avoid race condition
         requestAnimationFrame(
@@ -207,12 +174,12 @@ export class Questionnaire {
     const availableAnswers = JSON.parse(
       localStorage.getItem(LOCAL_STORAGE_KEYS.ANSWERS)
     );
-    const availableScores = JSON.parse(
-      localStorage.getItem(LOCAL_STORAGE_KEYS.SCORES)
+    const availablResult = JSON.parse(
+      localStorage.getItem(LOCAL_STORAGE_KEYS.RESULT)
     );
 
     this.answerData = availableAnswers ?? {};
-    this.scoreData = availableScores ?? {};
+    this.result = availablResult ?? {};
 
     // const formDataKeys = Object.keys(this.answerData);
 
@@ -221,26 +188,32 @@ export class Questionnaire {
 
     //   this.moveToNextStep();
     // }
-    this.newQuestionnaire({
-      target: {
-        value:
-          'https://covopen.github.io/CovQuestions/questionnaires/covapp/2/de.json',
-        //   '/assets/questionnaire.json',
-      },
-    } as any);
+    this.newQuestionnaire(
+      'https://covopen.github.io/CovQuestions/questionnaires/covapp/2/de.json'
+    );
     // this.questionnaireEngine = new QuestionnaireEngine(testQuestionnaire);
     // this.currentQuestion = this.questionnaireEngine.nextQuestion();
     // this.questionnaireEngine
   };
 
-  newQuestionnaire = (event: Event) => {
-    fetch((event.target as HTMLInputElement).value)
+  newQuestionnaire = (url: string) => {
+    fetch(url)
       .then((response: Response) => response.json())
       .then(response => {
         this.questionnaireEngine = new QuestionnaireEngine(response);
+        this.questionnaireEngine.setAnswersPersistence({
+          answers: Object.keys(this.answerData).reduce((accumulator, key, i, a) => {
+            accumulator.push({
+              questionId: key,
+              rawAnswer: this.answerData[key],
+            });
+            return accumulator;
+          }, []),
+          version: 2,
+          timeOfExecution: 23,
+        });
         this.currentQuestion = this.questionnaireEngine.nextQuestion();
-
-        // debugger;
+        this.progress = this.questionnaireEngine.getProgress();
       })
       .catch(() => {
         // do nothing for now
@@ -262,7 +235,9 @@ export class Questionnaire {
         <input
           placeholder="CovQuesionnaire Link"
           value="https://covopen.github.io/CovQuestions/questionnaires/covapp/2/de.json"
-          onInput={newQuestionnaire}
+          onInput={event =>
+            newQuestionnaire((event.target as HTMLInputElement).value)
+          }
         ></input>
         <form
           onSubmit={event => submitForm(event)}

@@ -1,6 +1,7 @@
 import { LOCAL_STORAGE_KEYS, QUESTIONNAIRE_VERSION } from '../constants';
 import settings, { COMPLETED } from './settings';
 
+//TODO: Use JSON Questionnaire Version
 const match = (): boolean => {
   const setVersion = localStorage.getItem(LOCAL_STORAGE_KEYS.VERSION);
   return setVersion === QUESTIONNAIRE_VERSION;
