@@ -265,12 +265,12 @@ export class Questionnaire {
                 <legend class="u-visually-hidden">
                   {currentQuestion ? currentQuestion.text : ''}
                 </legend>
-                {/* {QUESTIONS[currentStep].comment && (
-                      <p
-                        class="questionnaire__comment"
-                        innerHTML={`${i18next.t(QUESTIONS[currentStep].comment)}`}
-                      ></p>
-                    )} */}
+                {currentQuestion.details && (
+                  <p
+                    class="questionnaire__comment"
+                    innerHTML={currentQuestion.details}
+                  ></p>
+                )}
                 {currentQuestion ? (
                   <div class="questionnaire__form u-padding-vertical--normal ">
                     {isQuestionWithOptions(currentQuestion) &&
