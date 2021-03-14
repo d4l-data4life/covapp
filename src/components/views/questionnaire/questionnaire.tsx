@@ -34,7 +34,7 @@ export class Questionnaire {
   @State() previousStep: number;
   // TODO: Export DataType from CovQuestions
   @State() answerData: { [key: string]: any } = undefined;
-  @State() result: Result = undefined;
+  @State() result: Result[] = undefined;
 
   @Event() showLogoHeader: EventEmitter;
 
@@ -109,6 +109,7 @@ export class Questionnaire {
     }
     const nextQuestion = this.questionnaireEngine.nextQuestion();
     this.progress = this.questionnaireEngine.getProgress();
+    this.result = this.questionnaireEngine.getResults();
     if (nextQuestion === undefined) {
       this.history.push(ROUTES.SUMMARY, {});
       //   trackEvent(TRACKING_EVENTS.FINISH);
@@ -179,7 +180,7 @@ export class Questionnaire {
     );
 
     this.answerData = availableAnswers ?? {};
-    this.result = availablResult ?? {};
+    this.result = availablResult ?? [];
 
     // const formDataKeys = Object.keys(this.answerData);
 
@@ -202,7 +203,7 @@ export class Questionnaire {
       .then(response => {
         this.questionnaireEngine = new QuestionnaireEngine(response);
         this.questionnaireEngine.setAnswersPersistence({
-          answers: Object.keys(this.answerData).reduce((accumulator, key, i, a) => {
+          answers: Object.keys(this.answerData).reduce((accumulator, key) => {
             accumulator.push({
               questionId: key,
               rawAnswer: this.answerData[key],
