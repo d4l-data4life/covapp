@@ -19,6 +19,9 @@ import {
   RawAnswer,
   Result,
 } from '@covopen/covquestions-js';
+import { QUESTION_SHARE_DATA } from './utils';
+import { trackEvent, TRACKING_EVENTS } from '../../../global/utils/track';
+import { getQuestionnaire } from '../../../global/questions';
 
 export type Scores = { [key: string]: number };
 export type Answers = { [key: string]: string | string[] };
@@ -112,23 +115,18 @@ export class Questionnaire {
     this.result = this.questionnaireEngine.getResults();
     if (nextQuestion === undefined) {
       this.history.push(ROUTES.SUMMARY, {});
-      //   trackEvent(TRACKING_EVENTS.FINISH);
+      trackEvent(TRACKING_EVENTS.FINISH);
     } else {
       this.currentQuestion = nextQuestion;
     }
     this.persistStateToLocalStorage();
 
-    // const question = QUESTIONS[this.currentStep];
-    // let answerIndex = this.answerData[question.id];
-
-    // if (question.id === QUESTION.DATA_DONATION) {
-    //   trackEvent([
-    //     ...TRACKING_EVENTS.DATA_DONATION_CONSENT,
-    //     this.answerData[QUESTION.DATA_DONATION] === '0' ? '1' : '0',
-    //   ]);
-    // }
-
-    // this.scoreData = updateScoreData(this.currentStep, answerIndex, this.scoreData);
+    if (this.currentQuestion.id === QUESTION_SHARE_DATA.id) {
+      trackEvent([
+        ...TRACKING_EVENTS.DATA_DONATION_CONSENT,
+        this.currentAnswerValue === 'yes' ? '1' : '0',
+      ]);
+    }
   };
 
   moveToPreviousStep = () => {
@@ -175,12 +173,12 @@ export class Questionnaire {
     const availableAnswers = JSON.parse(
       localStorage.getItem(LOCAL_STORAGE_KEYS.ANSWERS)
     );
-    const availablResult = JSON.parse(
+    const availableResult = JSON.parse(
       localStorage.getItem(LOCAL_STORAGE_KEYS.RESULT)
     );
 
     this.answerData = availableAnswers ?? {};
-    this.result = availablResult ?? [];
+    this.result = availableResult ?? [];
 
     // const formDataKeys = Object.keys(this.answerData);
 
@@ -198,10 +196,9 @@ export class Questionnaire {
   };
 
   newQuestionnaire = (url: string) => {
-    fetch(url)
-      .then((response: Response) => response.json())
-      .then(response => {
-        this.questionnaireEngine = new QuestionnaireEngine(response);
+    getQuestionnaire(url)
+      .then(questionnaire => {
+        this.questionnaireEngine = new QuestionnaireEngine(questionnaire);
         this.questionnaireEngine.setAnswersPersistence({
           answers: Object.keys(this.answerData).reduce((accumulator, key) => {
             accumulator.push({

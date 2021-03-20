@@ -1,5 +1,6 @@
+import { isQuestionWithOptions, Question } from '@covopen/covquestions-js';
 import { Component, h, Listen, Prop, State } from '@stencil/core';
-import { QUESTIONS } from '../../global/questions';
+import { getQuestionnaire } from '../../global/questions';
 import i18next from '../../global/utils/i18n';
 
 @Component({
@@ -9,6 +10,7 @@ import i18next from '../../global/utils/i18n';
 export class AnswersTable {
   @Prop() answers: any = {};
   @State() language: string;
+  @State() questions: Question[];
 
   @Listen('changedLanguage', {
     target: 'window',
@@ -21,13 +23,19 @@ export class AnswersTable {
     return this.language || 'en';
   }
 
+  componentWillLoad = () => {
+    getQuestionnaire().then(questionnaire => {
+      this.questions = questionnaire.questions;
+    });
+  };
+
   generateQuestionRow = (id: string) => {
-    const question = QUESTIONS.find(e => e.id === id);
+    const question = this.questions.find(e => e.id === id);
     if (!question) {
       return null;
     }
 
-    if (question.inputType === 'date') {
+    if (question.type === 'date') {
       return (
         <tr class="answers-table__row">
           <td>{i18next.t(question.text)}</td>
@@ -39,29 +47,29 @@ export class AnswersTable {
           </td>
         </tr>
       );
-    } else if (question.inputType === 'radio') {
-      const response = question.options[this.answers[id]] as string;
+    } else if (question.type === 'select' && isQuestionWithOptions(question)) {
+      const response = question.options.find(o => o.value === this.answers[id]);
       return (
         <tr class="answers-table__row">
           <td>{i18next.t(question.text)}</td>
-          <td>{i18next.t(response)}</td>
+          <td>{i18next.t(response.text)}</td>
         </tr>
       );
-    } else if (question.inputType === 'decimal') {
+    } else if (question.type === 'number') {
       return (
         <tr class="answers-table__row">
           <td>{i18next.t(question.text)}</td>
           <td>{this.answers[id]}</td>
         </tr>
       );
-    } else if (question.inputType === 'checkbox') {
+    } else if (question.type === 'multiselect') {
       return (
         <tr class="answers-table__row">
           <td>{i18next.t(question.text)}</td>
           <td>
             {this.answers[id].map(
-              (optionIndex: string, index: number) =>
-                `${i18next.t(question.options[optionIndex].label)}${
+              (option, index) =>
+                `${question.options.find(o => o.value === option).text}${
                   index < this.answers[id].length - 1 ? ', ' : ''
                 }`
             )}
@@ -75,11 +83,13 @@ export class AnswersTable {
   };
 
   render() {
-    const { answers, generateQuestionRow } = this;
+    const { answers, generateQuestionRow, questions } = this;
 
     return (
       <div class="answers-table">
-        <table>{Object.keys(answers).map(generateQuestionRow)}</table>
+        {questions ? (
+          <table>{Object.keys(answers).map(generateQuestionRow)}</table>
+        ) : null}
       </div>
     );
   }

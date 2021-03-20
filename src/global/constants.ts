@@ -29,6 +29,7 @@ export const LOCAL_STORAGE_KEYS = {
   VERSION: 'version',
   DATA_SENT: 'dataSent',
   EXPORTED: 'exported',
+  QUESTIONNAIRE: 'questionnaire',
 };
 
 export const MOBILE_ORIGINS = {

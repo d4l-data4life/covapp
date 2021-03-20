@@ -7,6 +7,39 @@ import {
   BoolCondition,
 } from './guard';
 import { PANDEMIC_TRACKING_IS_ENABLED } from './custom';
+import { Questionnaire } from '@covopen/covquestions-js';
+import {
+  QUESTION_SHARE_DATA,
+  QUESTION_SHARE_DATA_PLZ,
+} from '../components/views/questionnaire/utils';
+import { LOCAL_STORAGE_KEYS } from './constants';
+
+export function getQuestionnaire(
+  url = 'https://covopen.github.io/CovQuestions/questionnaires/covapp/2/de.json'
+): Promise<Questionnaire> {
+  // TODO implement Update Mechanism
+  //   let cachedQuestionnaire = JSON.parse(
+  //     localStorage.getItem(LOCAL_STORAGE_KEYS.QUESTIONNAIRE)
+  //   );
+  //   if (cachedQuestionnaire) {
+  //     return new Promise(() => cachedQuestionnaire);
+  //   }
+  return fetch(url)
+    .then((response: Response) => response.json())
+    .then(response => {
+      response.questions.push(QUESTION_SHARE_DATA);
+      response.questions.push(QUESTION_SHARE_DATA_PLZ);
+      localStorage.setItem(
+        LOCAL_STORAGE_KEYS.QUESTIONNAIRE,
+        JSON.stringify(response)
+      );
+
+      return response;
+    });
+  // .catch(() => {
+  //     // do nothing for now
+  //   });
+}
 
 export type Question = {
   id: string;
@@ -55,6 +88,9 @@ export const QUESTION = {
 
 export const XML_ORDER = ['V', 'P', 'C', 'S', 'D', 'M'];
 
+/**
+ * @deprecated
+ */
 export const QUESTIONS: Question[] = [
   {
     id: QUESTION.ABOVE_65,
