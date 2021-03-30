@@ -14,8 +14,10 @@ import {
 } from '../components/views/questionnaire/utils';
 import { LOCAL_STORAGE_KEYS } from './constants';
 
+export let questionnaire: Questionnaire = undefined;
+
 export function getQuestionnaire(
-  url = 'https://covopen.github.io/CovQuestions/questionnaires/covapp/2/de.json'
+  url = '/assets/questionnaire.json'
 ): Promise<Questionnaire> {
   // TODO implement Update Mechanism
   //   let cachedQuestionnaire = JSON.parse(
@@ -24,6 +26,9 @@ export function getQuestionnaire(
   //   if (cachedQuestionnaire) {
   //     return new Promise(() => cachedQuestionnaire);
   //   }
+  if (questionnaire != undefined) {
+    return new Promise(resolve => resolve(questionnaire));
+  }
   return fetch(url)
     .then((response: Response) => response.json())
     .then(response => {
@@ -33,6 +38,7 @@ export function getQuestionnaire(
         LOCAL_STORAGE_KEYS.QUESTIONNAIRE,
         JSON.stringify(response)
       );
+      questionnaire = response;
 
       return response;
     });

@@ -4,14 +4,15 @@ import {
   PANDEMIC_TRACKING_URL,
   PANDEMIC_TRACKING_IS_ENABLED,
 } from '../../global/custom';
-import { LOCAL_STORAGE_KEYS, QUESTIONNAIRE_VERSION } from '../../global/constants';
-import { XML_ORDER, QUESTION } from '../../global/questions';
+import { LOCAL_STORAGE_KEYS } from '../../global/constants';
+import { getQuestionnaire, XML_ORDER } from '../../global/questions';
 import i18next from '../../global/utils/i18n';
 import { trackEvent, TRACKING_EVENTS } from '../../global/utils/track';
-import { Answers } from '../views/questionnaire/questionnaire';
 
-import { generateValuePairs, KeyValue } from './utils';
 import { RouterHistory } from '@stencil/router';
+import { QUESTION_SHARE_DATA } from '../views/questionnaire/utils';
+import { QuestionnaireEngine } from '@covopen/covquestions-js';
+export type KeyValue = { key: string; value: string | number };
 
 @Component({
   styleUrl: 'qr-code.css',
@@ -20,7 +21,7 @@ import { RouterHistory } from '@stencil/router';
 export class QRCode {
   @Prop() history: RouterHistory;
   @Prop() answers: any = {};
-  @Prop() resultCase: number = 5;
+  @State() qr_values: { [id: string]: string };
   @State() language: string;
 
   @Listen('changedLanguage', {
@@ -30,9 +31,15 @@ export class QRCode {
     this.language = event.detail.code;
   }
 
-  generateXML = (answers): string => {
-    let xml = `<PATIENT><V0>${QUESTIONNAIRE_VERSION}</V0>`;
-    let valuePairs = generateValuePairs(answers);
+  generateXML = (qr_values: { [id: string]: string }): string => {
+    let xml = `<PATIENT>`;
+    let valuePairs = Object.keys(this.qr_values).reduce((accumulator, key) => {
+      accumulator.push({
+        key: key,
+        value: qr_values[key],
+      });
+      return accumulator;
+    }, [] as KeyValue[]);
     valuePairs.sort(this.XMLSort);
     for (const pair of valuePairs) {
       xml += `<${pair.key}>${pair.value}</${pair.key}>`;
@@ -59,7 +66,7 @@ export class QRCode {
 
   generateCode = (): string => {
     const svgString = qrcode({
-      content: this.generateXML(this.answers),
+      content: this.generateXML(this.qr_values),
       padding: 0,
       width: 540,
       height: 540,
@@ -71,13 +78,7 @@ export class QRCode {
     return svg2url(svgString);
   };
 
-  generateDonationXML = (answers: Answers) => {
-    const postalCode = `<V1>${answers[QUESTION.POSTAL_CODE]}</V1>`;
-    const resultCase = `<V2>${this.resultCase}</V2>`;
-    return `<PATIENT>${postalCode}${resultCase}</PATIENT>`;
-  };
-
-  sendXMLData = async () => {
+  sendData = async () => {
     fetch(PANDEMIC_TRACKING_URL, {
       method: 'POST',
       mode: 'cors',
@@ -88,8 +89,7 @@ export class QRCode {
       redirect: 'follow',
       referrer: 'no-referrer',
       body: JSON.stringify({
-        postalCode: this.answers[QUESTION.POSTAL_CODE],
-        riskCase: this.resultCase,
+        answers: this.answers,
       }),
     })
       .then(response => {
@@ -110,14 +110,32 @@ export class QRCode {
     if (
       PANDEMIC_TRACKING_IS_ENABLED &&
       !dataSent &&
-      this.answers[QUESTION.DATA_DONATION] === '0'
+      this.answers[QUESTION_SHARE_DATA.id] === 'yes'
     ) {
-      this.sendXMLData();
+      this.sendData();
     }
+    getQuestionnaire().then(questionnaire => {
+      const engine = new QuestionnaireEngine(questionnaire);
+      // TODO:https://github.com/CovOpen/CovQuestions/issues/148
+      engine.setAnswersPersistence({
+        answers: Object.keys(this.answers).reduce((accumulator, key) => {
+          accumulator.push({
+            questionId: key,
+            rawAnswer: this.answers[key],
+          });
+          return accumulator;
+        }, []),
+        version: 2,
+        timeOfExecution: 23,
+      });
+      this.qr_values = engine
+        .getResults()
+        .exports.filter(x => x.id == 'covapp_qr')[0].mapping;
+    });
   };
 
   render() {
-    const { generateCode, answers } = this;
+    const { generateCode, answers, qr_values } = this;
     const canPrint = window && typeof window.print === 'function';
 
     return (
@@ -137,10 +155,12 @@ export class QRCode {
         )}
         <p innerHTML={i18next.t('qr_code_paragraph')} />
         <div class="qr-code__img-code u-text-align--center">
-          <img
-            src={generateCode()}
-            alt="QR code generated based on the provided answers"
-          />
+          {qr_values ? (
+            <img
+              src={generateCode()}
+              alt="QR code generated based on the provided answers"
+            />
+          ) : null}
         </div>
         <ia-answers-table answers={answers} />
       </div>

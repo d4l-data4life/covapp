@@ -40,10 +40,12 @@ export class AnswersTable {
         <tr class="answers-table__row">
           <td>{i18next.t(question.text)}</td>
           <td>
-            {this.answers[id]
-              .split('.')
-              .reverse()
-              .join('.')}
+            {Number.isInteger(this.answers[id])
+              ? new Date(this.answers[id]).toLocaleDateString()
+              : this.answers[id]
+                  .split('.')
+                  .reverse()
+                  .join('.')}
           </td>
         </tr>
       );
@@ -56,6 +58,13 @@ export class AnswersTable {
         </tr>
       );
     } else if (question.type === 'number') {
+      return (
+        <tr class="answers-table__row">
+          <td>{i18next.t(question.text)}</td>
+          <td>{this.answers[id]}</td>
+        </tr>
+      );
+    } else if (question.type === 'text') {
       return (
         <tr class="answers-table__row">
           <td>{i18next.t(question.text)}</td>

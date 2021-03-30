@@ -1,0 +1,740 @@
+{
+  "id": "covapp",
+  "schemaVersion": "1",
+  "version": 2,
+  "language": "de",
+  "title": "CovApp",
+  "meta": {
+    "availableLanguages": ["de"],
+    "author": "Alexander Thieme",
+    "creationDate": "2021-03-12"
+  },
+  "questions": [
+    {
+      "options": [
+        {
+          "scores": {
+            "Severity": 2,
+            "Exposition": 0,
+            "Symptoms": 0,
+            "Dissemination": 0
+          },
+          "text": "Ja",
+          "value": "yes"
+        },
+        {
+          "scores": {
+            "Severity": 0,
+            "Exposition": 0,
+            "Symptoms": 0,
+            "Dissemination": 0
+          },
+          "text": "Nein",
+          "value": "no"
+        }
+      ],
+      "id": "q_age",
+      "text": "Sind Sie 65 Jahre oder älter?",
+      "type": "select"
+    },
+    {
+      "options": [
+        { "scores": {}, "text": "Allein wohnend", "value": "alone" },
+        {
+          "scores": { "Exposition": 1, "Dissemination": 1 },
+          "text": "Zusammen mit Familie, in einer Wohngemeinschaft oder betreuten Gemeinschaftseinrichtung",
+          "value": "together"
+        }
+      ],
+      "id": "q_living",
+      "text": "Wie ist Ihre aktuelle Wohnsituation?",
+      "type": "select"
+    },
+    {
+      "options": [
+        { "scores": { "Dissemination": 1 }, "text": "Ja", "value": "yes" },
+        { "scores": {}, "text": "Nein", "value": "no" }
+      ],
+      "id": "q_caring",
+      "text": "Pflegen oder unterstützen Sie privat mindestens einmal pro Woche eine oder mehrere Personen mit altersbedingten Beschwerden, chronischen Erkrankungen oder Gebrechlichkeit?",
+      "type": "select",
+      "details": "Nicht gemeint sind Pflegeleistungen oder Unterstützung, die Sie im Zusammenhang mit Ihrer beruflichen Tätigkeit erbringen."
+    },
+    {
+      "options": [
+        {
+          "scores": { "Exposition": 1, "Dissemination": 1 },
+          "text": "Im medizinischen Bereich tätig (Pflege, Arztpraxis oder Krankenhaus)",
+          "value": "medical"
+        },
+        {
+          "scores": { "Exposition": 1, "Dissemination": 1 },
+          "text": "Im medizinischen Bereich betreut/untergebracht (Pflege oder Krankenhaus)",
+          "value": "medical2"
+        },
+        {
+          "scores": { "Exposition": 1, "Dissemination": 1 },
+          "text": "In einer Gemeinschaftseinrichtung tätig (Schule, Kita, Universität, Heim o.ä.)",
+          "value": "community"
+        },
+        {
+          "scores": { "Exposition": 1, "Dissemination": 1 },
+          "text": "In einer Gemeinschaftseinrichtung betreut/untergebracht (Schule, Kita, Universität, Heim etc.)",
+          "value": "community2"
+        },
+        {
+          "scores": {},
+          "text": "Nein, in keinem der genannten Bereiche",
+          "value": "none"
+        }
+      ],
+      "id": "q_work",
+      "text": "Sind Sie in einem der folgenden Bereiche tätig oder untergebracht/betreut?",
+      "type": "select"
+    },
+    {
+      "options": [
+        { "scores": { "Exposition": 6 }, "text": "Ja", "value": "yes" },
+        { "scores": {}, "text": "Nein", "value": "no" }
+      ],
+      "id": "q_outbreak",
+      "text": "Sind zwei oder mehr Personen in der Einrichtung in der Sie leben oder arbeiten in den letzten 14 Tagen positiv getestet worden?",
+      "type": "select",
+      "enableWhenExpression": {
+        "or": [
+          { "var": "q_work.option.medical" },
+          { "var": "q_work.option.medical2" },
+          { "var": "q_work.option.community" },
+          { "var": "q_work.option.community2" }
+        ]
+      }
+    },
+    {
+      "options": [
+        { "scores": { "Severity": 1 }, "text": "Ja", "value": "yes" },
+        { "scores": {}, "text": "Nein", "value": "no" }
+      ],
+      "id": "q_smoke",
+      "text": "Rauchen Sie?",
+      "type": "select"
+    },
+    {
+      "options": [
+        { "scores": { "Severity": 1 }, "text": "Ja", "value": "yes" },
+        { "scores": {}, "text": "Nein", "value": "no" },
+        { "scores": {}, "text": "Ich weiß es nicht", "value": "dont_know" }
+      ],
+      "id": "q_pregnant",
+      "text": "Sind Sie schwanger?",
+      "type": "select"
+    },
+    {
+      "options": [
+        { "scores": { "Exposition": 6 }, "text": "Ja", "value": "yes" },
+        { "scores": {}, "text": "Nein", "value": "no" }
+      ],
+      "id": "q_contact",
+      "text": "Hatten Sie engen Kontakt zu einem bestätigten Fall?",
+      "details": "Enger Kontakt mit einem bestätigten Fall bedeutet: <ul><li>Kontakt von Angesicht zu Angesicht länger als 15 Minuten</li><li>Direkter, physischer Kontakt (Berührung, Händeschütteln, Küssen)</li><li>Länger als 15 Minuten direkt neben einer infizierten Person (weniger als 1,5 Meter Abstand) verbracht</li><li>Kontakt mit oder Austausch von Körperflüssigkeiten</li><li>Teilen einer Wohnung</li></ul>  Falls Sie Kontakt hatten, aber adäquate Schutzmaßnahmen (Maske, Kittel) getragen haben, wählen Sie \"Nein\".",
+      "type": "select"
+    },
+    {
+      "id": "q_contact_date",
+      "text": "An welchem Tag war der letzte Kontakt?",
+      "type": "date",
+      "enableWhenExpression": { "var": "q_contact.option.yes" }
+    },
+    {
+      "options": [
+        {
+          "scores": { "Exposition": 6 },
+          "text": "Ja, mit erhöhtem Risiko",
+          "value": "yes_high_risk"
+        },
+        {
+          "scores": { "Exposition": 2 },
+          "text": "Ja, mit niedrigem Risiko",
+          "value": "yes_low_risk"
+        },
+        { "scores": {}, "text": "Nein", "value": "no" },
+        {
+          "scores": {},
+          "text": "Ich verwende die Corona Warn App nicht",
+          "value": "no_usage"
+        }
+      ],
+      "id": "q_contact_tracing_risk_contacts",
+      "text": "Wurde durch die Corona Warn App in den letzten 14 Tagen eine Risikobegegnung festgestellt?",
+      "type": "select"
+    },
+    {
+      "options": [
+        {
+          "scores": { "Symptoms": 1 },
+          "text": "Fieber (über 38 °C)",
+          "value": "fever"
+        },
+        { "scores": { "Symptoms": 1 }, "text": "Schüttelfrost", "value": "chills" },
+        {
+          "scores": { "Symptoms": 1 },
+          "text": "Gliederschmerzen",
+          "value": "aches"
+        },
+        {
+          "scores": { "Symptoms": 3 },
+          "text": "Geschmacks- oder Geruchsverlust",
+          "value": "tastesmell"
+        }
+      ],
+      "id": "q_symptoms",
+      "text": "Hatten Sie in den letzen Tagen neue Krankheitsbeschwerden. Wenn ja, welche? (Mehrfachnennung möglich)",
+      "type": "multiselect",
+      "details": "Die Frage bezieht sich auf akut aufgetretene oder verstärkte Symptome und schließt chronische Beschwerden und saisonale bzw. allergische Beschwerden aus. Sollten Sie eine chronische Erkrankung haben, vergleichen Sie für die Beantwortung der Frage Ihre derzeitigen mit Ihren bisherigen Beschwerden.   Sollten Sie keines der Symptome haben, wählen Sie keinen Eintrag aus und klicken Sie direkt weiter.",
+      "optional": true
+    },
+    {
+      "options": [
+        {
+          "scores": { "Symptoms": 1 },
+          "text": "Fühle mich schlapp oder abgeschlagen",
+          "value": "tired"
+        },
+        {
+          "scores": { "Symptoms": 1 },
+          "text": "Anhaltender Husten",
+          "value": "cough"
+        },
+        { "scores": { "Symptoms": 1 }, "text": "Schnupfen", "value": "nose" },
+        { "scores": { "Symptoms": 1 }, "text": "Durchfall", "value": "Diarrhea" },
+        {
+          "scores": { "Symptoms": 1 },
+          "text": "Halsschmerzen",
+          "value": "sorethroat"
+        },
+        { "scores": { "Symptoms": 1 }, "text": "Kopfschmerzen", "value": "headache" }
+      ],
+      "id": "q_symptoms2",
+      "text": "Hatten Sie in den letzen Tagen neue Krankheitsbeschwerden. Wenn ja, welche? (Mehrfachnennung möglich)",
+      "type": "multiselect",
+      "details": "Sollten Sie keines der Symptome haben, wählen Sie keinen Eintrag aus und klicken Sie direkt weiter.",
+      "optional": true
+    },
+    {
+      "options": [
+        { "scores": { "Symptoms": 1, "Severity": 3 }, "text": "Ja", "value": "1" },
+        { "scores": {}, "text": "Nein", "value": "0" }
+      ],
+      "id": "q_breath",
+      "text": "Sind Sie in den letzten 24 Std. schneller außer Atem als sonst?",
+      "type": "select",
+      "details": "Wählen Sie \"Ja\", wenn Sie:  <ul><li>Bei leichten Belastungen, wie einem Spaziergang oder dem Steigen weniger Treppenstufen schneller als sonst kurzatmig werden oder Schwierigkeiten beim Atmen haben</li><li>Das Gefühl der Atemnot/Luftnot oder Kurzatmigkeit beim Sitzen oder Liegen verspüren</li><li>Beim Aufstehen aus dem Bett oder vom Stuhl das Gefühl der Atemnot/Luftnot haben</li></ul>  Sollten Sie eine chronische Lungenerkrankung haben, vergleichen Sie Ihre derzeitigen Beschwerden im Hinblick auf Ihre Atmung mit Ihren bisherigen Atemproblemen."
+    },
+    {
+      "id": "q_symptoms_date",
+      "text": "Bezogen auf alle Fragen zu Symptomen: Seit wann haben Sie die von Ihnen angegebenen Symptome?",
+      "type": "date",
+      "enableWhenExpression": { ">": [{ "var": "score.Symptoms" }, 0] }
+    },
+    {
+      "options": [
+        {
+          "scores": { "Severity": 1 },
+          "text": "Chronische Lungenerkrankung",
+          "value": "lung"
+        },
+        { "scores": { "Severity": 1 }, "text": "Diabetes", "value": "diabetes" },
+        { "scores": { "Severity": 1 }, "text": "Herzerkrankung", "value": "heart" },
+        {
+          "scores": { "Severity": 1 },
+          "text": "Bluthochdruck",
+          "value": "pressure"
+        },
+        {
+          "scores": { "Severity": 1 },
+          "text": "Nierenerkrankungen",
+          "value": "kidney"
+        },
+        {
+          "scores": { "Severity": 1 },
+          "text": "Down-Syndrom",
+          "value": "downsyndrome"
+        },
+        { "scores": { "Severity": 1 }, "text": "Krebserkrankung", "value": "cancer" }
+      ],
+      "id": "q_chronic_illnesses",
+      "text": "Wurde bei Ihnen durch eine Ärztin/einen Arzt eine der folgenden Erkrankungen festgestellt?",
+      "type": "multiselect",
+      "details": "Sollten Sie keine der Erkrankungen haben, wählen Sie keinen Eintrag aus, und wählen Sie direkt „Weiter“.",
+      "optional": true
+    },
+    {
+      "numericOptions": { "max": 220, "min": 100, "step": 1 },
+      "id": "q_height",
+      "text": "Was ist ihre Größe? (in cm)",
+      "type": "number",
+      "details": "Wir nutzen Ihr Gewicht und Ihre Größe zur Berechnung Ihres Body-Mass-Index (BMI). Dieser ist ein Risikofaktor in Zusammenhang mit einer COVID-19 Erkrankung. "
+    },
+    {
+      "numericOptions": { "max": 300, "min": 20, "step": 1 },
+      "id": "q_weight",
+      "text": "Was ist Ihr Gewicht? (in kg)",
+      "type": "number",
+      "details": "Wir nutzen Ihr Gewicht und Ihre Größe zur Berechnung Ihres Body-Mass-Index (BMI). Dieser ist ein Risikofaktor in Zusammenhang mit einer COVID-19 Erkrankung. "
+    },
+    {
+      "options": [
+        { "scores": { "Severity": 1 }, "text": "Ja", "value": "yes" },
+        { "scores": {}, "text": "Nein", "value": "no" },
+        { "scores": {}, "text": "Ich weiß es nicht", "value": "dont_know" }
+      ],
+      "id": "q_steroids",
+      "text": "Nehmen Sie aktuell Cortison in Tablettenform ein?",
+      "type": "select"
+    },
+    {
+      "options": [
+        {
+          "scores": { "Severity": 2 },
+          "text": "Immunsuppressiva (bei Organtransplantation oder Autoimmunerkrankung)",
+          "value": "immunosuppressiva"
+        },
+        {
+          "scores": { "Severity": 2, "Exposition": 1 },
+          "text": "Chemotherapie",
+          "value": "chemo"
+        },
+        {
+          "scores": { "Severity": 2, "Exposition": 1 },
+          "text": "Strahlentherapie",
+          "value": "radiotherapy"
+        }
+      ],
+      "id": "q_immunosuppressants",
+      "text": "Erhalten Sie aktuell eine oder mehrere der genannten Therapien?",
+      "type": "multiselect",
+      "details": "Immunsuppressiva nehmen oder bekommen Sie nach einer Organtransplantation oder während der Therapie einer Autoimmunerkrankung. Eine Chemo und/oder Strahlentherapie wird zur Behandlung einer Krebserkrankung durchgeführt. Sollten Sie keine der Behandlungen erhalten, wählen Sie keinen Eintrag aus, und wählen Sie direkt „Weiter“.",
+      "optional": true
+    },
+    {
+      "options": [
+        { "scores": {}, "text": "Ja", "value": "yes" },
+        { "scores": {}, "text": "Nein", "value": "no" }
+      ],
+      "id": "q_flu",
+      "text": "Haben Sie sich im Zeitraum vom 1. August 2020 bis heute gegen Grippe impfen lassen?",
+      "type": "select"
+    },
+    {
+      "options": [
+        { "scores": {}, "text": "Ja", "value": "yes" },
+        { "scores": {}, "text": "Nein", "value": "no" }
+      ],
+      "id": "q_vaccine",
+      "text": "Haben Sie eine Impfung gegen das neuartige Coronavirus erhalten?",
+      "type": "select"
+    },
+    {
+      "options": [
+        { "scores": {}, "text": "Ja", "value": "yes" },
+        { "scores": {}, "text": "Nein", "value": "no" }
+      ],
+      "id": "q_vaccine_completed",
+      "text": "Haben Sie sämtliche vorgesehene Impfdosen des Coronavirus-Impfstoffes erhalten?",
+      "type": "select",
+      "enableWhenExpression": { "var": "q_vaccine.option.yes" }
+    },
+    {
+      "id": "q_vaccine_date",
+      "text": "Wann haben Sie die letzte Impfdosis erhalten?",
+      "type": "date",
+      "enableWhenExpression": { "var": "q_vaccine_completed.option.yes" }
+    },
+    {
+      "options": [
+        { "scores": {}, "text": "Ja", "value": "yes" },
+        { "scores": {}, "text": "Nein", "value": "no" }
+      ],
+      "id": "q_test",
+      "text": "Haben Sie in den letzten 7 Tagen selbst einen Antigen-Schnelltest durchgeführt?",
+      "type": "select"
+    },
+    {
+      "options": [
+        { "scores": { "Symptoms": 3 }, "text": "Ja", "value": "yes" },
+        { "scores": {}, "text": "Nein", "value": "no" }
+      ],
+      "id": "q_testpositive",
+      "text": "War dieser Test positiv?",
+      "type": "select",
+      "enableWhenExpression": { "var": "q_test.option.yes" }
+    },
+    {
+      "options": [
+        { "scores": {}, "text": "Ja", "value": "yes" },
+        { "scores": {}, "text": "Nein", "value": "no" }
+      ],
+      "id": "q_testverified",
+      "text": "Wurde der Test schon in einem Labor bestätigt?",
+      "type": "select",
+      "enableWhenExpression": { "var": "q_testpositive.option.yes" }
+    }
+  ],
+  "variables": [
+    {
+      "id": "v_contact_relevant",
+      "expression": {
+        "<=": [{ "-": [{ "var": "now" }, { "var": "q_contact_date" }] }, 1209600]
+      }
+    },
+    {
+      "id": "v_symptoms_relevant",
+      "expression": {
+        "<=": [{ "-": [{ "var": "now" }, { "var": "q_symptoms_date" }] }, 1209600]
+      }
+    },
+    {
+      "id": "v_symptoms_after_contact",
+      "expression": {
+        "and": [
+          { "<": [{ "var": "q_contact_date" }, { "var": "q_symptoms_date" }] },
+          { "var": "v_symptoms_relevant" },
+          { "var": "v_contact_relevant" }
+        ]
+      }
+    },
+    {
+      "id": "v_bmi",
+      "expression": {
+        "/": [
+          { "*": [{ "var": "q_weight" }, 10000] },
+          { "*": [{ "var": "q_height" }, { "var": "q_height" }] }
+        ]
+      }
+    },
+    {
+      "id": "v_respiratory_symptoms",
+      "expression": {
+        "or": [
+          { "var": "q_symptoms2.option.nose" },
+          { "var": "q_symptoms2.option.sorethroat" },
+          { "var": "q_symptoms2.option.cough" },
+          { "var": "q_breath.option.yes" }
+        ]
+      }
+    },
+    {
+      "id": "v_symptoms_help",
+      "expression": {
+        "if": [
+          { "var": "v_symptoms_relevant" },
+          {
+            "if": [
+              {
+                "and": [
+                  { "var": "q_flu.option.yes" },
+                  { ">": [{ "var": "score.Symptoms" }, 0] }
+                ]
+              },
+              { "+": [{ "var": "score.Symptoms" }, 1] },
+              { "var": "score.Symptoms" }
+            ]
+          },
+          0
+        ]
+      }
+    },
+    {
+      "id": "v_symptoms",
+      "expression": {
+        "if": [
+          { "var": "v_symptoms_after_contact" },
+          { "+": [{ "var": "v_symptoms_help" }, 1] },
+          { "var": "v_symptoms_help" }
+        ]
+      }
+    },
+    {
+      "id": "v_exposition",
+      "expression": {
+        "if": [
+          {
+            "and": [
+              { "var": "q_contact.option.yes" },
+              { "!": { "var": "v_contact_relevant" } }
+            ]
+          },
+          { "-": [{ "var": "score.Exposition" }, 6] },
+          { "var": "score.Exposition" }
+        ]
+      }
+    },
+    {
+      "id": "v_severity",
+      "expression": {
+        "if": [
+          { ">=": [{ "var": "v_bmi" }, 40] },
+          { "+": [{ "var": "score.Severity" }, 2] },
+          {
+            "if": [
+              { ">=": [{ "var": "v_bmi" }, 30] },
+              { "+": [{ "var": "score.Severity" }, 1] },
+              { "var": "score.Severity" }
+            ]
+          }
+        ]
+      }
+    },
+    { "id": "v_dissemination", "expression": { "var": "score.Dissemination" } },
+    {
+      "id": "has_high_symptoms",
+      "expression": { ">=": [{ "var": "v_symptoms" }, 2] }
+    },
+    { "id": "has_symptoms", "expression": { ">": [{ "var": "v_symptoms" }, 0] } },
+    {
+      "id": "has_high_exposition",
+      "expression": { ">=": [{ "var": "v_exposition" }, 6] }
+    },
+    {
+      "id": "has_exposition",
+      "expression": { ">": [{ "var": "v_exposition" }, 0] }
+    },
+    {
+      "id": "has_high_severity",
+      "expression": { ">=": [{ "var": "v_severity" }, 2] }
+    },
+    { "id": "has_severity", "expression": { ">": [{ "var": "v_severity" }, 0] } },
+    {
+      "id": "has_dissemination",
+      "expression": { ">": [{ "var": "v_dissemination" }, 0] }
+    },
+    {
+      "id": "v_symptoms_normalized",
+      "expression": { "*": [{ "/": [{ "var": "v_symptoms" }, 18] }, 100] }
+    },
+    {
+      "id": "v_exposition_normalized",
+      "expression": { "*": [{ "/": [{ "var": "v_exposition" }, 23] }, 100] }
+    },
+    {
+      "id": "v_severity_normalized",
+      "expression": { "*": [{ "/": [{ "var": "v_severity" }, 23] }, 100] }
+    },
+    {
+      "id": "v_dissemination_normalized",
+      "expression": { "*": [{ "/": [{ "var": "v_dissemination" }, 3] }, 100] }
+    },
+    { "id": "qr_test", "expression": { "var": "score.Dissemination" } }
+  ],
+  "resultCategories": [
+    {
+      "results": [
+        {
+          "expression": true,
+          "id": "print_risk_profile",
+          "text": "Symptome: %(v_symptoms_normalized)d<br>Exposition: %(v_exposition_normalized)d<br>Schwerer Verlauf: %(v_severity_normalized)d<br>Verbreitungspotential: %(v_dissemination_normalized)d"
+        }
+      ],
+      "id": "rc_profil",
+      "description": "Ihr persönliches Risikoprofil (0 bis 100 Punkte):"
+    },
+    {
+      "results": [
+        {
+          "id": "show_shortness_of_breath_advisory",
+          "text": "Sie geben an, unter Atemnot zu leiden. Bitte melden Sie sich telefonisch bei Ihrem Hausarzt/Ihrer Hausärztin oder dem Ärztlichen Bereitschaftsdienst (+49 116 117). Bei stärker werden der Atemnot holen Sie sich bitte ärztliche Hilfe. Bitte tauschen Sie sich täglich mit einer nahestehenden Person über Ihr Befinden aus.",
+          "expression": { "var": "q_breath.option.yes" }
+        }
+      ],
+      "id": "rc_breath",
+      "description": "Shortness of breath advisory"
+    },
+    {
+      "results": [
+        {
+          "expression": { "var": "has_high_symptoms" },
+          "id": "priority_1",
+          "text": "Priorität 1: Es liegen Symptome vor, die für eine Coronavirusinfektion sprechen. Es wird ein PCR Test empfohlen. Ein Antigen-Test kann bei begrenzter Kapazität oder bei der Notwendigkeit eines schnellen Ergebnisses durchgeführt werden."
+        },
+        {
+          "expression": {
+            "or": [
+              { "var": "has_high_exposition" },
+              {
+                "and": [
+                  {
+                    "or": [
+                      { "var": "q_work.option.medical" },
+                      { "var": "q_work.option.medical2" }
+                    ]
+                  },
+                  { "var": "q_outbreak.yes" }
+                ]
+              }
+            ]
+          },
+          "id": "priority_2",
+          "text": "Priorität 2: Es liegt ein Risikokontakt vor oder Sie befinden sich in einer medizinischen Einrichtung, in der Infektionen aufgetreten sind. Es wird ein PCR Test empfohlen. Ein Antigen-Test kann bei begrenzter Kapazität oder bei der Notwendigkeit eines schnellen Ergebnisses durchgeführt werden."
+        },
+        {
+          "expression": { "var": "q_outbreak.option.yes" },
+          "id": "priority_3",
+          "text": "Priorität 3: In Ihrem Umfeld sind Infektionen aufgetreten. Es wird ein PCR Test empfohlen. Ein Antigen-Test kann zur Kohorten-Isolation oder zur Entlastung von Laborkapazitäten durchgeführt werden."
+        },
+        {
+          "expression": { "var": "q_work.option.medical" },
+          "id": "priority_4",
+          "text": "Priorität 4: Ein Antigen-Test wird in Abstimmung mit der lokalen Gesundheitsbehörde oder bei einer erhöhten 7-Tages Inzidenz (> 50 Fälle/100.000 Einwohner) empfohlen. Eine PCR ist möglich ohne Kostenerstattung."
+        },
+        {
+          "expression": { "var": "q_work.option.medical2" },
+          "id": "priority_5",
+          "text": "Priorität 5: Ein Point-of-Care Antigen-Test in regelmäßigen Intervallen wird empfohlen, sofern die 7-Tages-Inzidenz oberhalb von 50 liegt. Eine PCR ist möglich ohne Kostenerstattung."
+        },
+        {
+          "expression": true,
+          "id": "no_priority",
+          "text": "Keine Priorität: Keine Testung nach der nationalen Teststrategie empfohlen."
+        }
+      ],
+      "id": "rc_rki_priority",
+      "description": "Priorität nationale Teststrategie"
+    },
+    {
+      "results": [
+        {
+          "expression": { "var": "has_high_symptoms" },
+          "id": "high_symptoms",
+          "text": "Es liegen Symptome, die für eine Infektion mit dem Coronavirus sprechen, oder ein positiver Antigen-Schnelltest vor. Wir empfehlen die Durchführung eines PCR Bestätigungstests."
+        },
+        {
+          "expression": { "var": "has_symptoms" },
+          "id": "medium_symptoms",
+          "text": "Es liegen einige Symptome vor. Wir empfehlen die Durchführung eines Antigen-Schnelltest. Nach Durchführung des Schnelltests empfehlen wir die erneute Ausführung der CovApp."
+        }
+      ],
+      "id": "rc_symptoms",
+      "description": "Risikokategorie Symptome"
+    },
+    {
+      "results": [
+        {
+          "expression": {
+            "and": [
+              { "var": "has_high_exposition" },
+              { "!": { "var": "has_high_symptoms" } }
+            ]
+          },
+          "id": "high_exposition",
+          "text": "Sie geben keine Symptome an, es liegt jedoch ein Risikokontakt vor. Wir empfehlen die Durchführung einer PCR."
+        },
+        {
+          "expression": {
+            "and": [
+              { "var": "has_exposition" },
+              { "!": { "var": "has_high_symptoms" } }
+            ]
+          },
+          "id": "medium_exposition",
+          "text": "Es liegen einige Risikofaktoren führ eine erhöhte Exposition vor. In Ihrem Fall könnte es sinnvoll sein, Antigen-Schnelltests in regelmäßigen Intervallen durchzuführen."
+        }
+      ],
+      "id": "rc_exposition",
+      "description": "Risikokategorie Exposition"
+    },
+    {
+      "results": [
+        {
+          "expression": {
+            "and": [{ "var": "has_high_severity" }, { "var": "has_high_symptoms" }]
+          },
+          "id": "high_severity",
+          "text": "Bei Ihnen liegen Risikofaktoren bezüglich eines schweren Verlaufs einer Coronavirusinfektion vor und Sie geben Symptome an oder es liegt ein positiver Antigen-Schnelltest vor. Bitte lassen Sie sich ärztlich beraten."
+        },
+        {
+          "expression": {
+            "and": [{ "var": "has_severity" }, { "var": "has_high_symptoms" }]
+          },
+          "id": "medium_severity",
+          "text": "Bei Ihnen ist die Wahrscheinlichkeit für einen schweren Verlaufs mäßig erhöht und Sie geben Symptome an oder es liegt ein positiver Antigen-Schnelltest vor. Bei weiterer Verschlechterung der Symptome lassen Sie sich bitte ärztlich beraten."
+        }
+      ],
+      "id": "rc_severity",
+      "description": "Risikokategorie schwerer Verlauf"
+    },
+    {
+      "results": [
+        {
+          "expression": {
+            "and": [{ "var": "has_dissemination" }, { "var": "has_high_symptoms" }]
+          },
+          "id": "dissemination",
+          "text": "Nach Ihren Angaben haben Sie beruflich und/oder privat soziale Kontakte und Sie geben Symptome an oder es liegt ein positiver Antigen-Schnelltest vor. Bitte reduzieren Sie Ihre sozialen Kontakte, bis ein PCR Bestätigungstest durchgeführt wurde und dieser negativ ausgefallen ist."
+        }
+      ],
+      "id": "rc_dissemination",
+      "description": "Risikokategorie Verbreitungspotential"
+    }
+  ],
+  "testCases": [
+    {
+      "description": "Patients with a high BMI (> 40) have a high risk of a severe covid-19 course",
+      "answers": {
+        "q_height": 145,
+        "q_weight": 118,
+        "q_symptoms": ["fever", "chills"],
+        "q_symptoms_date": 1615507200
+      },
+      "results": { "rc_severity": "high_severity" },
+      "options": { "randomRuns": 1000, "fillInDate": "2021-03-14" }
+    },
+    {
+      "description": "Patients with multiple symptoms should get RKI priority 1",
+      "answers": {
+        "q_symptoms": ["fever", "chills"],
+        "q_symptoms_date": 1615507200
+      },
+      "results": { "rc_rki_priority": "priority_1" },
+      "options": { "fillInDate": "2021-03-21", "randomRuns": 1000 }
+    }
+  ],
+  "export": [
+    {
+      "type": "chariteqr",
+      "mapping": [
+        {
+          "id": "V0",
+          "value": "400"
+        },
+        {
+          "id": "S1",
+          "value": "score.qr_value"
+        },
+        {
+          "id": "BMI",
+          "value": {
+            "/": [
+              {
+                "*": [
+                  {
+                    "var": "q_weight"
+                  },
+                  10000
+                ]
+              },
+              {
+                "*": [
+                  {
+                    "var": "q_height"
+                  },
+                  {
+                    "var": "q_height"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

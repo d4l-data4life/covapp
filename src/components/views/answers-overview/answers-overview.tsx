@@ -6,7 +6,7 @@ import { LOCAL_STORAGE_KEYS, ROUTES } from '../../../global/constants';
 import settings from '../../../global/utils/settings';
 import version from '../../../global/utils/version';
 import { RouterHistory } from '@stencil/router';
-import { Answers, Scores } from '../questionnaire/questionnaire';
+import { Answers } from '../questionnaire/questionnaire';
 
 @Component({
   styleUrl: 'answers-overview.css',
@@ -15,19 +15,13 @@ import { Answers, Scores } from '../questionnaire/questionnaire';
 export class AnswersOverview {
   @Prop() history: RouterHistory;
   @State() language: string;
-  @State() scores: Scores = {};
   @State() answers: Answers = {};
-  @State() resultCase: number = 5;
 
   componentWillLoad = () => {
     const availableAnswers = JSON.parse(
       localStorage.getItem(LOCAL_STORAGE_KEYS.ANSWERS)
     );
     this.answers = availableAnswers ? availableAnswers : {};
-    const availableScores = JSON.parse(
-      localStorage.getItem(LOCAL_STORAGE_KEYS.SCORES)
-    );
-    this.scores = availableScores ? availableScores : {};
     settings.completed = true;
   };
 
@@ -62,7 +56,7 @@ export class AnswersOverview {
       <div class="c-card-wrapper answers-overview">
         <d4l-card classes="card--desktop">
           <div class="recommendations__content" slot="card-content">
-            <ia-qr-code answers={this.answers} resultCase={this.resultCase} />
+            <ia-qr-code answers={this.answers} />
             <p>{i18next.t('summary_reset_paragraph')}</p>
             <d4l-button
               type="button"

@@ -24,8 +24,6 @@ export const ROUTES = {
 
 export const LOCAL_STORAGE_KEYS = {
   ANSWERS: 'answers',
-  RESULT: 'result',
-  SCORES: 'scores',
   VERSION: 'version',
   DATA_SENT: 'dataSent',
   EXPORTED: 'exported',

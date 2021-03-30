@@ -130,7 +130,6 @@ export namespace Components {
     interface IaQrCode {
         "answers": any;
         "history": RouterHistory;
-        "resultCase": number;
     }
     interface IaQuestionnaire {
         "history": RouterHistory;
@@ -558,7 +557,6 @@ declare namespace LocalJSX {
     interface IaQrCode {
         "answers"?: any;
         "history"?: RouterHistory;
-        "resultCase"?: number;
     }
     interface IaQuestionnaire {
         "history"?: RouterHistory;

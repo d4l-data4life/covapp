@@ -3,13 +3,7 @@ import { h } from '@stencil/core';
 import { QUESTIONNAIRE_VERSION, LOCAL_STORAGE_KEYS } from '../../global/constants';
 import { QUESTIONS } from '../../global/questions';
 import { getStorageString } from '../../global/utils/date';
-import {
-  checkGoTo,
-  checkGuard,
-  updateScoreData,
-} from '../views/questionnaire/utils';
-import { QRCode } from './qr-code';
-import { KeyValue } from './utils';
+import { KeyValue, QRCode } from './qr-code';
 
 let XMLPrefix = `<PATIENT><V0>${QUESTIONNAIRE_VERSION}</V0>`;
 const XMLSuffix = '</PATIENT>';
@@ -21,7 +15,6 @@ const mockQuestionAnswers = (
 ) => {
   let answer;
   let answers = {};
-  let score = {};
   let i = 0;
   while (i < QUESTIONS.length) {
     const question = QUESTIONS[i];
@@ -46,9 +39,6 @@ const mockQuestionAnswers = (
         break;
     }
     answers[QUESTIONS[i].id] = answer;
-    score = updateScoreData(i, answers[QUESTIONS[i].id], score);
-    i = checkGoTo(i, answers[QUESTIONS[i].id]);
-    i = checkGuard(i, score, answers);
   }
 
   return answers;
@@ -61,7 +51,7 @@ describe('qr-code', () => {
     localStorage.setItem(LOCAL_STORAGE_KEYS.DATA_SENT, 'true');
     let page = await newSpecPage({
       components: [QRCode],
-      template: () => <ia-qr-code resultCase={2} />,
+      template: () => <ia-qr-code />,
     });
     qrCode = page.rootInstance;
   });
@@ -117,16 +107,6 @@ describe('qr-code', () => {
       );
       const expected = `${XMLPrefix}<P1>1</P1><P2>1</P2><P3>1</P3><P4>1</P4><P5>1</P5><P6>1</P6><C0>1</C0><CZ>20200331</CZ><S0>1</S0><S3>1</S3><S4>1</S4><S5>1</S5><S6>1</S6><S7>1</S7><S8>1</S8><S9>1</S9><SA>1</SA><SB>1</SB><SC>1</SC><SZ>20200331</SZ><D0>1</D0><D1>1</D1><D2>1</D2><D4>1</D4><D5>150</D5><D6>150</D6><D7>67</D7><M0>1</M0><M1>1</M1><M2>1</M2>${XMLSuffix}`;
       expect(qrCode.generateXML(answers)).toEqual(expected);
-    });
-
-    it('includes limited data for xml sending', async () => {
-      let answers = mockQuestionAnswers(
-        true,
-        getStorageString(new Date('2020-03-31')),
-        '14482'
-      );
-      const expected = `<PATIENT><V1>14482</V1><V2>2</V2></PATIENT>`;
-      expect(qrCode.generateDonationXML(answers)).toEqual(expected);
     });
   });
 });

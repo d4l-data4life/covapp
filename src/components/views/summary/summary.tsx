@@ -14,7 +14,8 @@ import version from '../../../global/utils/version';
 import { Answers } from '../questionnaire/questionnaire';
 import settings from '../../../global/utils/settings';
 import { IS_COLLABORATION } from '../../../global/layouts';
-import { Result } from '@covopen/covquestions-js';
+import { QuestionnaireEngine, Result } from '@covopen/covquestions-js';
+import { getQuestionnaire } from '../../../global/questions';
 
 @Component({
   styleUrl: 'summary.css',
@@ -63,10 +64,22 @@ export class Summary {
       localStorage.getItem(LOCAL_STORAGE_KEYS.ANSWERS)
     );
     this.answers = availableAnswers ? availableAnswers : {};
-    const availableResult = JSON.parse(
-      localStorage.getItem(LOCAL_STORAGE_KEYS.RESULT)
-    );
-    this.result = availableResult ? availableResult : undefined;
+    getQuestionnaire().then(questionnaire => {
+      const engine = new QuestionnaireEngine(questionnaire);
+      // TODO:https://github.com/CovOpen/CovQuestions/issues/148
+      engine.setAnswersPersistence({
+        answers: Object.keys(this.answers).reduce((accumulator, key) => {
+          accumulator.push({
+            questionId: key,
+            rawAnswer: this.answers[key],
+          });
+          return accumulator;
+        }, []),
+        version: 2,
+        timeOfExecution: 23,
+      });
+      this.result = engine.getResults().results;
+    });
     settings.completed = true;
   };
 

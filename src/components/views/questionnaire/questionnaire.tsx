@@ -17,7 +17,6 @@ import {
   Question,
   QuestionnaireEngine,
   RawAnswer,
-  Result,
 } from '@covopen/covquestions-js';
 import { QUESTION_SHARE_DATA } from './utils';
 import { trackEvent, TRACKING_EVENTS } from '../../../global/utils/track';
@@ -37,7 +36,6 @@ export class Questionnaire {
   @State() previousStep: number;
   // TODO: Export DataType from CovQuestions
   @State() answerData: { [key: string]: any } = undefined;
-  @State() result: Result[] = undefined;
 
   @Event() showLogoHeader: EventEmitter;
 
@@ -84,7 +82,6 @@ export class Questionnaire {
       LOCAL_STORAGE_KEYS.ANSWERS,
       JSON.stringify(this.answerData)
     );
-    localStorage.setItem(LOCAL_STORAGE_KEYS.RESULT, JSON.stringify(this.result));
     settings.completed = false;
     version.set();
   };
@@ -112,7 +109,6 @@ export class Questionnaire {
     }
     const nextQuestion = this.questionnaireEngine.nextQuestion();
     this.progress = this.questionnaireEngine.getProgress();
-    this.result = this.questionnaireEngine.getResults();
     if (nextQuestion === undefined) {
       this.history.push(ROUTES.SUMMARY, {});
       trackEvent(TRACKING_EVENTS.FINISH);
@@ -173,12 +169,7 @@ export class Questionnaire {
     const availableAnswers = JSON.parse(
       localStorage.getItem(LOCAL_STORAGE_KEYS.ANSWERS)
     );
-    const availableResult = JSON.parse(
-      localStorage.getItem(LOCAL_STORAGE_KEYS.RESULT)
-    );
-
     this.answerData = availableAnswers ?? {};
-    this.result = availableResult ?? [];
 
     // const formDataKeys = Object.keys(this.answerData);
 
@@ -199,6 +190,7 @@ export class Questionnaire {
     getQuestionnaire(url)
       .then(questionnaire => {
         this.questionnaireEngine = new QuestionnaireEngine(questionnaire);
+        // TODO:https://github.com/CovOpen/CovQuestions/issues/148
         this.questionnaireEngine.setAnswersPersistence({
           answers: Object.keys(this.answerData).reduce((accumulator, key) => {
             accumulator.push({
@@ -262,7 +254,7 @@ export class Questionnaire {
                 <legend class="u-visually-hidden">
                   {currentQuestion ? currentQuestion.text : ''}
                 </legend>
-                {currentQuestion.details && (
+                {currentQuestion && currentQuestion.details && (
                   <p
                     class="questionnaire__comment"
                     innerHTML={currentQuestion.details}
