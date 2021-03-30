@@ -261,6 +261,10 @@ export class AppRoot {
               <stencil-route url={ROUTES.FAQ} component="ia-faq" />
               <stencil-route url={ROUTES.DATA_PRIVACY} component="ia-data-privacy" />
               <stencil-route url={ROUTES.EXPORT} component="ia-export" />
+              <stencil-route
+                url={ROUTES.RECOMMENDATIONS}
+                component="ia-recommendation"
+              />
               <stencil-route url={ROUTES.ANSWERS} component="ia-answers-overview" />
               <stencil-route component="ia-start" />
             </stencil-route-switch>
