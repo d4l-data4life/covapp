@@ -1,0 +1,27 @@
+.recommendation__headline {
+  display: flex;
+  align-items: center;
+}
+
+.recommendation__indicator {
+  margin-left: 0.35em;
+  height: 1em;
+  width: 1em;
+  border-radius: 50%;
+}
+
+.recommendation__indicator--slight {
+  background-color: #00af00;
+}
+
+.recommendation__indicator--low {
+  background-color: #ffd800;
+}
+
+.recommendation__indicator--medium {
+  background-color: #f98300;
+}
+
+.recommendation__indicator--high {
+  background-color: #e70000;
+}
