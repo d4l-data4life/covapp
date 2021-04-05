@@ -38,7 +38,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@covopen/covquestions-js": "1.2.0",
+    "@covopen/covquestions-js": "^1.3.1",
     "@d4l/web-components-library": "^2.13.4",
     "@sentry/browser": "^5.15.4",
     "i18next": "^19.3.2",

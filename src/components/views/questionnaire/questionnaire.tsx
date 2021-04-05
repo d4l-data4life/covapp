@@ -178,16 +178,14 @@ export class Questionnaire {
 
     //   this.moveToNextStep();
     // }
-    this.newQuestionnaire(
-      'https://covopen.github.io/CovQuestions/questionnaires/covapp/2/de.json'
-    );
+    this.newQuestionnaire();
     // this.questionnaireEngine = new QuestionnaireEngine(testQuestionnaire);
     // this.currentQuestion = this.questionnaireEngine.nextQuestion();
     // this.questionnaireEngine
   };
 
-  newQuestionnaire = (url: string) => {
-    getQuestionnaire(url)
+  newQuestionnaire = () => {
+    getQuestionnaire()
       .then(questionnaire => {
         this.questionnaireEngine = new QuestionnaireEngine(questionnaire);
         // TODO:https://github.com/CovOpen/CovQuestions/issues/148
@@ -213,7 +211,6 @@ export class Questionnaire {
   render() {
     const {
       submitForm,
-      newQuestionnaire,
       moveToPreviousStep,
       progress,
       currentQuestion,
@@ -222,13 +219,6 @@ export class Questionnaire {
 
     return (
       <div class="questionnaire c-card-wrapper">
-        <input
-          placeholder="CovQuesionnaire Link"
-          value="https://covopen.github.io/CovQuestions/questionnaires/covapp/2/de.json"
-          onInput={event =>
-            newQuestionnaire((event.target as HTMLInputElement).value)
-          }
-        ></input>
         <form
           onSubmit={event => submitForm(event)}
           ref={el => (this.formElement = el as HTMLFormElement)}

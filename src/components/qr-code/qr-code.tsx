@@ -65,6 +65,7 @@ export class QRCode {
   };
 
   generateCode = (): string => {
+    console.log(this.generateXML(this.qr_values));
     const svgString = qrcode({
       content: this.generateXML(this.qr_values),
       padding: 0,
