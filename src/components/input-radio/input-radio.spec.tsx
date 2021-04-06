@@ -8,7 +8,16 @@ describe('input-radio', () => {
     const page = await newSpecPage({
       components: [InputRadio],
       template: () => (
-        <ia-input-radio question={QUESTIONS[0]} currentSelection={0} />
+        <ia-input-radio
+          inputId={'test'}
+          options={[
+            {
+              text: 'test-option-1',
+              value: 'opt1',
+            },
+          ]}
+          value={'opt1'}
+        />
       ),
     });
     expect(page.rootInstance).toBeTruthy();

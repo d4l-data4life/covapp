@@ -48,7 +48,7 @@ export class InputBoolean implements ComponentInterface {
               value: 'false',
             },
           ]}
-          value={this.value.toString()}
+          value={this.value != null ? this.value.toString() : ''}
           onUpdateFormData={updateFormDataAction}
         />
       </Host>

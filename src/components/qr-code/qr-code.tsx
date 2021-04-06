@@ -33,11 +33,13 @@ export class QRCode {
 
   generateXML = (qr_values: { [id: string]: string }): string => {
     let xml = `<PATIENT>`;
-    let valuePairs = Object.keys(this.qr_values).reduce((accumulator, key) => {
-      accumulator.push({
-        key: key,
-        value: qr_values[key],
-      });
+    let valuePairs = Object.keys(qr_values).reduce((accumulator, key) => {
+      if (qr_values[key] != null) {
+        accumulator.push({
+          key: key,
+          value: qr_values[key],
+        });
+      }
       return accumulator;
     }, [] as KeyValue[]);
     valuePairs.sort(this.XMLSort);
