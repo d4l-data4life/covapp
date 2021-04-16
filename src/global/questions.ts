@@ -1,12 +1,4 @@
-import {
-  Guard,
-  ScoreCondition,
-  Disjunction,
-  RadioAnswerCondition,
-  Conjunction,
-  BoolCondition,
-} from './guard';
-import { PANDEMIC_TRACKING_IS_ENABLED } from './custom';
+import { Guard } from './guard';
 import { Questionnaire } from '@covopen/covquestions-js';
 import {
   QUESTION_SHARE_DATA,
