@@ -1,5 +1,4 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { QUESTIONS } from '../../global/questions';
 import { InputRadio } from './input-radio';
 import { h } from '@stencil/core';
 

@@ -305,12 +305,12 @@ export class Questionnaire {
                     )}
                     {currentQuestion.type === 'number' && (
                       <ia-input-number
-                        question={{
-                          id: currentQuestion.id,
-                          category: '',
-                          inputType: 'checkbox',
-                        }}
-                        value={this.currentAnswerValue as string}
+                        inputId={currentQuestion.id}
+                        required={!currentQuestion.optional}
+                        inputMax={currentQuestion.numericOptions.max}
+                        inputMin={currentQuestion.numericOptions.min}
+                        inputStep={currentQuestion.numericOptions.step}
+                        value={this.currentAnswerValue as number}
                         onUpdateFormData={updateFormData}
                       />
                     )}

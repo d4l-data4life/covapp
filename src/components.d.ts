@@ -71,8 +71,12 @@ export namespace Components {
         "value": string[];
     }
     interface IaInputNumber {
-        "question": Question;
-        "value": string;
+        "inputId": string;
+        "inputMax": number;
+        "inputMin": number;
+        "inputStep": number;
+        "required": boolean;
+        "value": number;
     }
     interface IaInputPostalCode {
         "question": Question;
@@ -494,9 +498,13 @@ declare namespace LocalJSX {
         "value"?: string[];
     }
     interface IaInputNumber {
+        "inputId"?: string;
+        "inputMax"?: number;
+        "inputMin"?: number;
+        "inputStep"?: number;
         "onUpdateFormData"?: (event: CustomEvent<any>) => void;
-        "question"?: Question;
-        "value"?: string;
+        "required"?: boolean;
+        "value"?: number;
     }
     interface IaInputPostalCode {
         "onUpdateFormData"?: (event: CustomEvent<any>) => void;
