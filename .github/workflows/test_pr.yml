@@ -1,0 +1,20 @@
+name: Test PR
+
+on:
+  pull_request:
+    branches:
+      - master
+      - staging
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '13.x'
+      - name: Install and Test
+        run: npm ci && npm run prepare-customization && npm run test:all
+        env:
+          PANDEMIC_TRACKING_URL: 'dummy'
