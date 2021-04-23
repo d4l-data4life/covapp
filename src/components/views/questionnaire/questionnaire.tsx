@@ -294,11 +294,7 @@ export class Questionnaire {
                     )}
                     {currentQuestion.type === 'text' && (
                       <ia-input-postal-code
-                        question={{
-                          id: currentQuestion.id,
-                          category: '',
-                          inputType: 'checkbox',
-                        }}
+                        inputId={currentQuestion.id}
                         value={this.currentAnswerValue as string}
                         onUpdateFormData={updateFormData}
                       />

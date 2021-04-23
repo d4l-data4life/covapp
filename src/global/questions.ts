@@ -1,4 +1,3 @@
-import { Guard } from './guard';
 import { Questionnaire } from '@covopen/covquestions-js';
 import {
   QUESTION_SHARE_DATA,
@@ -38,29 +37,6 @@ export function getQuestionnaire(
   //     // do nothing for now
   //   });
 }
-
-export type Question = {
-  id: string;
-  category: string;
-  comment?: string;
-  text?: string;
-  inputType: 'radio' | 'date' | 'checkbox' | 'postal' | 'decimal' | 'hidden';
-  options?: string[] | CheckboxOption[];
-  nextQuestionMap?: string | string[];
-  scoreMap?: number[];
-  guard?: Guard;
-  xmlValueMapping?: number[];
-  inputMin?: number;
-  inputMax?: number;
-  inputStep?: number;
-  xmlValue?: (answers: any) => string | number;
-  optional?: boolean;
-};
-
-export type CheckboxOption = {
-  label: string;
-  id: string;
-};
 
 export const NO_XML = 'X';
 export const QUESTION = {

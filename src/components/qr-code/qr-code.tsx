@@ -134,6 +134,7 @@ export class QRCode {
       this.qr_values = engine
         .getResults()
         .exports.filter(x => x.id == 'covapp_qr')[0].mapping;
+      console.log(engine.getVariables());
     });
   };
 

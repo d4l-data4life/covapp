@@ -7,7 +7,6 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { RouterHistory, } from "@stencil/router";
 import { Language, } from "@d4l/web-components-library/dist/types/components/LanguageSwitcher/language-switcher";
-import { Question, } from "./global/questions";
 export namespace Components {
     interface AppRoot {
         "history": RouterHistory;
@@ -79,7 +78,7 @@ export namespace Components {
         "value": number;
     }
     interface IaInputPostalCode {
-        "question": Question;
+        "inputId": string;
         "value": string;
     }
     interface IaInputRadio {
@@ -507,8 +506,8 @@ declare namespace LocalJSX {
         "value"?: number;
     }
     interface IaInputPostalCode {
+        "inputId"?: string;
         "onUpdateFormData"?: (event: CustomEvent<any>) => void;
-        "question"?: Question;
         "value"?: string;
     }
     interface IaInputRadio {

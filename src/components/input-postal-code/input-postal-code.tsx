@@ -8,13 +8,12 @@ import {
   State,
 } from '@stencil/core';
 import i18next from '../../global/utils/i18n';
-import { Question } from '../../global/questions';
 
 @Component({
   tag: 'ia-input-postal-code',
 })
 export class InputPostalCode {
-  @Prop() question: Question;
+  @Prop() inputId: string;
   @Prop() value: string;
 
   @State() language?: string;
@@ -33,18 +32,18 @@ export class InputPostalCode {
   }
 
   render() {
-    const { question, value } = this;
+    const { inputId, value } = this;
 
     const onInputChange = (event: Event) => {
       const target = event.target as HTMLInputElement;
-      this.updateFormDataHandler(this.question.id, target.value);
+      this.updateFormDataHandler(this.inputId, target.value);
     };
 
     return (
       <span>
         <d4l-input
-          inputId={`input-question-${question.id}`}
-          name={question.id}
+          inputId={`input-question-${inputId}`}
+          name={inputId}
           pattern="(?!01000|99999)(0[1-9]\d{3}|[1-9]\d{4})"
           inputmode="numeric"
           required
