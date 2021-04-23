@@ -18,8 +18,14 @@ jobs:
       - name: Install Packages
         run: npm install
 
+      
+      - name: Prepare for Charite
+        run: npm run prepare-charite
+
       - name: Build package
         run: npm run build
+        env:
+          LAYOUT: CHARITE
 
       - name: Upload artifact
         uses: actions/upload-artifact@v1.0.0
