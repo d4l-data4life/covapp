@@ -1,3 +1,7 @@
+⚠️ The latest CovApp Version code is now maintained here: https://github.com/CovOpen/CovApp-2.0
+
+----
+
 # CovApp
 
 > 😷 Solution for assessing the risk of contagious viral infections (COVID-19)
