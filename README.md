@@ -1,4 +1,6 @@
-⚠️ The latest CovApp Version code is now maintained here: https://github.com/CovOpen/CovApp-2.0
+⚠️ Since 25 June 2021, there is a new CovApp version 2.0.0, including a new questionnaire and risk assessment developed by the Charité. This repository contains the CovApp version 1.0.0 and is outdated since June 2021.
+
+The latest CovApp Version code is now maintained here: https://github.com/CovOpen/CovApp-2.0
 
 ----
 
